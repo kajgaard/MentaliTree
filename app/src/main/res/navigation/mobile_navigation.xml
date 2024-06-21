@@ -13,9 +13,9 @@
 
     <fragment
         android:id="@+id/navigation_dashboard"
-        android:name="com.example.mentalitree.ui.dashboard.DashboardFragment"
+        android:name="com.example.mentalitree.ui.motivation.MotivationFragment"
         android:label="@string/title_dashboard"
-        tools:layout="@layout/fragment_dashboard" />
+        tools:layout="@layout/fragment_motivation" />
 
     <fragment
         android:id="@+id/navigation_notifications"

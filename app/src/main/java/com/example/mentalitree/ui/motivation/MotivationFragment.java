@@ -1,4 +1,4 @@
-package com.example.mentalitree.ui.dashboard;
+package com.example.mentalitree.ui.motivation;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -10,22 +10,22 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.example.mentalitree.databinding.FragmentDashboardBinding;
+import com.example.mentalitree.databinding.FragmentMotivationBinding;
 
-public class DashboardFragment extends Fragment {
+public class MotivationFragment extends Fragment {
 
-    private FragmentDashboardBinding binding;
+    private FragmentMotivationBinding binding;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        DashboardViewModel dashboardViewModel =
-                new ViewModelProvider(this).get(DashboardViewModel.class);
+        MotivationViewModel motivationViewModel =
+                new ViewModelProvider(this).get(MotivationViewModel.class);
 
-        binding = FragmentDashboardBinding.inflate(inflater, container, false);
+        binding = FragmentMotivationBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
         final TextView textView = binding.textDashboard;
-        dashboardViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
+        motivationViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
         return root;
     }
 
