@@ -3,22 +3,22 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/navigation_home">
+    app:startDestination="@+id/navigation_today">
 
     <fragment
-        android:id="@+id/navigation_home"
+        android:id="@+id/navigation_today"
         android:name="com.example.mentalitree.ui.today.TodayFragment"
         android:label="@string/title_home"
         tools:layout="@layout/fragment_today" />
 
     <fragment
-        android:id="@+id/navigation_dashboard"
+        android:id="@+id/navigation_motivation"
         android:name="com.example.mentalitree.ui.motivation.MotivationFragment"
         android:label="@string/title_dashboard"
         tools:layout="@layout/fragment_motivation" />
 
     <fragment
-        android:id="@+id/navigation_notifications"
+        android:id="@+id/navigation_profile"
         android:name="com.example.mentalitree.ui.profile.ProfileFragment"
         android:label="@string/title_notifications"
         tools:layout="@layout/fragment_profile" />
