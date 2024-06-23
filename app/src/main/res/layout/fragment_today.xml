@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -6,321 +7,339 @@
     android:layout_height="match_parent"
     tools:context=".ui.today.TodayFragment">
 
-    <ImageView
-        android:id="@+id/landscapeIv"
+    <ScrollView
+        android:id="@+id/scrollView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/nature_bg"
+        android:layout_height="match_parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        >
 
-
-    <ImageView
-        android:id="@+id/treeIv"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/tree_2"
-        app:layout_constraintBottom_toBottomOf="@+id/landscapeIv"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/landscapeIv"
-        app:layout_constraintTop_toTopOf="@+id/landscapeIv" />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:orientation="vertical"
-        android:paddingHorizontal="15dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/landscapeIv">
-
-        <TextView
-            android:id="@+id/todaysDateTv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:text="Thu. 13th June"
-            android:textSize="18sp" />
-
-        <Button
-            android:id="@+id/reviewDayBtn"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:background="@drawable/call_to_action_btn_bg"
-            android:text="Review your day"
-            android:textColor="@color/white" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:text="Workbook"
-            android:textSize="18sp" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Here are a few things you can work on today. \nTry if you can complete 3 of them."
-            android:textSize="14sp" />
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:orientation="horizontal"
-            android:paddingVertical="15dp">
+            android:layout_height="match_parent">
 
             <ImageView
-                android:id="@+id/taskOneIv"
-                android:layout_width="wrap_content"
+                android:id="@+id/landscapeIv"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingHorizontal="5dp"
-                android:src="@drawable/task_completed" />
+                android:background="@drawable/nature_bg"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
 
             <ImageView
-                android:id="@+id/taskTwoIv"
+                android:id="@+id/treeIv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:paddingHorizontal="5dp"
-                android:src="@drawable/task_incomplete" />
+                android:src="@drawable/tree_2"
+                app:layout_constraintBottom_toBottomOf="@+id/landscapeIv"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/landscapeIv"
+                app:layout_constraintTop_toTopOf="@+id/landscapeIv" />
 
-            <ImageView
-                android:id="@+id/taskThreeIv"
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:orientation="vertical"
+                android:paddingHorizontal="15dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/landscapeIv">
+
+                <TextView
+                    android:id="@+id/todaysDateTv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:text="Thu. 13th June"
+                    android:textSize="18sp" />
+
+                <Button
+                    android:id="@+id/reviewDayBtn"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/call_to_action_btn_bg"
+                    android:text="Review your day"
+                    android:textColor="@color/white" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:text="Workbook"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Here are a few things you can work on today. \nTry if you can complete 3 of them."
+                    android:textSize="14sp" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:orientation="horizontal"
+                    android:paddingVertical="15dp">
+
+                    <ImageView
+                        android:id="@+id/taskOneIv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingHorizontal="5dp"
+                        android:src="@drawable/task_completed" />
+
+                    <ImageView
+                        android:id="@+id/taskTwoIv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingHorizontal="5dp"
+                        android:src="@drawable/task_incomplete" />
+
+                    <ImageView
+                        android:id="@+id/taskThreeIv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingHorizontal="5dp"
+                        android:src="@drawable/task_incomplete" />
+
+                </LinearLayout>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/workbookTasksRv"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:paddingBottom="60dp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/streakDaysLayout"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:paddingHorizontal="5dp"
-                android:src="@drawable/task_incomplete" />
+                android:orientation="horizontal"
+                app:layout_constraintBottom_toBottomOf="@+id/landscapeIv"
+                app:layout_constraintEnd_toEndOf="@+id/landscapeIv"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/treeIv">
 
-        </LinearLayout>
+                <LinearLayout
+                    android:id="@+id/mondayGroupLayout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:paddingHorizontal="@dimen/streak_days_divider">
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/workbookTasksRv"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+                    <ImageView
+                        android:id="@+id/mondayStreakIv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/missed_streak" />
 
-    </LinearLayout>
+                    <TextView
+                        android:id="@+id/mondayTV"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:text="M" />
 
-    <LinearLayout
-        android:id="@+id/streakDaysLayout"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintBottom_toBottomOf="@+id/landscapeIv"
-        app:layout_constraintEnd_toEndOf="@+id/landscapeIv"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/treeIv">
+                </LinearLayout>
 
-        <LinearLayout
-            android:id="@+id/mondayGroupLayout"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:paddingHorizontal="@dimen/streak_days_divider">
+                <LinearLayout
+                    android:id="@+id/tuesdayGroupLayout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:paddingHorizontal="@dimen/streak_days_divider">
 
-            <ImageView
-                android:id="@+id/mondayStreakIv"
+                    <ImageView
+                        android:id="@+id/tuesdayStreakIv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/completed_streak" />
+
+                    <TextView
+                        android:id="@+id/tuesdayTV"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:text="T" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/wednesdayGroupLayout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:paddingHorizontal="@dimen/streak_days_divider">
+
+                    <ImageView
+                        android:id="@+id/wednesdayStreakIv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/completed_streak" />
+
+                    <TextView
+                        android:id="@+id/wednesdayTV"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:text="W" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/thursdayGroupLayout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:paddingHorizontal="@dimen/streak_days_divider">
+
+                    <ImageView
+                        android:id="@+id/thursdayStreakIv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/today_pending_streak" />
+
+                    <TextView
+                        android:id="@+id/thursdayTV"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:text="T" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/fridayGroupLayout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:paddingHorizontal="@dimen/streak_days_divider">
+
+                    <ImageView
+                        android:id="@+id/fridayStreakIv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/tomorrow_pending_streak" />
+
+                    <TextView
+                        android:id="@+id/fridayTV"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:text="F" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/saturdayGroupLayout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:paddingHorizontal="@dimen/streak_days_divider">
+
+                    <ImageView
+                        android:id="@+id/saturdayStreakIv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/tomorrow_pending_streak" />
+
+                    <TextView
+                        android:id="@+id/saturdayTV"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:text="S" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/sundayGroupLayout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:paddingHorizontal="@dimen/streak_days_divider">
+
+                    <ImageView
+                        android:id="@+id/sundayStreakIv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/tomorrow_pending_streak" />
+
+                    <TextView
+                        android:id="@+id/sundayTV"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:text="S" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/missed_streak" />
+                android:orientation="vertical"
+                app:layout_constraintBottom_toBottomOf="@+id/treeIv"
+                app:layout_constraintEnd_toStartOf="@+id/treeIv"
+                app:layout_constraintStart_toStartOf="@+id/landscapeIv"
+                app:layout_constraintTop_toTopOf="@+id/treeIv">
 
-            <TextView
-                android:id="@+id/mondayTV"
+                <TextView
+                    android:id="@+id/currentStreakTv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:text="2"
+                    android:textSize="40sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="CURRENT\nSTREAK"
+                    android:textAlignment="center"
+                    android:textColor="@color/light_grey"
+                    android:textSize="14sp" />
+
+            </LinearLayout>
+
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:text="M" />
+                android:orientation="vertical"
+                app:layout_constraintBottom_toBottomOf="@+id/treeIv"
+                app:layout_constraintEnd_toEndOf="@+id/landscapeIv"
+                app:layout_constraintStart_toEndOf="@+id/treeIv"
+                app:layout_constraintTop_toTopOf="@+id/treeIv">
 
-        </LinearLayout>
+                <TextView
+                    android:id="@+id/highestStreakTv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:text="8"
+                    android:textSize="40sp" />
 
-        <LinearLayout
-            android:id="@+id/tuesdayGroupLayout"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:paddingHorizontal="@dimen/streak_days_divider">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="CURRENT\nSTREAK"
+                    android:textAlignment="center"
+                    android:textColor="@color/light_grey"
+                    android:textSize="14sp" />
 
-            <ImageView
-                android:id="@+id/tuesdayStreakIv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/completed_streak" />
+            </LinearLayout>
 
-            <TextView
-                android:id="@+id/tuesdayTV"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:text="T" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/wednesdayGroupLayout"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:paddingHorizontal="@dimen/streak_days_divider">
-
-            <ImageView
-                android:id="@+id/wednesdayStreakIv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/completed_streak" />
-
-            <TextView
-                android:id="@+id/wednesdayTV"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:text="W" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/thursdayGroupLayout"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:paddingHorizontal="@dimen/streak_days_divider">
-
-            <ImageView
-                android:id="@+id/thursdayStreakIv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/today_pending_streak" />
-
-            <TextView
-                android:id="@+id/thursdayTV"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:text="T" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/fridayGroupLayout"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:paddingHorizontal="@dimen/streak_days_divider">
-
-            <ImageView
-                android:id="@+id/fridayStreakIv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/tomorrow_pending_streak" />
-
-            <TextView
-                android:id="@+id/fridayTV"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:text="F" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/saturdayGroupLayout"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:paddingHorizontal="@dimen/streak_days_divider">
-
-            <ImageView
-                android:id="@+id/saturdayStreakIv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/tomorrow_pending_streak" />
-
-            <TextView
-                android:id="@+id/saturdayTV"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:text="S" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/sundayGroupLayout"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:paddingHorizontal="@dimen/streak_days_divider">
-
-            <ImageView
-                android:id="@+id/sundayStreakIv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/tomorrow_pending_streak" />
-
-            <TextView
-                android:id="@+id/sundayTV"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:text="S" />
-
-        </LinearLayout>
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="@+id/treeIv"
-        app:layout_constraintEnd_toStartOf="@+id/treeIv"
-        app:layout_constraintStart_toStartOf="@+id/landscapeIv"
-        app:layout_constraintTop_toTopOf="@+id/treeIv">
-
-        <TextView
-            android:id="@+id/currentStreakTv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:text="2"
-            android:textSize="40sp" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="CURRENT\nSTREAK"
-            android:textAlignment="center"
-            android:textColor="@color/light_grey"
-            android:textSize="14sp" />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="@+id/treeIv"
-        app:layout_constraintStart_toEndOf="@+id/treeIv"
-        app:layout_constraintEnd_toEndOf="@+id/landscapeIv"
-        app:layout_constraintTop_toTopOf="@+id/treeIv">
-
-        <TextView
-            android:id="@+id/highestStreakTv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:text="8"
-            android:textSize="40sp" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="CURRENT\nSTREAK"
-            android:textAlignment="center"
-            android:textColor="@color/light_grey"
-            android:textSize="14sp" />
-
-    </LinearLayout>
-
+    </ScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

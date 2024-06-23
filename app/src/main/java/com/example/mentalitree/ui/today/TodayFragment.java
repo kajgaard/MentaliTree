@@ -37,7 +37,13 @@ public class TodayFragment extends Fragment {
         WorkbookTaskAdapter adapter = new WorkbookTaskAdapter(workbookTasks);
 
         workbookTasksRv.setAdapter(adapter);
-        workbookTasksRv.setLayoutManager(new LinearLayoutManager(getActivity()));
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity()) {
+            @Override
+            public boolean canScrollVertically() {
+                return false;
+            }
+        };
+        workbookTasksRv.setLayoutManager(linearLayoutManager);
 
         return root;
     }
@@ -49,9 +55,8 @@ public class TodayFragment extends Fragment {
     }
 
     private void setUpWorkbookTasks(){
-        workbookTasks.add(new TaskModel("Affirmations about yourself", "What is a positive affirmation, that reminds\n" +
-                "you of your worth and your strength? ", R.drawable.reflection_task_icon));
-        workbookTasks.add(new TaskModel("Eat a healthy meal", "Try to incoorporate at least 1 healthy meal today", R.drawable.healthy_food_task_icon));
+        workbookTasks.add(new TaskModel("Affirmations about yourself", "What is a positive affirmation, that reminds you of your worth and your strength? ", R.drawable.reflection_task_icon));
+        workbookTasks.add(new TaskModel("Eat a healthy meal", "Try to incorporate at least 1 healthy meal today", R.drawable.healthy_food_task_icon));
         workbookTasks.add(new TaskModel("Go for a walk outside", "Enjoy some fresh air with a trip outside", R.drawable.nature_task_icon));
         workbookTasks.add(new TaskModel("Give your kitchen a clean ", "Make it really nice in your kitchen with clean counters", R.drawable.clean_task_icon));
         workbookTasks.add(new TaskModel("Reach out to a friend or loved one ", "Message or call a friend or family member and have a chat", R.drawable.hand_with_heart_task_icon));
