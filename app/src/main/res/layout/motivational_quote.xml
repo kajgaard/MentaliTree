@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/workbook_task_card_bg"
+    android:padding="1.5dp"
+    android:layout_margin="5dp"
+    android:elevation="2dp">
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/bgIv"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:src="@drawable/quote_bg"
+        android:scaleType="fitXY"
+        app:layout_constraintDimensionRatio="H,1:1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:shapeAppearanceOverlay="@style/RoundedTopCorners"
+        />
+
+
+    <TextView
+        android:id="@+id/todaysQuoteTv"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:padding="30dp"
+        android:text="It is never too late to be what you might have been."
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:textSize="32sp"
+        app:layout_constraintBottom_toBottomOf="@+id/dateLL"
+        app:layout_constraintEnd_toEndOf="@+id/bgIv"
+        android:gravity="center"
+        app:layout_constraintStart_toStartOf="@+id/bgIv"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+    <LinearLayout
+        android:id="@+id/dateLL"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="@+id/bgIv"
+        app:layout_constraintStart_toStartOf="@+id/bgIv"
+        app:layout_constraintBottom_toBottomOf="@id/bgIv"
+        android:background="@drawable/date_for_quotes_bg"
+        android:orientation="vertical">
+
+
+        <TextView
+            android:id="@+id/oldQuoteDateTv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Thursday June 13th"
+            android:textColor="@color/light_grey"
+            android:layout_margin="7dp"
+            android:textSize="16sp"/>
+
+    </LinearLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

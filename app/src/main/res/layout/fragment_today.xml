@@ -50,7 +50,7 @@
                 app:layout_constraintTop_toBottomOf="@id/landscapeIv">
 
                 <TextView
-                    android:id="@+id/todaysDateTv"
+                    android:id="@+id/oldQuoteDateTv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
