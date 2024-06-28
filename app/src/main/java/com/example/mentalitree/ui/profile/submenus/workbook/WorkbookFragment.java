@@ -3,64 +3,77 @@ package com.example.mentalitree.ui.profile.submenus.workbook;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.mentalitree.R;
+import com.example.mentalitree.databinding.FragmentProfileNotesBinding;
+import com.example.mentalitree.databinding.FragmentProfileWorkbookBinding;
+import com.example.mentalitree.ui.today.TaskModel;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link WorkbookFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+
+import kotlinx.coroutines.scheduling.Task;
+
+
 public class WorkbookFragment extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    RecyclerView workbookDaysRecyclerView;
+    FragmentProfileWorkbookBinding binding;
 
     public WorkbookFragment() {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment WorkbookFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static WorkbookFragment newInstance(String param1, String param2) {
-        WorkbookFragment fragment = new WorkbookFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
+
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_profile_workbook, container, false);
+
+        binding = FragmentProfileWorkbookBinding.inflate(inflater, container, false);
+        View root = binding.getRoot();
+        workbookDaysRecyclerView = binding.workbookDaysRecyclerView;
+        WorkbookDayAdapter adapter = new WorkbookDayAdapter(getWorkbookLog());
+        workbookDaysRecyclerView.setAdapter(adapter);
+
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
+        workbookDaysRecyclerView.setLayoutManager(linearLayoutManager);
+
+        return root;
+    }
+
+    public ArrayList<WorkbookDayModel> getWorkbookLog(){
+        ArrayList<WorkbookDayModel> workbookDays = new ArrayList<>();
+        ArrayList<TaskModel> arr1 = new ArrayList<>();
+        arr1.add(new TaskModel("Affirmations about yourself", R.drawable.reflection_task_icon));
+        arr1.add(new TaskModel("Get social", R.drawable.social_task_icon));
+        workbookDays.add(new WorkbookDayModel("Wednesday June 12th", arr1));
+
+        ArrayList<TaskModel> arr2 = new ArrayList<>();
+        arr2.add(new TaskModel("Thankfullness", R.drawable.butterfly_task_icon));
+        workbookDays.add(new WorkbookDayModel("Tuesday June 11th", arr2));
+
+        ArrayList<TaskModel> emptyArr = new ArrayList<>();
+        workbookDays.add(new WorkbookDayModel("Monday June 10th", emptyArr));
+        workbookDays.add(new WorkbookDayModel("Sunday June 9th", emptyArr));
+
+        ArrayList<TaskModel> arr3 = new ArrayList<>();
+        arr3.add(new TaskModel("Reach out", R.drawable.hand_with_heart_task_icon));
+        arr3.add(new TaskModel("Eat a healthy meal", R.drawable.healthy_food_task_icon));
+        arr3.add(new TaskModel("Listing relaxing activity", R.drawable.talking_task_icon));
+        workbookDays.add(new WorkbookDayModel("Saturday June 8th", arr3));
+
+        return workbookDays;
     }
 }

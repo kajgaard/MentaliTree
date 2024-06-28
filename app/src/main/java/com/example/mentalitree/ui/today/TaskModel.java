@@ -12,7 +12,7 @@ public class TaskModel {
         this.image = image;
     }
 
-    public TaskModel(int image, String taskName) {
+    public TaskModel(String taskName, int image) {
         this.image = image;
         this.taskName = taskName;
     }
