@@ -12,6 +12,11 @@ public class TaskModel {
         this.image = image;
     }
 
+    public TaskModel(int image, String taskName) {
+        this.image = image;
+        this.taskName = taskName;
+    }
+
     public String getTaskName() {
         return taskName;
     }
