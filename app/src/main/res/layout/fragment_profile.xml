@@ -6,63 +6,88 @@
     android:layout_height="match_parent"
     tools:context=".ui.profile.ProfileFragment">
 
+
+
     <LinearLayout
+        android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
+        <ImageView
+            android:id="@+id/profileBannerIv"
+            android:layout_width="match_parent"
+            android:layout_height="110dp"
+            android:scaleType="fitXY"
+            android:src="@drawable/profile_banner" />
+
         <LinearLayout
+            android:id="@+id/buttonBarLl"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:layout_marginTop="5dp"
+            android:orientation="horizontal"
+            android:padding="10dp">
 
             <Button
                 android:id="@+id/settings_btn"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:background="@drawable/active_submenu_bg"
                 android:padding="5dp"
                 android:text="Settings"
-                android:textColor="@color/white"
-                android:background="@drawable/active_submenu_bg"/>
+                android:textColor="@color/white" />
 
             <Button
                 android:id="@+id/notes_btn"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:background="@drawable/inactive_submenu_bg"
                 android:padding="5dp"
                 android:text="Notes"
-                android:textColor="@color/light_grey"
-                android:background="@drawable/inactive_submenu_bg"/>
+                android:textColor="@color/light_grey" />
 
             <Button
                 android:id="@+id/workbook_btn"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:background="@drawable/inactive_submenu_bg"
                 android:padding="5dp"
                 android:text="Workbook"
-                android:textColor="@color/light_grey"
-                android:background="@drawable/inactive_submenu_bg"/>
+                android:textColor="@color/light_grey" />
 
             <Button
                 android:id="@+id/statistics_btn"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:background="@drawable/inactive_submenu_bg"
                 android:padding="5dp"
                 android:text="Statistics"
-                android:textColor="@color/light_grey"
-                android:background="@drawable/inactive_submenu_bg"/>
+                android:textColor="@color/light_grey" />
         </LinearLayout>
 
         <FrameLayout
             android:id="@+id/childFragmentContainer"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+            android:layout_height="match_parent"
+            />
 
     </LinearLayout>
+
+    <ImageView
+        android:id="@+id/profile_avatarIv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:src="@drawable/profile_avatar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
