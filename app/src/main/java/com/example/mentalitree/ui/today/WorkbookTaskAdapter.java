@@ -41,6 +41,7 @@ public class WorkbookTaskAdapter  extends RecyclerView.Adapter<WorkbookTaskAdapt
         holder.titleTv.setText(workbookTasks.get(position).getTaskName());
         holder.shortdescriptionTv.setText(workbookTasks.get(position).getTaskShortDescription());
         holder.iconIv.setImageResource(workbookTasks.get(position).getImage());
+        holder.setIsRecyclable(false);
 
     }
 
