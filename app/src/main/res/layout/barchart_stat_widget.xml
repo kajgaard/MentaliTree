@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/workbook_task_card_bg"
+    android:padding="0.75dp"
+    android:elevation="2dp"
+    android:layout_marginBottom="50dp">
+
+    <LinearLayout
+        android:id="@+id/dateLL"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/header_for_widget_bg"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="@+id/widgetLl"
+        app:layout_constraintStart_toStartOf="@+id/widgetLl"
+        app:layout_constraintTop_toTopOf="parent">
+
+
+        <TextView
+            android:id="@+id/currentHeaderTv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="7dp"
+            android:text="Best rated activities"
+            android:textColor="@color/white"
+            android:layout_gravity="center_horizontal"
+            android:textSize="16sp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/widgetLl"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:baselineAligned="false"
+        android:orientation="horizontal"
+        android:padding="15dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/dateLL"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:shapeAppearanceOverlay="@style/RoundedTopCorners"
+        android:divider="@drawable/divider"
+        android:showDividers="middle">
+
+        <LinearLayout
+            android:id="@+id/rated1stLl"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:gravity="bottom"
+            android:weightSum="1.25"
+            android:layout_weight="0.2">
+
+
+            <ImageView
+                android:id="@+id/bar1stIv"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:src="@drawable/blue_rectangle"
+                android:layout_gravity="bottom"
+                android:layout_weight="1"/>
+
+
+            <ImageView
+                android:id="@+id/icon1stIv"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_gravity="bottom"
+                android:src="@drawable/clean_task_icon"
+                android:layout_weight="0.25"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/rated2ndLl"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:gravity="bottom"
+            android:weightSum="1.25"
+            android:layout_weight="0.2">
+
+
+            <ImageView
+                android:id="@+id/bar2ndIv"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:src="@drawable/blue_rectangle"
+                android:layout_gravity="bottom"
+                android:layout_weight="0.8"/>
+
+
+            <ImageView
+                android:id="@+id/icon2ndIv"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_gravity="bottom"
+                android:src="@drawable/nature_task_icon"
+                android:layout_weight="0.25"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/rated3rdLl"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:gravity="bottom"
+            android:weightSum="1.25"
+            android:layout_weight="0.2">
+
+
+            <ImageView
+                android:id="@+id/bar3rdIv"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:src="@drawable/blue_rectangle"
+                android:layout_gravity="bottom"
+                android:layout_weight="0.6"/>
+
+
+            <ImageView
+                android:id="@+id/icon3rdIv"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_gravity="bottom"
+                android:src="@drawable/healthy_food_task_icon"
+                android:layout_weight="0.25"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/rated4thLl"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:gravity="bottom"
+            android:weightSum="1.25"
+            android:layout_weight="0.2">
+
+
+            <ImageView
+                android:id="@+id/bar4thIv"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:src="@drawable/blue_rectangle"
+                android:layout_gravity="bottom"
+                android:layout_weight="0.3"/>
+
+
+            <ImageView
+                android:id="@+id/icon4thIv"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_gravity="bottom"
+                android:src="@drawable/butterfly_task_icon"
+                android:layout_weight="0.25"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/rated5thLl"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:gravity="bottom"
+            android:weightSum="1.25"
+            android:layout_weight="0.2">
+
+
+            <ImageView
+                android:id="@+id/bar5thIv"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:src="@drawable/blue_rectangle"
+                android:layout_gravity="bottom"
+                android:layout_weight="0.2"/>
+
+
+            <ImageView
+                android:id="@+id/icon5thIv"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_gravity="bottom"
+                android:src="@drawable/hand_with_heart_task_icon"
+                android:layout_weight="0.25"/>
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

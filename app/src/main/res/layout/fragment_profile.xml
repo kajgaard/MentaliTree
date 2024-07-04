@@ -30,7 +30,7 @@
             android:layout_marginTop="5dp"
             android:orientation="horizontal"
             android:paddingVertical="10dp"
-            android:paddingHorizontal="6dp">
+            android:paddingHorizontal="5dp">
 
             <Button
                 android:id="@+id/settings_btn"

@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/workbook_task_card_bg"
+    android:padding="0.75dp"
+    android:layout_margin="15dp"
+    android:elevation="2dp">
+
+    <LinearLayout
+        android:id="@+id/dateLL"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/header_for_widget_bg"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="@+id/widgetLl"
+        app:layout_constraintStart_toStartOf="@+id/widgetLl"
+        app:layout_constraintTop_toTopOf="parent">
+
+
+        <TextView
+            android:id="@+id/longestHeaderTv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_margin="7dp"
+            android:text="Longest streak"
+            android:textColor="@color/white"
+            android:textSize="16sp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/widgetLl"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:scaleType="fitXY"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:padding="30dp"
+        app:layout_constraintDimensionRatio="H,1:1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/dateLL"
+        app:shapeAppearanceOverlay="@style/RoundedTopCorners">
+
+
+        <TextView
+            android:id="@+id/longestNumberTv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="8"
+            android:textSize="48sp" />
+
+        <TextView
+            android:id="@+id/longestUnitTv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="DAYS"/>
+
+    </LinearLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
