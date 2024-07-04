@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "680828929574",
+    "project_id": "mentalitree-69e3e",
+    "storage_bucket": "mentalitree-69e3e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:680828929574:android:68ff7f3d35396a7d19c8e7",
+        "android_client_info": {
+          "package_name": "com.example.mentalitree"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBALLgbr_fWMEQGPh2UHwSzsH8XTK7r49Q"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
