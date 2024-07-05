@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -29,6 +30,7 @@ public class TodayFragment extends Fragment {
      ArrayList<TaskModel> workbookTasks = new ArrayList<>();
      RecyclerView workbookTasksRv;
      ImageView mondayIv, tuesdayIv, wednesdayIv, thursdayIv, fridayIv, saturdayIv, sundayIv;
+     TextView totalDaysCounter;
     DataHandler datahandler = DataHandler.getInstance();
     private static final String TAG = "MMTODAYFRAG";
     public static String DATE_FORMAT_INPUT = "yyyy-MM-dd-HH:mm:ss";
@@ -63,6 +65,8 @@ public class TodayFragment extends Fragment {
         saturdayIv = binding.saturdayStreakIv;
         sundayIv = binding.sundayStreakIv;
 
+        totalDaysCounter = binding.highestStreakTv;
+
         updateStreak();
 
         return root;
@@ -77,12 +81,15 @@ public class TodayFragment extends Fragment {
     public void updateStreak(){
 
         ArrayList<LocalDate> listOfDates = new ArrayList<>();
+        ArrayList<String> listOfDateStrings = new ArrayList<>();
         datahandler.getActivityLog(list -> {
             for (String date : list) {
                 listOfDates.add(convert(date));
+                listOfDateStrings.add(convert(date).toString());
             }
             Log.d(TAG, "The list is now of LocalDates: "+ listOfDates.toString());
             updateStreakUI(listOfDates);
+            updateTotalDayCounter(listOfDateStrings);
         });
 
     }
@@ -164,6 +171,12 @@ public class TodayFragment extends Fragment {
                 imageView.setImageResource(R.drawable.missed_streak);
             }
         }
+    }
+
+    public void updateTotalDayCounter(ArrayList<String> list){
+        long n = list.stream().distinct().count();
+        String value = ""+n;
+        totalDaysCounter.setText(value);
     }
 
     private void setUpWorkbookTasks(){
