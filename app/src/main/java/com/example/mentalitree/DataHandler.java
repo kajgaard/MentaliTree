@@ -23,6 +23,8 @@ import com.google.firebase.firestore.QuerySnapshot;
 import com.google.protobuf.Any;
 
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -33,11 +35,17 @@ import java.util.TimeZone;
 
 public class DataHandler {
 
+    public int getUsersCurrentStreak() {
+        return usersCurrentStreak;
+    }
+
     private static DataHandler single_instance = null;
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     String userPin, userId;
     String userToken;
     private static final String TAG = "MMDATAHANDLER";
+    public static String DATE_FORMAT_INPUT = "yyyy-MM-dd-HH:mm:ss";
+    int usersCurrentStreak;
 
 
     private DataHandler() {
@@ -64,8 +72,6 @@ public class DataHandler {
 
         Query query = usersRef.whereEqualTo("userId", this.userId).whereEqualTo("userPin", this.userPin);
 
-
-
         query.get().addOnCompleteListener(task -> {
             if(task.isSuccessful()){
 
@@ -73,6 +79,8 @@ public class DataHandler {
                     for (QueryDocumentSnapshot document : task.getResult()) {
                         Log.d(TAG, document.getId() + " => " + document.getData());
                         this.userToken = document.getId();
+                        Map<String, Object> data = document.getData();
+                        this.usersCurrentStreak = ((Long) data.get("currentStreak")).intValue();
                     }
                     addTimestampToLog();
                     firebaseCallBack.onCallback(true);
@@ -95,19 +103,26 @@ public class DataHandler {
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
 
-                            ArrayList list = new ArrayList<>();
+                            ArrayList<String> list = new ArrayList<>();
                             for (QueryDocumentSnapshot document : task.getResult()) {
                                 Map<String, Object> data = document.getData();
                                 String timeStamp = data.get("timeStamp").toString();
                                 list.add(timeStamp);
                                 Log.d(TAG, "Found document: "+ document.getId() + " => " + document.getData());
                             }
+                            LocalDate lastEntry = convert(list.get(list.size()-2));
+                            Log.d(TAG, "LastEntry is: " + lastEntry);
+                            increaseCurrentStreakIfNessercary(lastEntry);
                             firebaseCallBack.onCallback(list);
                         } else {
                             Log.d(TAG, "Error getting documents: ", task.getException());
                         }
                     }
                 });
+    }
+
+    public LocalDate convert(String dateStr) {
+        return (LocalDate.parse(dateStr, DateTimeFormatter.ofPattern(DATE_FORMAT_INPUT)));
     }
 
     public void addTimestampToLog(){
@@ -126,13 +141,52 @@ public class DataHandler {
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
-                        Log.d("MMDATA", "DocumentSnapshot for timestamp successfully written!");
+                        Log.d(TAG, "DocumentSnapshot for timestamp successfully written!");
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        Log.w("MMDATA", "Error writing document", e);
+                        Log.w(TAG, "Error writing document", e);
+                    }
+                });
+
+    }
+
+    public void increaseCurrentStreakIfNessercary(LocalDate lastEntry){
+        LocalDate today = LocalDate.now();
+
+        Log.d(TAG, "Hello from increasing streak method");
+
+        Log.d(TAG, "Todays date for comp is: " + today+"\nlastEntry is: " + lastEntry + "\ntoday.minusDays(1): " + today.minusDays(1));
+        if(!(lastEntry.isEqual(today.minusDays(1))) && !(lastEntry.isEqual(today))){
+            Log.d(TAG, "Ooops i dont think you hit the streak");
+            usersCurrentStreak = 1;
+            updateStreakInDatabase();
+
+        }else if(lastEntry.isEqual(today.minusDays(1))){
+            Log.d(TAG, "Yes you hit the streak yay!");
+            usersCurrentStreak++;
+            updateStreakInDatabase();
+        }
+    }
+
+    public void updateStreakInDatabase(){
+        Map<String, Object> streak = new HashMap<>();
+        streak.put("currentStreak", usersCurrentStreak);
+
+        db.collection("users").document(userToken)
+                .update(streak)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Log.d(TAG, "DocumentSnapshot for streak successfully written!");
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.w(TAG, "Error writing document", e);
                     }
                 });
 

@@ -30,7 +30,7 @@ public class TodayFragment extends Fragment {
      ArrayList<TaskModel> workbookTasks = new ArrayList<>();
      RecyclerView workbookTasksRv;
      ImageView mondayIv, tuesdayIv, wednesdayIv, thursdayIv, fridayIv, saturdayIv, sundayIv;
-     TextView totalDaysCounter;
+     TextView totalDaysCounter, currentStreakCounter;
     DataHandler datahandler = DataHandler.getInstance();
     private static final String TAG = "MMTODAYFRAG";
     public static String DATE_FORMAT_INPUT = "yyyy-MM-dd-HH:mm:ss";
@@ -66,6 +66,7 @@ public class TodayFragment extends Fragment {
         sundayIv = binding.sundayStreakIv;
 
         totalDaysCounter = binding.highestStreakTv;
+        currentStreakCounter = binding.currentStreakTv;
 
         updateStreak();
 
@@ -90,6 +91,7 @@ public class TodayFragment extends Fragment {
             Log.d(TAG, "The list is now of LocalDates: "+ listOfDates.toString());
             updateStreakUI(listOfDates);
             updateTotalDayCounter(listOfDateStrings);
+            updateCurrentStreak();
         });
 
     }
@@ -177,6 +179,13 @@ public class TodayFragment extends Fragment {
         long n = list.stream().distinct().count();
         String value = ""+n;
         totalDaysCounter.setText(value);
+    }
+
+    public void updateCurrentStreak(){
+        String value = String.valueOf(datahandler.getUsersCurrentStreak());
+        Log.d(TAG, "I am setting value for current streak: " + value);
+       currentStreakCounter.setText(value);
+
     }
 
     private void setUpWorkbookTasks(){
