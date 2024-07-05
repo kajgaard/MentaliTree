@@ -27,6 +27,7 @@ public class LogInActivity extends AppCompatActivity implements View.OnClickList
     Button enterBtn;
     EditText userId, userPin;
     Intent intent;
+    DataHandler datahandler = DataHandler.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,26 +50,20 @@ public class LogInActivity extends AppCompatActivity implements View.OnClickList
             String inputId = String.valueOf(userId.getText());
             String inputPin = String.valueOf(userPin.getText());
 
-            CollectionReference usersRef = db.collection("users");
+            datahandler.setUpcCredentialAttempt(inputId, inputPin);
 
-            Query query = usersRef.whereEqualTo("userId", inputId).whereEqualTo("userPin", inputPin);
-
-            query.get().addOnCompleteListener(task -> {
-                if(task.isSuccessful()){
-
-                    if(!task.getResult().isEmpty()) {
-                        for (QueryDocumentSnapshot document : task.getResult()) {
-                            Log.d("BITCH", document.getId() + " => " + document.getData());
-                        }
-                        startActivity(intent);
-                    }else{
-                        Toast.makeText(LogInActivity.this, "FUCK", Toast.LENGTH_SHORT).show();
-                    }
+            datahandler.userAuthenticationSuccessful(flag -> {
+                if(flag){
+                    startActivity(intent);
                 }else{
-                    Log.d("BITCH", "Error getting documents: ", task.getException());
+                    Toast.makeText(this, "Credentials are incorrect", Toast.LENGTH_SHORT).show();
                 }
             });
 
+
+
         }
     }
+
+
 }
