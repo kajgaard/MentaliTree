@@ -139,7 +139,7 @@
                         android:id="@+id/mondayStreakIv"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:src="@drawable/missed_streak" />
+                        android:src="@drawable/tomorrow_pending_streak" />
 
                     <TextView
                         android:id="@+id/mondayTV"
@@ -161,7 +161,7 @@
                         android:id="@+id/tuesdayStreakIv"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:src="@drawable/completed_streak" />
+                        android:src="@drawable/tomorrow_pending_streak" />
 
                     <TextView
                         android:id="@+id/tuesdayTV"
@@ -183,7 +183,7 @@
                         android:id="@+id/wednesdayStreakIv"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:src="@drawable/completed_streak" />
+                        android:src="@drawable/tomorrow_pending_streak" />
 
                     <TextView
                         android:id="@+id/wednesdayTV"
@@ -205,7 +205,7 @@
                         android:id="@+id/thursdayStreakIv"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:src="@drawable/today_pending_streak" />
+                        android:src="@drawable/tomorrow_pending_streak" />
 
                     <TextView
                         android:id="@+id/thursdayTV"

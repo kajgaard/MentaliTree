@@ -1,10 +1,11 @@
 package com.example.mentalitree.ui.today;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
+import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -12,9 +13,14 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.mentalitree.DataHandler;
 import com.example.mentalitree.R;
 import com.example.mentalitree.databinding.FragmentTodayBinding;
 
+import java.time.DayOfWeek;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.TemporalAdjusters;
 import java.util.ArrayList;
 
 public class TodayFragment extends Fragment {
@@ -22,6 +28,10 @@ public class TodayFragment extends Fragment {
     private FragmentTodayBinding binding;
      ArrayList<TaskModel> workbookTasks = new ArrayList<>();
      RecyclerView workbookTasksRv;
+     ImageView mondayIv, tuesdayIv, wednesdayIv, thursdayIv, fridayIv, saturdayIv, sundayIv;
+    DataHandler datahandler = DataHandler.getInstance();
+    private static final String TAG = "MMTODAYFRAG";
+    public static String DATE_FORMAT_INPUT = "yyyy-MM-dd-HH:mm:ss";
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -45,6 +55,16 @@ public class TodayFragment extends Fragment {
         };
         workbookTasksRv.setLayoutManager(linearLayoutManager);
 
+        mondayIv = binding.mondayStreakIv;
+        tuesdayIv = binding.tuesdayStreakIv;
+        wednesdayIv = binding.wednesdayStreakIv;
+        thursdayIv = binding.thursdayStreakIv;
+        fridayIv = binding.fridayStreakIv;
+        saturdayIv = binding.saturdayStreakIv;
+        sundayIv = binding.sundayStreakIv;
+
+        updateStreak();
+
         return root;
     }
 
@@ -52,6 +72,98 @@ public class TodayFragment extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
         binding = null;
+    }
+
+    public void updateStreak(){
+
+        ArrayList<LocalDate> listOfDates = new ArrayList<>();
+        datahandler.getActivityLog(list -> {
+            for (String date : list) {
+                listOfDates.add(convert(date));
+            }
+            Log.d(TAG, "The list is now of LocalDates: "+ listOfDates.toString());
+            updateStreakUI(listOfDates);
+        });
+
+    }
+
+    public LocalDate convert(String dateStr) {
+        return (LocalDate.parse(dateStr, DateTimeFormatter.ofPattern(DATE_FORMAT_INPUT)));
+    }
+
+    public void updateStreakUI(ArrayList<LocalDate> activityDates){
+        LocalDate today = LocalDate.now();
+
+        LocalDate lastSaturday = today.with(TemporalAdjusters.previous(DayOfWeek.SATURDAY));
+        LocalDate lastFriday = today.with(TemporalAdjusters.previous(DayOfWeek.FRIDAY));
+        LocalDate lastThursday = today.with(TemporalAdjusters.previous(DayOfWeek.THURSDAY));
+        LocalDate lastWednesday = today.with(TemporalAdjusters.previous(DayOfWeek.WEDNESDAY));
+        LocalDate lastTuesday = today.with(TemporalAdjusters.previous(DayOfWeek.TUESDAY));
+        LocalDate lastMonday = today.with(TemporalAdjusters.previous(DayOfWeek.MONDAY));
+
+        switch(today.getDayOfWeek()){
+            case SUNDAY:
+                streakHit(today, activityDates, sundayIv);
+                streakHit(lastSaturday, activityDates, saturdayIv);
+                streakHit(lastFriday,activityDates, fridayIv);
+                streakHit(lastThursday, activityDates, thursdayIv);
+                streakHit(lastWednesday, activityDates, wednesdayIv);
+                streakHit(lastTuesday, activityDates, tuesdayIv);
+                streakHit(lastMonday,activityDates, mondayIv);
+                break;
+
+            case SATURDAY:
+                streakHit(today, activityDates, saturdayIv);
+                streakHit(lastFriday,activityDates, fridayIv);
+                streakHit(lastThursday, activityDates, thursdayIv);
+                streakHit(lastWednesday, activityDates, wednesdayIv);
+                streakHit(lastTuesday, activityDates, tuesdayIv);
+                streakHit(lastMonday,activityDates, mondayIv);
+                break;
+
+            case FRIDAY:
+                streakHit(today, activityDates, fridayIv);
+                streakHit(lastThursday, activityDates, thursdayIv);
+                streakHit(lastWednesday, activityDates, wednesdayIv);
+                streakHit(lastTuesday, activityDates, tuesdayIv);
+                streakHit(lastMonday,activityDates, mondayIv);
+                break;
+
+            case THURSDAY:
+                streakHit(today, activityDates, thursdayIv);
+                streakHit(lastWednesday, activityDates, wednesdayIv);
+                streakHit(lastTuesday, activityDates, tuesdayIv);
+                streakHit(lastMonday,activityDates, mondayIv);
+                break;
+            case WEDNESDAY:
+                streakHit(today, activityDates, wednesdayIv);
+                streakHit(lastTuesday, activityDates, tuesdayIv);
+                streakHit(lastMonday,activityDates, mondayIv);
+                break;
+            case TUESDAY:
+                streakHit(today, activityDates, tuesdayIv);
+                streakHit(lastMonday,activityDates, mondayIv);
+                break;
+            case MONDAY:
+                streakHit(today,activityDates, mondayIv);
+                break;
+
+
+        }
+
+        Log.d(TAG, "Finished updating streak");
+    }
+
+    public void streakHit(LocalDate hitDate, ArrayList<LocalDate> activityDates, ImageView imageView){
+        if(activityDates.contains(hitDate)){
+            imageView.setImageResource(R.drawable.completed_streak);
+        }else{
+            if(hitDate == LocalDate.now()){
+                imageView.setImageResource(R.drawable.today_pending_streak);
+            }else {
+                imageView.setImageResource(R.drawable.missed_streak);
+            }
+        }
     }
 
     private void setUpWorkbookTasks(){
