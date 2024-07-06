@@ -68,6 +68,7 @@ public class TodayFragment extends Fragment {
     public void updateWorkbookTasks(){
         datahandler.getWorkbookTaskFromDatabase(list -> {
             this.workbookTasks = list;
+            Log.d(TAG, "The list is: " + list);
             WorkbookTaskAdapter adapter = new WorkbookTaskAdapter(workbookTasks);
             workbookTasksRv.setAdapter(adapter);
             LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity()) {

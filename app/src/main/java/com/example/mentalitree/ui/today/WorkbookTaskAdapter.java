@@ -48,7 +48,7 @@ public class WorkbookTaskAdapter  extends RecyclerView.Adapter<WorkbookTaskAdapt
     @Override
     public int getItemCount() {
         //the number of views we want displayed
-        return workbookTasks.size();
+        return 5;
     }
 
     public static class MyViewHolder extends RecyclerView.ViewHolder{

@@ -51,7 +51,7 @@ public class TaskModel {
                 this.image =  R.drawable.talking_task_icon;
                 break;
 
-            case "reaching-out":
+            case "mindfulness":
                 this.image = R.drawable.hand_with_heart_task_icon;
                 break;
 
