@@ -4,6 +4,11 @@ import com.example.mentalitree.R;
 
 public class TaskModel {
     String taskName;
+
+    public String getHelpText() {
+        return helpText;
+    }
+
     String taskShortDescription;
     int image;
     String category;

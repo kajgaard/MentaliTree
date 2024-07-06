@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.today.WorkbookTaskFragment"
+    android:background="@drawable/workbook_task_card_bg"
+    android:orientation="vertical">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="@color/lightest_grey"
+        android:padding="15dp"
+        android:weightSum="1">
+
+        <ImageView
+            android:id="@+id/closeDialogIv"
+            android:layout_width="45dp"
+            android:layout_height="match_parent"
+            android:src="@drawable/close_icon"
+            android:layout_weight="0.5"
+            android:gravity="start"/>
+
+        <TextView
+            android:id="@+id/doneWithTaskTv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.5"
+            android:gravity="end"
+            android:text="Done"
+            android:textColor="@color/blue"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="15dp"
+        android:weightSum="1"
+        android:background="@color/yellowish_white"
+        >
+
+        <TextView
+            android:id="@+id/shortDescriptionForTaskTv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="What is a positive affirmation, that reminds you of your worth and your strenght?"
+            android:layout_weight="0.2"
+            android:layout_gravity="center_vertical"
+            android:textSize="16sp"/>
+
+        <ImageView
+            android:id="@+id/categoryIconIv"
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            android:src="@drawable/reflection_task_icon"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="0.8"/>
+
+
+    </LinearLayout>
+
+    <View
+    android:layout_width="match_parent"
+    android:layout_height="1dp"
+    android:background="@color/lightest_grey"
+    android:orientation="vertical" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="15dp">
+
+        <EditText
+            android:id="@+id/userInputWorkbookTaskEt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+            android:paddingBottom="30dp"
+            android:hint="Ex. I am a good listener"
+            android:textColorHint="@color/light_grey"
+            android:textCursorDrawable="@drawable/blue_cursor"/>
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/lightest_grey"
+        android:orientation="vertical" />
+
+</LinearLayout>
