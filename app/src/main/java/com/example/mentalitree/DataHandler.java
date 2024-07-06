@@ -13,6 +13,7 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -43,7 +44,6 @@ public class DataHandler {
 
 
     private DataHandler() {
-
     }
 
     // Static method
@@ -162,6 +162,7 @@ public class DataHandler {
             Log.d(TAG, "Yes you hit the streak yay!");
             usersCurrentStreak++;
             updateStreakInDatabase();
+            writeTodaysChosenTasksToLog();
         }
     }
 
@@ -180,12 +181,46 @@ public class DataHandler {
         logEntry.put("taskName", taskModel.getTaskName());
 
 
-        db.collection("users").document(userToken).collection("taskLog").document(date)
+        db.collection("users").document(userToken).collection("completionLog").document(date)
                 .set(logEntry)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
                         Log.d(TAG, "DocumentSnapshot for logentry successfully written!");
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.w(TAG, "Error writing document", e);
+                    }
+                });
+
+
+    }
+
+    public void updateChosenTasksInDatabase(){
+
+        String simplePattern = "yyyy-MM-dd";
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(simplePattern);
+
+        String specificPattern = "yyyy-MM-dd-HH:mm:ss";
+        SimpleDateFormat specificDateFormat = new SimpleDateFormat(specificPattern);
+
+        String simpleDate = simpleDateFormat.format(new Date());
+        String specificDate = specificDateFormat.format(new Date());
+
+
+        Map<String, Object> dayEntry = new HashMap<>();
+        dayEntry.put("timeStamp", simpleDate);
+        dayEntry.put("chosenTasks", this.todaysTasks);
+
+        db.collection("users").document(userToken).collection("taskLog").document(simpleDate)
+                .set(dayEntry)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Log.d(TAG, "DocumentSnapshot for dayentry successfully written!");
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
@@ -232,6 +267,35 @@ public class DataHandler {
 
     }
 
+    public void writeTodaysChosenTasksToLog(){
+
+            String pattern = "yyyy-MM-dd";
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
+
+            String date = simpleDateFormat.format(new Date());
+            System.out.println(date);
+
+            Map<String, Object> taskLog = new HashMap<>();
+            taskLog.put("timeStamp", date);
+            taskLog.put("chosenTasks", this.todaysTasks);
+
+            db.collection("users").document(userToken).collection("taskLog").document(date)
+                    .set(taskLog)
+                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void aVoid) {
+                            Log.d(TAG, "DocumentSnapshot for taskLog successfully written!");
+                        }
+                    })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Log.w(TAG, "Error writing document", e);
+                        }
+                    });
+
+    }
+
     public void updateStreakInDatabase(){
         Map<String, Object> streak = new HashMap<>();
         streak.put("currentStreak", usersCurrentStreak);
@@ -259,6 +323,7 @@ public class DataHandler {
 
     public void setTodaysTasks(ArrayList<TaskModel> todaysTasks) {
         this.todaysTasks = todaysTasks;
+        updateChosenTasksInDatabase();
     }
 
     public interface MyFirebaseBooleanCallBack {

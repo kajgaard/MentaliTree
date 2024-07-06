@@ -116,7 +116,7 @@ public class WorkbookTaskFragment extends DialogFragment implements View.OnClick
     @Override
     public void onClick(View view) {
         if(view == doneBtnTv){
-            dataHandler.addCompletedTaskToLog(taskObject);
+
             ArrayList<TaskModel> masterList = dataHandler.getTodaysTasks();
 
             for (TaskModel task : masterList){
@@ -126,6 +126,7 @@ public class WorkbookTaskFragment extends DialogFragment implements View.OnClick
                 }
             }
 
+            dataHandler.addCompletedTaskToLog(taskObject);
             dataHandler.setTodaysTasks(masterList);
             //ArrayList<TaskModel> newUpdatedList = oldListBeforeUpdate.get()
             if(confirmedListener != null){
