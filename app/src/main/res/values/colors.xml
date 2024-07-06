@@ -18,4 +18,6 @@
     <color name="stroke_grey">#FFE2E2E2</color>
     <color name="lightest_blue">#FFD9ECF5</color>
     <color name="yellowish_white">#FFFCFCFA</color>
+    <color name="greenish_white">#FBFFF7</color>
+    <color name="grey">#FF606566</color>
 </resources>

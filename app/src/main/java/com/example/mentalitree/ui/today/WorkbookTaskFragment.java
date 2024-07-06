@@ -2,6 +2,7 @@ package com.example.mentalitree.ui.today;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -19,15 +20,32 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.mentalitree.DataHandler;
 import com.example.mentalitree.R;
 import com.example.mentalitree.databinding.FragmentProfileSettingsBinding;
 import com.example.mentalitree.databinding.FragmentWorkbookTaskBinding;
 import com.example.mentalitree.databinding.WorkbookTaskBinding;
 
+import java.util.ArrayList;
+
 public class WorkbookTaskFragment extends DialogFragment implements View.OnClickListener {
 
 
     TextView doneBtnTv, taskDescTv;
+    DataHandler dataHandler = DataHandler.getInstance();
+    private OnDialogConfirmedListener confirmedListener;
+
+
+
+
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+    }
+
+    public void setConfirmedListener(OnDialogConfirmedListener confirmedListener) {
+        this.confirmedListener = confirmedListener;
+    }
 
     @NonNull
     @Override
@@ -98,9 +116,30 @@ public class WorkbookTaskFragment extends DialogFragment implements View.OnClick
     @Override
     public void onClick(View view) {
         if(view == doneBtnTv){
-            //close frag and save
+            dataHandler.addCompletedTaskToLog(taskObject);
+            ArrayList<TaskModel> masterList = dataHandler.getTodaysTasks();
+
+            for (TaskModel task : masterList){
+                if(task.getTaskId().equals(taskObject.getTaskId())){
+                    task.setCompleted(true);
+                    break;
+                }
+            }
+
+            dataHandler.setTodaysTasks(masterList);
+            //ArrayList<TaskModel> newUpdatedList = oldListBeforeUpdate.get()
+            if(confirmedListener != null){
+                confirmedListener.onDialogCompleted();
+            }
+            dismiss();
         }else if(view == closeBtnIv){
             dismiss();
         }
     }
+
+    public interface OnDialogConfirmedListener{
+
+        void onDialogCompleted();
+    }
 }
+

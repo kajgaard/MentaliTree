@@ -1,6 +1,10 @@
 package com.example.mentalitree.ui.today;
 
+
+
+import android.annotation.SuppressLint;
 import android.content.Context;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -37,19 +41,32 @@ public class WorkbookTaskAdapter  extends RecyclerView.Adapter<WorkbookTaskAdapt
         return new WorkbookTaskAdapter.MyViewHolder(view);
     }
 
+    @SuppressLint("ResourceAsColor")
     @Override
     public void onBindViewHolder(@NonNull WorkbookTaskAdapter.MyViewHolder holder, int position) {
         //assigning the values to the views in the layout file, based on the position of the recyclerview
 
-        holder.titleTv.setText(workbookTasks.get(position).getTaskName());
-        holder.shortdescriptionTv.setText(workbookTasks.get(position).getTaskShortDescription());
-        holder.iconIv.setImageResource(workbookTasks.get(position).getImage());
-        holder.layoutView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                listener.onTaskClicked(workbookTasks.get(position));
-            }
-        });
+        if(workbookTasks.get(position).isCompleted()){
+            holder.titleTv.setText(workbookTasks.get(position).getTaskName());
+            holder.iconIv.setImageResource(workbookTasks.get(position).getImage());
+            holder.shortdescriptionTv.setVisibility(View.GONE);
+            holder.titleTv.setGravity(Gravity.CENTER_VERTICAL);
+            holder.completedMarkIv.setVisibility(View.VISIBLE);
+            holder.layoutView.setBackgroundResource(R.drawable.workbook_task_card_completed_bg);
+            holder.titleTv.setTextColor(R.color.grey);
+         }else{
+            holder.titleTv.setText(workbookTasks.get(position).getTaskName());
+            holder.shortdescriptionTv.setText(workbookTasks.get(position).getTaskShortDescription());
+            holder.iconIv.setImageResource(workbookTasks.get(position).getImage());
+            int finalPosition = position;
+            holder.layoutView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    listener.onTaskClicked(workbookTasks.get(finalPosition));
+                }
+            });
+        }
+
         holder.setIsRecyclable(false);
 
     }
@@ -65,7 +82,7 @@ public class WorkbookTaskAdapter  extends RecyclerView.Adapter<WorkbookTaskAdapt
         //grabbing the views from the layout file
 
         TextView titleTv, shortdescriptionTv;
-        ImageView iconIv;
+        ImageView iconIv, completedMarkIv;
         ConstraintLayout layoutView;
 
         public MyViewHolder(@NonNull View itemView) {
@@ -75,6 +92,7 @@ public class WorkbookTaskAdapter  extends RecyclerView.Adapter<WorkbookTaskAdapt
             shortdescriptionTv = itemView.findViewById(R.id.workbookTaskShortDescriptionTv);
             iconIv = itemView.findViewById(R.id.workbookTaskIconIv);
             layoutView = itemView.findViewById(R.id.entireTaskConstraintLayout);
+            completedMarkIv = itemView.findViewById(R.id.completedIconIv);
 
         }
     }

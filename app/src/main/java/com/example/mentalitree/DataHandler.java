@@ -24,6 +24,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class DataHandler {
 
@@ -38,6 +39,7 @@ public class DataHandler {
     private static final String TAG = "MMDATAHANDLER";
     public static String DATE_FORMAT_INPUT = "yyyy-MM-dd-HH:mm:ss";
     int usersCurrentStreak;
+    ArrayList<TaskModel> todaysTasks = new ArrayList<>();
 
 
     private DataHandler() {
@@ -163,6 +165,39 @@ public class DataHandler {
         }
     }
 
+    public void addCompletedTaskToLog(TaskModel taskModel){
+
+        String pattern = "yyyy-MM-dd-HH:mm:ss";
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
+
+        String date = simpleDateFormat.format(new Date());
+
+
+        Map<String, String> logEntry = new HashMap<>();
+        logEntry.put("timeStamp", date);
+        logEntry.put("category", taskModel.getCategory());
+        logEntry.put("taskId", taskModel.getTaskId());
+        logEntry.put("taskName", taskModel.getTaskName());
+
+
+        db.collection("users").document(userToken).collection("taskLog").document(date)
+                .set(logEntry)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Log.d(TAG, "DocumentSnapshot for logentry successfully written!");
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.w(TAG, "Error writing document", e);
+                    }
+                });
+
+
+    }
+
     public void getWorkbookTaskFromDatabase(MyFirebaseTaskModelListCallback myFirebaseCallback){
         db.collection("workbook-tasks")
                 .get()
@@ -183,12 +218,18 @@ public class DataHandler {
 
                                 Log.d(TAG, document.getId() + " => " + document.getData()+"\nI made a taskModel object like: "+workbookTask.toString());
                             }
-                            myFirebaseCallback.onCallback(taskList);
+                            chooseTodaysTasks(taskList);
+                            myFirebaseCallback.onCallback(todaysTasks);
                         } else {
                             Log.d(TAG, "Error getting documents: ", task.getException());
                         }
                     }
                 });
+    }
+
+    public void chooseTodaysTasks(ArrayList<TaskModel> list){
+        this.todaysTasks = (ArrayList<TaskModel>) list.stream().limit(5).collect(Collectors.toList());
+
     }
 
     public void updateStreakInDatabase(){
@@ -212,6 +253,14 @@ public class DataHandler {
 
     }
 
+    public ArrayList<TaskModel> getTodaysTasks() {
+        return todaysTasks;
+    }
+
+    public void setTodaysTasks(ArrayList<TaskModel> todaysTasks) {
+        this.todaysTasks = todaysTasks;
+    }
+
     public interface MyFirebaseBooleanCallBack {
 
         void onCallback(boolean flag);
@@ -225,5 +274,7 @@ public class DataHandler {
     public interface MyFirebaseTaskModelListCallback{
         void onCallback(ArrayList<TaskModel> list);
     }
+
+
 }
 

@@ -25,7 +25,7 @@ import java.time.format.DateTimeFormatter;
 import java.time.temporal.TemporalAdjusters;
 import java.util.ArrayList;
 
-public class TodayFragment extends Fragment implements TaskSelectListener {
+public class TodayFragment extends Fragment implements TaskSelectListener, WorkbookTaskFragment.OnDialogConfirmedListener {
 
     private FragmentTodayBinding binding;
      ArrayList<TaskModel> workbookTasks = new ArrayList<>();
@@ -82,6 +82,20 @@ public class TodayFragment extends Fragment implements TaskSelectListener {
         });
 
 
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        Log.d(TAG, "onResume called");
+        updateWorkbookUI();
+    }
+
+    public void updateWorkbookUI(){
+
+        WorkbookTaskAdapter adapter = new WorkbookTaskAdapter(datahandler.getTodaysTasks(), this);
+        Log.d(TAG, "Updated adapter with list: " + datahandler.getTodaysTasks());
+        workbookTasksRv.setAdapter(adapter);
     }
 
     @Override
@@ -212,6 +226,13 @@ public class TodayFragment extends Fragment implements TaskSelectListener {
     public void onTaskClicked(TaskModel taskModel) {
         Toast.makeText(getContext(),"YAY YOU CLICKED: "+taskModel.getTaskName() , Toast.LENGTH_SHORT).show();
         WorkbookTaskFragment dialogFragment = new WorkbookTaskFragment(taskModel);
+        dialogFragment.setConfirmedListener(this);
         dialogFragment.show(getParentFragmentManager(), "WorkbookTaskFragment");
+    }
+
+
+    @Override
+    public void onDialogCompleted() {
+        updateWorkbookUI();
     }
 }

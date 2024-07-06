@@ -4,16 +4,12 @@ import com.example.mentalitree.R;
 
 public class TaskModel {
     String taskName;
-
-    public String getHelpText() {
-        return helpText;
-    }
-
     String taskShortDescription;
     int image;
     String category;
     String helpText;
     String taskId;
+    boolean completed = false;
 
 
     //constructor for use in get data from db
@@ -90,5 +86,24 @@ public class TaskModel {
 
     public int getImage() {
         return image;
+    }
+    public String getCategory() {
+        return category;
+    }
+
+    public String getTaskId() {
+        return taskId;
+    }
+
+    public String getHelpText() {
+        return helpText;
+    }
+
+    public boolean isCompleted() {
+        return completed;
+    }
+
+    public void setCompleted(boolean completed) {
+        this.completed = completed;
     }
 }

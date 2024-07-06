@@ -1,50 +1,64 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
 
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/entireTaskConstraintLayout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:elevation="2dp"
     android:layout_margin="5dp"
-    android:paddingBottom="15dp"
     android:layout_marginBottom="5dp"
     android:background="@drawable/workbook_task_card_bg"
-    >
-            <ImageView
-                android:id="@+id/workbookTaskIconIv"
-                android:layout_width="60dp"
-                android:layout_height="60dp"
-                android:layout_marginTop="10dp"
-                android:src="@drawable/reflection_task_icon"
-                app:layout_constraintEnd_toStartOf="@+id/workbookTaskTitleTv"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+    android:elevation="2dp"
+    android:paddingBottom="15dp">
 
-            <TextView
-                android:id="@+id/workbookTaskTitleTv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="90dp"
-                android:layout_marginTop="15dp"
-                android:text="Affirmations about yourself"
-                android:textColor="@color/blue"
-                android:textSize="14sp"
-                android:textStyle="bold"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+    <ImageView
+        android:id="@+id/workbookTaskIconIv"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="10dp"
+        android:src="@drawable/reflection_task_icon"
+        app:layout_constraintEnd_toStartOf="@+id/workbookTaskTitleTv"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-            <TextView
-                android:id="@+id/workbookTaskShortDescriptionTv"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:layout_marginEnd="10dp"
-                android:text="What is a positive affirmation, that reminds you of your worth and your strength?"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="@+id/workbookTaskTitleTv"
-                app:layout_constraintTop_toBottomOf="@+id/workbookTaskTitleTv" />
+    <TextView
+        android:id="@+id/workbookTaskTitleTv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="90dp"
+        android:layout_marginTop="15dp"
+        android:text="Affirmations about yourself"
+        android:textColor="@color/blue"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/workbookTaskShortDescriptionTv"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="10dp"
+        android:text="What is a positive affirmation, that reminds you of your worth and your strength?"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/workbookTaskTitleTv"
+        app:layout_constraintTop_toBottomOf="@+id/workbookTaskTitleTv" />
+
+    <ImageView
+        android:id="@+id/completedIconIv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:layout_marginEnd="25dp"
+        android:src="@drawable/task_completed_icon"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.5"
+        android:visibility="gone"/>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 
