@@ -8,6 +8,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.mentalitree.R;
@@ -18,9 +19,11 @@ public class WorkbookTaskAdapter  extends RecyclerView.Adapter<WorkbookTaskAdapt
 
     Context context;
     ArrayList<TaskModel> workbookTasks;
+    TaskSelectListener listener;
 
-    public WorkbookTaskAdapter(ArrayList<TaskModel> workbookTasks) {
+    public WorkbookTaskAdapter(ArrayList<TaskModel> workbookTasks, TaskSelectListener listener) {
         this.workbookTasks = workbookTasks;
+        this.listener = listener;
     }
 
     @NonNull
@@ -41,6 +44,12 @@ public class WorkbookTaskAdapter  extends RecyclerView.Adapter<WorkbookTaskAdapt
         holder.titleTv.setText(workbookTasks.get(position).getTaskName());
         holder.shortdescriptionTv.setText(workbookTasks.get(position).getTaskShortDescription());
         holder.iconIv.setImageResource(workbookTasks.get(position).getImage());
+        holder.layoutView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                listener.onTaskClicked(workbookTasks.get(position));
+            }
+        });
         holder.setIsRecyclable(false);
 
     }
@@ -57,6 +66,7 @@ public class WorkbookTaskAdapter  extends RecyclerView.Adapter<WorkbookTaskAdapt
 
         TextView titleTv, shortdescriptionTv;
         ImageView iconIv;
+        ConstraintLayout layoutView;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -64,6 +74,7 @@ public class WorkbookTaskAdapter  extends RecyclerView.Adapter<WorkbookTaskAdapt
             titleTv = itemView.findViewById(R.id.workbookTaskTitleTv);
             shortdescriptionTv = itemView.findViewById(R.id.workbookTaskShortDescriptionTv);
             iconIv = itemView.findViewById(R.id.workbookTaskIconIv);
+            layoutView = itemView.findViewById(R.id.entireTaskConstraintLayout);
 
         }
     }

@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -24,7 +25,7 @@ import java.time.format.DateTimeFormatter;
 import java.time.temporal.TemporalAdjusters;
 import java.util.ArrayList;
 
-public class TodayFragment extends Fragment {
+public class TodayFragment extends Fragment implements TaskSelectListener {
 
     private FragmentTodayBinding binding;
      ArrayList<TaskModel> workbookTasks = new ArrayList<>();
@@ -69,7 +70,7 @@ public class TodayFragment extends Fragment {
         datahandler.getWorkbookTaskFromDatabase(list -> {
             this.workbookTasks = list;
             Log.d(TAG, "The list is: " + list);
-            WorkbookTaskAdapter adapter = new WorkbookTaskAdapter(workbookTasks);
+            WorkbookTaskAdapter adapter = new WorkbookTaskAdapter(workbookTasks, this);
             workbookTasksRv.setAdapter(adapter);
             LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity()) {
                 @Override
@@ -205,5 +206,10 @@ public class TodayFragment extends Fragment {
         workbookTasks.add(new TaskModel("Go for a walk outside", "Enjoy some fresh air with a trip outside", R.drawable.nature_task_icon));
         workbookTasks.add(new TaskModel("Give your kitchen a clean ", "Make it really nice in your kitchen with clean counters", R.drawable.clean_task_icon));
         workbookTasks.add(new TaskModel("Reach out to a friend or loved one ", "Message or call a friend or family member and have a chat", R.drawable.hand_with_heart_task_icon));
+    }
+
+    @Override
+    public void onTaskClicked(TaskModel taskModel) {
+        Toast.makeText(getContext(),"YAY YOU CLICKED: "+taskModel.getTaskName() , Toast.LENGTH_SHORT).show();
     }
 }
