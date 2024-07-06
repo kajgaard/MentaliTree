@@ -12,6 +12,7 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.Query;
@@ -41,6 +42,7 @@ public class DataHandler {
     public static String DATE_FORMAT_INPUT = "yyyy-MM-dd-HH:mm:ss";
     int usersCurrentStreak;
     ArrayList<TaskModel> todaysTasks = new ArrayList<>();
+    boolean firstLogonToday;
 
 
     private DataHandler() {
@@ -157,13 +159,70 @@ public class DataHandler {
             Log.d(TAG, "Ooops i dont think you hit the streak");
             usersCurrentStreak = 1;
             updateStreakInDatabase();
+            getWorkbookTaskFromDatabase(list -> {
+                Log.d(TAG, "(1)Hello from shitty method: list is: "+ list + "\ntodays tasks are: "+todaysTasks);
+                todaysTasks = list;
+                Log.d(TAG, "(2)Hello from shitty method: list is: "+ list + "\ntodays tasks are: "+todaysTasks);
+                writeTodaysChosenTasksToLog();
+            });
+
 
         }else if(lastEntry.isEqual(today.minusDays(1))){
             Log.d(TAG, "Yes you hit the streak yay!");
             usersCurrentStreak++;
             updateStreakInDatabase();
-            writeTodaysChosenTasksToLog();
+            getWorkbookTaskFromDatabase(list -> {
+                Log.d(TAG, "(1)Hello from shitty method: list is: "+ list + "\ntodays tasks are: "+todaysTasks);
+                todaysTasks = list;
+                Log.d(TAG, "(2)Hello from shitty method: list is: "+ list + "\ntodays tasks are: "+todaysTasks);
+                writeTodaysChosenTasksToLog();
+            });
+
+        }else if(lastEntry.isEqual(today)){
+            /*Log.d(TAG, "Today is normal same day...");
+            usersCurrentStreak++;
+            updateStreakInDatabase();
+            getWorkbookTaskFromDatabase(list -> {
+                Log.d(TAG, "(1)Hello from shitty method: list is: "+ list + "\ntodays tasks are: "+todaysTasks);
+                todaysTasks = list;
+                Log.d(TAG, "(2)Hello from shitty method: list is: "+ list + "\ntodays tasks are: "+todaysTasks);
+                writeTodaysChosenTasksToLog();
+            });*/
         }
+    }
+
+    public void getChosenTasksFromDatabase(MyFirebaseTaskModelListCallback firebaseCallback){
+
+        String pattern = "yyyy-MM-dd";
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
+
+        String date = simpleDateFormat.format(new Date());
+        db.collection("users").document(userToken).collection("taskLog").document(date)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                        if (task.isSuccessful()) {
+
+                            DocumentSnapshot document = task.getResult();
+                            if(document.exists()) {
+
+                                WorkDayLogEntry entry = document.toObject(WorkDayLogEntry.class);
+                                Log.d(TAG,"FINALLY THE OBJECT IS: "+entry);
+                                if(entry != null) {
+                                    todaysTasks = entry.getChosenTasks();
+                                    Log.d(TAG,"SEEEE WHAT TODAYS TASKS ARE: "+todaysTasks);
+                                    firebaseCallback.onCallback(todaysTasks);
+
+                                }
+
+                            }
+
+                        } else {
+                            Log.d(TAG, "Error getting documents: ", task.getException());
+                        }
+                    }
+                });
     }
 
     public void addCompletedTaskToLog(TaskModel taskModel){
@@ -233,7 +292,7 @@ public class DataHandler {
 
     }
 
-    public void getWorkbookTaskFromDatabase(MyFirebaseTaskModelListCallback myFirebaseCallback){
+    public void getWorkbookTaskFromDatabase(MyFirebaseTaskModelListCallback firebaseCallback){
         db.collection("workbook-tasks")
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -253,8 +312,8 @@ public class DataHandler {
 
                                 Log.d(TAG, document.getId() + " => " + document.getData()+"\nI made a taskModel object like: "+workbookTask.toString());
                             }
-                            chooseTodaysTasks(taskList);
-                            myFirebaseCallback.onCallback(todaysTasks);
+                            Log.d(TAG, "Sending callback with list: "+ chooseTodaysTasks(taskList));
+                            firebaseCallback.onCallback(chooseTodaysTasks(taskList));
                         } else {
                             Log.d(TAG, "Error getting documents: ", task.getException());
                         }
@@ -262,9 +321,10 @@ public class DataHandler {
                 });
     }
 
-    public void chooseTodaysTasks(ArrayList<TaskModel> list){
-        this.todaysTasks = (ArrayList<TaskModel>) list.stream().limit(5).collect(Collectors.toList());
-
+    public ArrayList<TaskModel> chooseTodaysTasks(ArrayList<TaskModel> list){
+        ArrayList<TaskModel> chosen = new ArrayList<>();
+                chosen = (ArrayList<TaskModel>) list.stream().limit(5).collect(Collectors.toList());
+        return chosen;
     }
 
     public void writeTodaysChosenTasksToLog(){

@@ -44,11 +44,8 @@ public class TodayFragment extends Fragment implements TaskSelectListener, Workb
         binding = FragmentTodayBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-        setUpWorkbookTasks();
+        setUpWorkbookTasks(); //should be deleted
         workbookTasksRv = binding.workbookTasksRv;
-
-
-
         mondayIv = binding.mondayStreakIv;
         tuesdayIv = binding.tuesdayStreakIv;
         wednesdayIv = binding.wednesdayStreakIv;
@@ -61,13 +58,27 @@ public class TodayFragment extends Fragment implements TaskSelectListener, Workb
         currentStreakCounter = binding.currentStreakTv;
 
         updateStreak();
-        updateWorkbookTasks();
+        //updateWorkbookTasks();
 
         return root;
     }
 
     public void updateWorkbookTasks(){
-        datahandler.getWorkbookTaskFromDatabase(list -> {
+
+        datahandler.getChosenTasksFromDatabase(list -> {
+            WorkbookTaskAdapter adapter = new WorkbookTaskAdapter(list, this);
+            workbookTasksRv.setAdapter(adapter);
+            LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity()) {
+                @Override
+                public boolean canScrollVertically() {
+                    return false;
+                }
+            };
+            workbookTasksRv.setLayoutManager(linearLayoutManager);
+        });
+
+
+        /*datahandler.getWorkbookTaskFromDatabase(list -> {
             this.workbookTasks = list;
             Log.d(TAG, "The list is: " + list);
             WorkbookTaskAdapter adapter = new WorkbookTaskAdapter(workbookTasks, this);
@@ -79,7 +90,7 @@ public class TodayFragment extends Fragment implements TaskSelectListener, Workb
                 }
             };
             workbookTasksRv.setLayoutManager(linearLayoutManager);
-        });
+        });*/
 
 
     }
@@ -117,6 +128,7 @@ public class TodayFragment extends Fragment implements TaskSelectListener, Workb
             updateStreakUI(listOfDates);
             updateTotalDayCounter(listOfDateStrings);
             updateCurrentStreak();
+            updateWorkbookTasks();
         });
 
     }

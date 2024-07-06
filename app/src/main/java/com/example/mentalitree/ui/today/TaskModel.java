@@ -2,6 +2,7 @@ package com.example.mentalitree.ui.today;
 
 import com.example.mentalitree.R;
 
+
 public class TaskModel {
     String taskName;
     String taskShortDescription;
@@ -20,6 +21,10 @@ public class TaskModel {
         this.helpText = helpText;
         this.taskId = taskId;
         this.image = getMatchingCategoryIcon(category);
+        this.completed = false;
+    }
+
+    public TaskModel(){
     }
 
     public int getMatchingCategoryIcon(String category){
