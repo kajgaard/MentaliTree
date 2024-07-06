@@ -2,15 +2,11 @@ package com.example.mentalitree;
 
 
 
-import static android.content.ContentValues.TAG;
-
-import android.content.Intent;
-import android.nfc.Tag;
 import android.util.Log;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
+import com.example.mentalitree.ui.today.TaskModel;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -20,18 +16,14 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
-import com.google.protobuf.Any;
 
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-import java.util.TimeZone;
 
 public class DataHandler {
 
@@ -67,7 +59,7 @@ public class DataHandler {
         this.userPin = userPin;
     }
 
-    public void userAuthenticationSuccessful(MyFirebaseCallBack firebaseCallBack){
+    public void userAuthenticationSuccessful(MyFirebaseBooleanCallBack firebaseCallBack){
         CollectionReference usersRef = db.collection("users");
 
         Query query = usersRef.whereEqualTo("userId", this.userId).whereEqualTo("userPin", this.userPin);
@@ -95,7 +87,7 @@ public class DataHandler {
 
     }
 
-    public void getActivityLog(MyFirebaseListCallback firebaseCallBack){
+    public void getActivityLog(MyFirebaseStringListCallback firebaseCallBack){
         db.collection("users").document(userToken).collection("activityLog")
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -171,6 +163,34 @@ public class DataHandler {
         }
     }
 
+    public void getWorkbookTaskFromDatabase(MyFirebaseTaskModelListCallback myFirebaseCallback){
+        db.collection("workbook-tasks")
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        ArrayList<TaskModel> taskList  =new ArrayList<>();
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                Map<String, Object> dataObject;
+                                dataObject = document.getData();
+                                TaskModel workbookTask = new TaskModel(dataObject.get("taskName").toString(),
+                                        dataObject.get("shortDescription").toString(),
+                                        dataObject.get("category").toString(),
+                                        dataObject.get("additionalText").toString(),
+                                        dataObject.get("taskId").toString());
+                                taskList.add(workbookTask);
+
+                                Log.d(TAG, document.getId() + " => " + document.getData()+"\nI made a taskModel object like: "+workbookTask.toString());
+                            }
+                            myFirebaseCallback.onCallback(taskList);
+                        } else {
+                            Log.d(TAG, "Error getting documents: ", task.getException());
+                        }
+                    }
+                });
+    }
+
     public void updateStreakInDatabase(){
         Map<String, Object> streak = new HashMap<>();
         streak.put("currentStreak", usersCurrentStreak);
@@ -192,14 +212,18 @@ public class DataHandler {
 
     }
 
-    public interface MyFirebaseCallBack {
+    public interface MyFirebaseBooleanCallBack {
 
         void onCallback(boolean flag);
 
     }
 
-    public interface MyFirebaseListCallback{
+    public interface MyFirebaseStringListCallback {
         void onCallback(ArrayList<String> list);
+    }
+
+    public interface MyFirebaseTaskModelListCallback{
+        void onCallback(ArrayList<TaskModel> list);
     }
 }
 

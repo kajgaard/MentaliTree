@@ -46,16 +46,7 @@ public class TodayFragment extends Fragment {
         setUpWorkbookTasks();
         workbookTasksRv = binding.workbookTasksRv;
 
-        WorkbookTaskAdapter adapter = new WorkbookTaskAdapter(workbookTasks);
 
-        workbookTasksRv.setAdapter(adapter);
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity()) {
-            @Override
-            public boolean canScrollVertically() {
-                return false;
-            }
-        };
-        workbookTasksRv.setLayoutManager(linearLayoutManager);
 
         mondayIv = binding.mondayStreakIv;
         tuesdayIv = binding.tuesdayStreakIv;
@@ -69,8 +60,26 @@ public class TodayFragment extends Fragment {
         currentStreakCounter = binding.currentStreakTv;
 
         updateStreak();
+        updateWorkbookTasks();
 
         return root;
+    }
+
+    public void updateWorkbookTasks(){
+        datahandler.getWorkbookTaskFromDatabase(list -> {
+            this.workbookTasks = list;
+            WorkbookTaskAdapter adapter = new WorkbookTaskAdapter(workbookTasks);
+            workbookTasksRv.setAdapter(adapter);
+            LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity()) {
+                @Override
+                public boolean canScrollVertically() {
+                    return false;
+                }
+            };
+            workbookTasksRv.setLayoutManager(linearLayoutManager);
+        });
+
+
     }
 
     @Override
