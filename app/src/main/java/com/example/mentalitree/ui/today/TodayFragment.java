@@ -65,17 +65,38 @@ public class TodayFragment extends Fragment implements TaskSelectListener, Workb
 
     public void updateWorkbookTasks(){
 
-        datahandler.getChosenTasksFromDatabase(list -> {
-            WorkbookTaskAdapter adapter = new WorkbookTaskAdapter(list, this);
-            workbookTasksRv.setAdapter(adapter);
-            LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity()) {
-                @Override
-                public boolean canScrollVertically() {
-                    return false;
-                }
-            };
-            workbookTasksRv.setLayoutManager(linearLayoutManager);
-        });
+        Log.d(TAG, "First logon today value is:" + datahandler.isFirstLogonToday());
+        if(datahandler.isFirstLogonToday()){
+            datahandler.getWorkbookTaskFromDatabase(list -> {
+                Log.d(TAG, "(1)Hello from shitty method: list is: " + list + "\ntodays tasks are: " + datahandler.getTodaysTasks());
+                datahandler.setTodaysTasks(list);
+                Log.d(TAG, "(2)Hello from shitty method: list is: " + list + "\ntodays tasks are: " + datahandler.getTodaysTasks());
+                datahandler.writeTodaysChosenTasksToLog(flag -> Log.d(TAG, "I am done updating the db with chosen tasks"));
+                WorkbookTaskAdapter adapter = new WorkbookTaskAdapter(list, this);
+                workbookTasksRv.setAdapter(adapter);
+                LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity()) {
+                    @Override
+                    public boolean canScrollVertically() {
+                        return false;
+                    }
+                };
+                workbookTasksRv.setLayoutManager(linearLayoutManager);
+
+            });
+        }else{
+            datahandler.getChosenTasksFromDatabase(list -> {
+                WorkbookTaskAdapter adapter = new WorkbookTaskAdapter(list, this);
+                workbookTasksRv.setAdapter(adapter);
+                LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity()) {
+                    @Override
+                    public boolean canScrollVertically() {
+                        return false;
+                    }
+                };
+                workbookTasksRv.setLayoutManager(linearLayoutManager);
+            });
+        }
+
 
 
         /*datahandler.getWorkbookTaskFromDatabase(list -> {

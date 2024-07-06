@@ -149,6 +149,10 @@ public class DataHandler {
 
     }
 
+    public boolean isFirstLogonToday() {
+        return firstLogonToday;
+    }
+
     public void increaseCurrentStreakIfNessercary(LocalDate lastEntry){
         LocalDate today = LocalDate.now();
 
@@ -158,24 +162,30 @@ public class DataHandler {
         if(!(lastEntry.isEqual(today.minusDays(1))) && !(lastEntry.isEqual(today))){
             Log.d(TAG, "Ooops i dont think you hit the streak");
             usersCurrentStreak = 1;
+            firstLogonToday = true;
             updateStreakInDatabase();
             getWorkbookTaskFromDatabase(list -> {
                 Log.d(TAG, "(1)Hello from shitty method: list is: "+ list + "\ntodays tasks are: "+todaysTasks);
                 todaysTasks = list;
                 Log.d(TAG, "(2)Hello from shitty method: list is: "+ list + "\ntodays tasks are: "+todaysTasks);
-                writeTodaysChosenTasksToLog();
+                writeTodaysChosenTasksToLog(flag -> {
+                    Log.d(TAG, "I am done updating the db with chosen tasks");
+                });
             });
 
 
         }else if(lastEntry.isEqual(today.minusDays(1))){
             Log.d(TAG, "Yes you hit the streak yay!");
+            firstLogonToday = true;
             usersCurrentStreak++;
             updateStreakInDatabase();
             getWorkbookTaskFromDatabase(list -> {
                 Log.d(TAG, "(1)Hello from shitty method: list is: "+ list + "\ntodays tasks are: "+todaysTasks);
                 todaysTasks = list;
                 Log.d(TAG, "(2)Hello from shitty method: list is: "+ list + "\ntodays tasks are: "+todaysTasks);
-                writeTodaysChosenTasksToLog();
+                writeTodaysChosenTasksToLog(flag -> {
+                    Log.d(TAG, "I am done updating the db with chosen tasks");
+                });
             });
 
         }else if(lastEntry.isEqual(today)){
@@ -327,7 +337,7 @@ public class DataHandler {
         return chosen;
     }
 
-    public void writeTodaysChosenTasksToLog(){
+    public void writeTodaysChosenTasksToLog(MyFirebaseBooleanCallBack firebaseBooleanCallBack){
 
             String pattern = "yyyy-MM-dd";
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
@@ -345,6 +355,7 @@ public class DataHandler {
                         @Override
                         public void onSuccess(Void aVoid) {
                             Log.d(TAG, "DocumentSnapshot for taskLog successfully written!");
+                            firebaseBooleanCallBack.onCallback(true);
                         }
                     })
                     .addOnFailureListener(new OnFailureListener() {
