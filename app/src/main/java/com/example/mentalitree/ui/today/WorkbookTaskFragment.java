@@ -2,6 +2,8 @@ package com.example.mentalitree.ui.today;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -12,6 +14,7 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -81,23 +84,12 @@ public class WorkbookTaskFragment extends DialogFragment implements View.OnClick
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
 
-        //binding = FragmentWorkbookTaskBinding.inflate(inflater, container, false);
-//
-        //doneBtnTv = binding.doneWithTaskTv;
-        //hintText = taskObject.getHelpText();
-        //closeBtnIv = binding.closeDialogIv;
-        //taskDescTv = binding.shortDescriptionForTaskTv;
-        //taskLogoIv = binding.categoryIconIv;
-        //inputFieldEt = binding.userInputWorkbookTaskEt;
-//
-        //doneBtnTv.setOnClickListener(this);
-        //inputFieldEt.setHint(hintText);
-        //closeBtnIv.setOnClickListener(this);
-        //taskDescTv.setText(taskObject.getTaskShortDescription());
-        //taskLogoIv.setImageResource(taskObject.getImage());
-//
+        if (getDialog() != null && getDialog().getWindow() != null) {
+            getDialog().getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+            getDialog().getWindow().requestFeature(Window.FEATURE_NO_TITLE);
+        }
+
         return inflater.inflate(R.layout.fragment_workbook_task, container, false);
 
 
@@ -108,7 +100,7 @@ public class WorkbookTaskFragment extends DialogFragment implements View.OnClick
         if(view == doneBtnTv){
             //close frag and save
         }else if(view == closeBtnIv){
-            //close frag and cancel
+            dismiss();
         }
     }
 }

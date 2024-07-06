@@ -12,13 +12,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:background="@color/lightest_grey"
+        android:background="@drawable/header_for_dialog"
         android:padding="15dp"
         android:weightSum="1">
 
         <ImageView
             android:id="@+id/closeDialogIv"
-            android:layout_width="45dp"
+            android:layout_width="35dp"
             android:layout_height="match_parent"
             android:src="@drawable/close_icon"
             android:layout_weight="0.5"
@@ -53,7 +53,8 @@
             android:text="What is a positive affirmation, that reminds you of your worth and your strenght?"
             android:layout_weight="0.2"
             android:layout_gravity="center_vertical"
-            android:textSize="16sp"/>
+            android:textSize="16sp"
+            android:textStyle="bold"/>
 
         <ImageView
             android:id="@+id/categoryIconIv"
@@ -95,5 +96,10 @@
         android:layout_height="1dp"
         android:background="@color/lightest_grey"
         android:orientation="vertical" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:background="@drawable/footer_for_dialog"/>
 
 </LinearLayout>
