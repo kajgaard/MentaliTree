@@ -6,6 +6,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 
@@ -67,7 +68,8 @@ public class ReviewFragment extends DialogFragment implements View.OnClickListen
         doneBtnTv = binding.doneWithReviewTv;
         doneBtnTv.setOnClickListener(this);
 
-        return super.onCreateDialog(savedInstanceState);
+        builder.setView(view);
+        return builder.create();
     }
 
     @Override
@@ -131,26 +133,30 @@ public class ReviewFragment extends DialogFragment implements View.OnClickListen
 
     @SuppressLint("ResourceAsColor")
     public void setButtonChosen(MaterialButton button){
-        button.setStrokeColor(ColorStateList.valueOf(R.color.blue));
-        button.setBackgroundTintList(ColorStateList.valueOf(R.color.lightest_blue));
+        //button.setStrokeColor(ColorStateList.valueOf(R.color.light_blue));
+
+       // button.setBackgroundColor(R.color.light_blue);
+        button.setBackgroundTintList(getResources().getColorStateList(R.color.checked_button));
+        button.setStrokeColor(getResources().getColorStateList(R.color.checked_button_stroke));
     }
 
     @SuppressLint("ResourceAsColor")
     public void resetAllButtons(){
-        rating1Btn.setStrokeColor(ColorStateList.valueOf(R.color.light_stroke_grey));
-        rating1Btn.setBackgroundTintList(ColorStateList.valueOf(R.color.white));
 
-        rating2Btn.setStrokeColor(ColorStateList.valueOf(R.color.light_stroke_grey));
-        rating2Btn.setBackgroundTintList(ColorStateList.valueOf(R.color.white));
+        rating1Btn.setStrokeColor(getResources().getColorStateList(R.color.unchecked_button_stroke));
+        rating1Btn.setBackgroundTintList(getResources().getColorStateList(R.color.unchecked_button));
 
-        rating3Btn.setStrokeColor(ColorStateList.valueOf(R.color.light_stroke_grey));
-        rating3Btn.setBackgroundTintList(ColorStateList.valueOf(R.color.white));
+        rating2Btn.setStrokeColor(getResources().getColorStateList(R.color.unchecked_button_stroke));
+        rating2Btn.setBackgroundTintList(getResources().getColorStateList(R.color.unchecked_button));
 
-        rating4Btn.setStrokeColor(ColorStateList.valueOf(R.color.light_stroke_grey));
-        rating4Btn.setBackgroundTintList(ColorStateList.valueOf(R.color.white));
+        rating3Btn.setStrokeColor(getResources().getColorStateList(R.color.unchecked_button_stroke));
+        rating3Btn.setBackgroundTintList(getResources().getColorStateList(R.color.unchecked_button));
 
-        rating5Btn.setStrokeColor(ColorStateList.valueOf(R.color.light_stroke_grey));
-        rating5Btn.setBackgroundTintList(ColorStateList.valueOf(R.color.white));
+        rating4Btn.setStrokeColor(getResources().getColorStateList(R.color.unchecked_button_stroke));
+        rating4Btn.setBackgroundTintList(getResources().getColorStateList(R.color.unchecked_button));
+
+        rating5Btn.setStrokeColor(getResources().getColorStateList(R.color.unchecked_button_stroke));
+        rating5Btn.setBackgroundTintList(getResources().getColorStateList(R.color.unchecked_button));
     }
 
     public interface OnReviewCompletedListener{
