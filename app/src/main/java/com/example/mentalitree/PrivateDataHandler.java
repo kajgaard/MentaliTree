@@ -5,7 +5,11 @@ import android.content.Context;
 import android.content.SharedPreferences;
 
 import android.util.Log;
+import android.widget.Toast;
 
+import com.google.common.base.Charsets;
+
+import java.nio.charset.StandardCharsets;
 import java.util.Base64;
 
 import javax.crypto.Cipher;
@@ -19,6 +23,7 @@ public class PrivateDataHandler {
     Context mContext;
     private static Application instance;
     private static final String TAG = "PRIVATEDATA";
+    private SecretKey userSecretKey;
 
     private PrivateDataHandler() {
         mContext = MyApplication.getInstance();
@@ -30,8 +35,13 @@ public class PrivateDataHandler {
     public static synchronized PrivateDataHandler getInstance() {
         if (single_instance == null) {
             single_instance = new PrivateDataHandler();
+
         }
         return single_instance;
+    }
+
+    public void setUserSecretKey(SecretKey userSecretKey) {
+        this.userSecretKey = userSecretKey;
     }
 
     public void testEncryption(){
@@ -88,8 +98,79 @@ public class PrivateDataHandler {
         // decode the base64 encoded string
         byte[] decodedKey = Base64.getDecoder().decode(keyString);
         // rebuild key using SecretKeySpec
-        SecretKey originalKey = new SecretKeySpec(decodedKey, 0, decodedKey.length, "AES");
+        SecretKey originalKey = new SecretKeySpec(decodedKey, 0, decodedKey.length, "DES");
 
         return  originalKey;
+    }
+
+    public String encryptString(String textToBeEncrypted){
+        // Creating object of Cipher
+
+        try{
+            Cipher desCipher;
+            desCipher = Cipher.getInstance("DES");
+            byte[] textAsBytes = textToBeEncrypted.getBytes(StandardCharsets.UTF_8);
+            // Encrypting text
+            desCipher.init(Cipher.ENCRYPT_MODE, userSecretKey);
+            byte[] textEncryptedByteArray = desCipher.doFinal(textAsBytes);
+            // Converting encrypted byte array to string
+            byte[] encodedEncryptedByteArray = android.util.Base64.encode(textEncryptedByteArray, android.util.Base64.DEFAULT);
+            //return Base64.getEncoder().encodeToString(textEncryptedByteArray);
+            return new String(encodedEncryptedByteArray, Charsets.UTF_8);
+
+        }catch (Exception e){
+            return "Encryption failed: " + e;
+        }
+
+    }
+
+    public String decryptString(String textToBeDecrypted){
+
+        try{
+            Cipher desCipher;
+            desCipher = Cipher.getInstance("DES");
+
+            //Decoding the text
+            byte[] decodedBytes = android.util.Base64.decode(textToBeDecrypted.getBytes(Charsets.UTF_8), android.util.Base64.DEFAULT);
+            // Decrypting text
+            desCipher.init(Cipher.DECRYPT_MODE, userSecretKey);
+
+
+            byte[] textDecrypted
+                    = desCipher.doFinal(decodedBytes);
+
+            // Converting decrypted byte array to string
+            return new String(textDecrypted, Charsets.UTF_8);
+        }catch (Exception e){
+            return "Decryption failed: "+ e;
+        }
+
+    }
+
+    public void getUserKeyFromSharedPreferences(){
+        sharedPreferences = mContext.getSharedPreferences("mUserPrefs", Context.MODE_PRIVATE);
+        this.userSecretKey = getStringAsKey(sharedPreferences.getString("cryptoKey",""));
+        Log.e(TAG, "I JUST RETRIEVED THE SECRET KEY LOOK: "+ getKeyAsString(this.userSecretKey));
+    }
+
+    public void createKeyForSharedPreferences(){
+        try {
+            KeyGenerator keygenerator
+                    = KeyGenerator.getInstance("DES");
+            SecretKey myDesKey = keygenerator.generateKey();
+            this.userSecretKey = myDesKey;
+            Log.e(TAG, "I JUST CREATED A SECRET KEY LOOK: "+ getKeyAsString(myDesKey));
+            SharedPreferences.Editor editor;
+            sharedPreferences = mContext.getSharedPreferences("mUserPrefs", Context.MODE_PRIVATE);
+            editor = sharedPreferences.edit();
+            Log.e(TAG, "Just created the shared prefs editor");
+            editor.putString("cryptoKey", getKeyAsString(myDesKey));
+            editor.apply();
+            Log.e(TAG, "and now i saved it to userPrefs:  "+ getKeyAsString(myDesKey));
+
+        }catch (Exception e){
+            Log.e(TAG, "fuck: "+ e);
+            Toast.makeText(mContext, "Error with generating private encryption key: "+e, Toast.LENGTH_SHORT).show();
+        }
     }
 }

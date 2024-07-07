@@ -340,7 +340,11 @@ public class TodayFragment extends Fragment implements TaskSelectListener, Workb
             ReviewFragment reviewFragment = new ReviewFragment();
             reviewFragment.setListener(this);
             reviewFragment.show(getParentFragmentManager(), "ReviewFragment");
-            privateDataHandler.testEncryption();
+            //privateDataHandler.testEncryption();
+            String encrypted = privateDataHandler.encryptString("Hej babsi");
+            Log.e(TAG, "I have an encrypted string: "+ encrypted);
+            String decrypted = privateDataHandler.decryptString(encrypted);
+            Log.e(TAG, "Now i have decrypted it again: " + decrypted);
         }
     }
 }

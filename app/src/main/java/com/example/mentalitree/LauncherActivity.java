@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity;
 public class LauncherActivity extends AppCompatActivity {
 
     SharedPreferences sharedPreferences;
+    PrivateDataHandler privateDataHandler = PrivateDataHandler.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -18,11 +19,15 @@ public class LauncherActivity extends AppCompatActivity {
 
         sharedPreferences = getSharedPreferences("mUserPrefs", Context.MODE_PRIVATE);
 
+
         fakeValueAsTrue();
 
         if(hasExistingUser()){
             Intent intent = new Intent(this, LogInActivity.class);
             startActivity(intent);
+            //privateDataHandler.createKeyForSharedPreferences();
+            privateDataHandler.getUserKeyFromSharedPreferences();
+
         }else{
             Intent intent = new Intent(this, OnboardingActivity.class);
             startActivity(intent);
