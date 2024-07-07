@@ -5,24 +5,23 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".OnboardingActivity">
-
+    tools:context=".Onboarding3">
     <ImageView
-        android:id="@+id/imageView"
+        android:id="@+id/backgroundIv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:scaleType="centerCrop"
-        android:src="@drawable/background"
+        android:src="@drawable/background_blurred"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/WelcomeTitleTV"
+        android:id="@+id/DisclaimerTV"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="First of all congrats!"
+        android:text="Disclaimer"
         android:textColor="#424242"
         android:textSize="34sp"
         android:textStyle="bold"
@@ -33,29 +32,69 @@
         app:layout_constraintVertical_bias="0.171" />
 
     <TextView
-        android:id="@+id/WelcomeTextTV"
+        android:id="@+id/DisclaimerTv"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="25dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="25dp"
-        android:text="You have just taken a big step on the path to prioritizing your mental health"
+        android:layout_marginStart="50dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginEnd="50dp"
+        android:text="This application does not substitute for professional help.\n\n
+If you or someone you know is in the need of professional help for mental health, this application is not the place to seek that help. Instead, please reach out to a clinician in your area.\n\n\n
+With that said, this application has the potential to help you with forming healthy mental habits.\n\n
+We all need a little help from time to time, we just need to be mindful of where we seek that help.\n\n"
         android:textAlignment="center"
         android:textColor="#424242"
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/WelcomeTitleTV" />
+        app:layout_constraintTop_toBottomOf="@+id/DisclaimerTV" />
+
+
+    <LinearLayout
+
+        android:id="@+id/understandCheck"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toTopOf="@+id/goToOnboarding3btn"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/DisclaimerTv">
+
+        <ImageView
+            android:id="@+id/uncheckedBoxIv"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:src="@drawable/unchecked_box"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.311"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.843" />
+
+        <TextView
+            android:id="@+id/IUnderstandTv"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="25dp"
+            android:layout_marginEnd="25dp"
+            android:text="I understand"
+            android:textAlignment="center"
+            android:textColor="#424242"
+            android:textSize="16sp" />
+
+    </LinearLayout>
 
     <Button
-        android:id="@+id/goToOnboarding2btn"
+        android:id="@+id/goToOnboarding4btn"
         android:textAllCaps="false"
         android:layout_width="0dp"
         android:layout_height="75dp"
         android:backgroundTint="#71B6D6"
         android:textSize="20sp"
         android:textColor="#ffffff"
-        android:text="Get started"
+        android:text="Next"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -67,51 +106,52 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintBottom_toTopOf="@+id/WelcomeTitleTV"
+        app:layout_constraintBottom_toTopOf="@+id/DisclaimerTV"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
-            android:layout_marginLeft="2dp"
-            android:layout_marginRight="2dp"
             android:id="@+id/dot1Iv"
             android:layout_width="10dp"
             android:layout_height="10dp"
+            android:layout_marginLeft="2dp"
+            android:layout_marginRight="2dp"
             android:src="@drawable/filled_dot_icon" />
 
         <ImageView
-            android:layout_marginLeft="2dp"
-            android:layout_marginRight="2dp"
             android:id="@+id/dot2Iv"
             android:layout_width="10dp"
             android:layout_height="10dp"
+            android:layout_marginLeft="2dp"
+            android:layout_marginRight="2dp"
             android:src="@drawable/filled_dot_icon" />
 
         <ImageView
-            android:layout_marginLeft="2dp"
-            android:layout_marginRight="2dp"
             android:id="@+id/dot3Iv"
             android:layout_width="10dp"
             android:layout_height="10dp"
+            android:layout_marginLeft="2dp"
+            android:layout_marginRight="2dp"
             android:src="@drawable/filled_dot_icon" />
 
         <ImageView
-            android:layout_marginLeft="2dp"
-            android:layout_marginRight="2dp"
             android:id="@+id/dot4Iv"
             android:layout_width="10dp"
             android:layout_height="10dp"
+            android:layout_marginLeft="2dp"
+            android:layout_marginRight="2dp"
             android:src="@drawable/filled_dot_icon" />
 
         <ImageView
-            android:layout_marginLeft="2dp"
-            android:layout_marginRight="2dp"
             android:id="@+id/dot5Iv"
             android:layout_width="10dp"
             android:layout_height="10dp"
+            android:layout_marginLeft="2dp"
+            android:layout_marginRight="2dp"
             android:src="@drawable/filled_dot_icon" />
 
 
     </LinearLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

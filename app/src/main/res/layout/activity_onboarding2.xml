@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Onboarding2">
+
+    <ImageView
+        android:id="@+id/backgroundIv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:scaleType="centerCrop"
+        android:src="@drawable/background_blurred"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/PrivacyTV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Privacy"
+        android:textColor="#424242"
+        android:textSize="34sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.171" />
+
+    <TextView
+        android:id="@+id/YourPrivacyTV"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="25dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginEnd="25dp"
+        android:text="Your privacy is our topmost priority.\n\n You are entirely in charge of your own data, and at any point in time you are able to delete all data that is stored locally on your device under “Profile” or by deleting this app."
+        android:textAlignment="center"
+        android:textColor="#424242"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/PrivacyTV" />
+
+    <TextView
+        android:id="@+id/SavedLocallyTitleTv"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="25dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="25dp"
+        android:text="Data stored only on your device"
+        android:textAlignment="center"
+        android:textStyle="bold"
+        android:textColor="#AFAFAF"
+        android:textSize="12sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/YourPrivacyTV" />
+
+    <TextView
+        android:id="@+id/SavedLocallyTextTv"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="25dp"
+        android:layout_marginEnd="25dp"
+        android:text="Notes\n Workbook answers \n Daily review notes"
+        android:textAlignment="center"
+        android:textColor="#424242"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/SavedLocallyTitleTv" />
+
+    <TextView
+        android:id="@+id/StoredInCloudTv"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="25dp"
+        android:layout_marginTop="50dp"
+        android:layout_marginEnd="25dp"
+        android:text="Data stored in the cloud for development purposes"
+        android:textAlignment="center"
+        android:textColor="#AFAFAF"
+        android:textSize="12sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/SavedLocallyTextTv" />
+
+    <TextView
+        android:id="@+id/SavedInCloudTextTv"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="25dp"
+        android:layout_marginEnd="25dp"
+        android:text="Frequenzy of app usage\n Daily chosen tasks\n Daily review ratings"
+        android:textAlignment="center"
+        android:textColor="#424242"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/StoredInCloudTv" />
+
+    <LinearLayout
+
+        android:id="@+id/understandCheck"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toTopOf="@+id/goToOnboarding3btn"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/SavedInCloudTextTv">
+
+        <ImageView
+            android:id="@+id/uncheckedBoxIv"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:src="@drawable/unchecked_box"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.311"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.843" />
+
+        <TextView
+            android:id="@+id/IUnderstandTv"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="25dp"
+            android:layout_marginEnd="25dp"
+            android:text="I understand"
+            android:textAlignment="center"
+            android:textColor="#424242"
+            android:textSize="16sp" />
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/goToOnboarding3btn"
+        android:textAllCaps="false"
+        android:layout_width="0dp"
+        android:layout_height="75dp"
+        android:backgroundTint="#71B6D6"
+        android:textSize="20sp"
+        android:textColor="#ffffff"
+        android:text="Next"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <LinearLayout
+
+        android:id="@+id/navigationDots"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toTopOf="@+id/PrivacyTV"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/dot1Iv"
+            android:layout_width="10dp"
+            android:layout_height="10dp"
+            android:layout_marginLeft="2dp"
+            android:layout_marginRight="2dp"
+            android:src="@drawable/filled_dot_icon" />
+
+        <ImageView
+            android:id="@+id/dot2Iv"
+            android:layout_width="10dp"
+            android:layout_height="10dp"
+            android:layout_marginLeft="2dp"
+            android:layout_marginRight="2dp"
+            android:src="@drawable/filled_dot_icon" />
+
+        <ImageView
+            android:id="@+id/dot3Iv"
+            android:layout_width="10dp"
+            android:layout_height="10dp"
+            android:layout_marginLeft="2dp"
+            android:layout_marginRight="2dp"
+            android:src="@drawable/filled_dot_icon" />
+
+        <ImageView
+            android:id="@+id/dot4Iv"
+            android:layout_width="10dp"
+            android:layout_height="10dp"
+            android:layout_marginLeft="2dp"
+            android:layout_marginRight="2dp"
+            android:src="@drawable/filled_dot_icon" />
+
+        <ImageView
+            android:id="@+id/dot5Iv"
+            android:layout_width="10dp"
+            android:layout_height="10dp"
+            android:layout_marginLeft="2dp"
+            android:layout_marginRight="2dp"
+            android:src="@drawable/filled_dot_icon" />
+
+
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
