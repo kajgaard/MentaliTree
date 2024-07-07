@@ -27,14 +27,14 @@
         android:id="@+id/todaysQuoteTv"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:gravity="center"
         android:padding="30dp"
-        android:text="It is never too late to be what you might have been."
+        android:text="..."
         android:textAlignment="center"
         android:textColor="@color/white"
         android:textSize="32sp"
         app:layout_constraintBottom_toBottomOf="@+id/dateLL"
         app:layout_constraintEnd_toEndOf="@+id/bgIv"
-        android:gravity="center"
         app:layout_constraintStart_toStartOf="@+id/bgIv"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -51,7 +51,7 @@
 
 
         <TextView
-            android:id="@+id/oldQuoteDateTv"
+            android:id="@+id/todaysDateTv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Thursday June 13th"

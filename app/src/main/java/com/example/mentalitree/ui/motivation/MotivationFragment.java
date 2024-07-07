@@ -7,26 +7,32 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.mentalitree.DataHandler;
+import com.example.mentalitree.R;
 import com.example.mentalitree.databinding.FragmentMotivationBinding;
 import com.example.mentalitree.ui.today.WorkbookTaskAdapter;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.time.format.TextStyle;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Locale;
 
 public class MotivationFragment extends Fragment {
     private static final String TAG = "MMMOTIVATION";
     DataHandler datahandler = DataHandler.getInstance();
     private FragmentMotivationBinding binding;
+    private TextView todaysQuoteTv, todaysDateTv;
     RecyclerView previousQuotesRecyclerView;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -38,10 +44,19 @@ public class MotivationFragment extends Fragment {
         View root = binding.getRoot();
 
         previousQuotesRecyclerView = binding.previousQuotesListView;
-        getPreviousQuotesFromDB();
+
+
 
 
         return root;
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        todaysQuoteTv = view.findViewById(R.id.todaysQuoteTv);
+        todaysDateTv = view.findViewById(R.id.todaysDateTv);
+        getPreviousQuotesFromDB();
     }
 
     public ArrayList<QuoteModel> getPreviousQuotes(){
@@ -59,11 +74,23 @@ public class MotivationFragment extends Fragment {
     public void getPreviousQuotesFromDB(){
 
         datahandler.getQuoteListFromDB(list -> {
-            for (QuoteModel quote : list){
-                quote.setDate(convertDate(quote.getDate()));
+            ArrayList<QuoteModel> newQuoteList = new ArrayList<>();
+            LocalDate currentDate = LocalDate.now();
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+            Collections.reverse(list);
+            for (QuoteModel quote : list) {
+                LocalDate date = LocalDate.parse(quote.getDate(), formatter);
+                if (date.isBefore(currentDate)){
+                    quote.setDate(convertDate(quote.getDate()));
+                    newQuoteList.add(new QuoteModel(quote.getQuote(), quote.getDate()));
+                }
+                if (date.equals(currentDate)){
+                    todaysQuoteTv.setText(quote.getQuote());
+                    todaysDateTv.setText(convertDate(quote.getDate()));
+                }
             }
 
-            QuoteAdapter adapter = new QuoteAdapter(list);
+            QuoteAdapter adapter = new QuoteAdapter(newQuoteList);
 
             previousQuotesRecyclerView.setAdapter(adapter);
             LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity()) {
