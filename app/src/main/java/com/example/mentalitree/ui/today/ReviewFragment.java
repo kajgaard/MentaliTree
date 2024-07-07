@@ -133,9 +133,6 @@ public class ReviewFragment extends DialogFragment implements View.OnClickListen
 
     @SuppressLint("ResourceAsColor")
     public void setButtonChosen(MaterialButton button){
-        //button.setStrokeColor(ColorStateList.valueOf(R.color.light_blue));
-
-       // button.setBackgroundColor(R.color.light_blue);
         button.setBackgroundTintList(getResources().getColorStateList(R.color.checked_button));
         button.setStrokeColor(getResources().getColorStateList(R.color.checked_button_stroke));
     }

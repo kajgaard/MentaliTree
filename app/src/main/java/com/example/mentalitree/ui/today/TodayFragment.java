@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.mentalitree.DataHandler;
+import com.example.mentalitree.PrivateDataHandler;
 import com.example.mentalitree.R;
 import com.example.mentalitree.databinding.FragmentTodayBinding;
 
@@ -34,6 +35,7 @@ public class TodayFragment extends Fragment implements TaskSelectListener, Workb
      ImageView mondayIv, tuesdayIv, wednesdayIv, thursdayIv, fridayIv, saturdayIv, sundayIv, taskStreak1, taskStreak2, taskStreak3;
      TextView totalDaysCounter, currentStreakCounter;
     DataHandler datahandler = DataHandler.getInstance();
+    PrivateDataHandler privateDataHandler = PrivateDataHandler.getInstance();
     private static final String TAG = "MMTODAYFRAG";
     public static String DATE_FORMAT_INPUT = "yyyy-MM-dd-HH:mm:ss";
     Button reviewBtn;
@@ -338,6 +340,7 @@ public class TodayFragment extends Fragment implements TaskSelectListener, Workb
             ReviewFragment reviewFragment = new ReviewFragment();
             reviewFragment.setListener(this);
             reviewFragment.show(getParentFragmentManager(), "ReviewFragment");
+            privateDataHandler.testEncryption();
         }
     }
 }
