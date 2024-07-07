@@ -30,7 +30,7 @@ public class TodayFragment extends Fragment implements TaskSelectListener, Workb
     private FragmentTodayBinding binding;
      ArrayList<TaskModel> workbookTasks = new ArrayList<>();
      RecyclerView workbookTasksRv;
-     ImageView mondayIv, tuesdayIv, wednesdayIv, thursdayIv, fridayIv, saturdayIv, sundayIv;
+     ImageView mondayIv, tuesdayIv, wednesdayIv, thursdayIv, fridayIv, saturdayIv, sundayIv, taskStreak1, taskStreak2, taskStreak3;
      TextView totalDaysCounter, currentStreakCounter;
     DataHandler datahandler = DataHandler.getInstance();
     private static final String TAG = "MMTODAYFRAG";
@@ -57,6 +57,11 @@ public class TodayFragment extends Fragment implements TaskSelectListener, Workb
         totalDaysCounter = binding.highestStreakTv;
         currentStreakCounter = binding.currentStreakTv;
 
+        taskStreak1 = binding.taskOneIv;
+        taskStreak2 = binding.taskTwoIv;
+        taskStreak3 = binding.taskThreeIv;
+
+
         updateStreak();
         //updateWorkbookTasks();
 
@@ -81,6 +86,7 @@ public class TodayFragment extends Fragment implements TaskSelectListener, Workb
                     }
                 };
                 workbookTasksRv.setLayoutManager(linearLayoutManager);
+                updateWorkbookStreakUI();
 
             });
         }else{
@@ -94,6 +100,7 @@ public class TodayFragment extends Fragment implements TaskSelectListener, Workb
                     }
                 };
                 workbookTasksRv.setLayoutManager(linearLayoutManager);
+                updateWorkbookStreakUI();
             });
         }
 
@@ -263,9 +270,56 @@ public class TodayFragment extends Fragment implements TaskSelectListener, Workb
         dialogFragment.show(getParentFragmentManager(), "WorkbookTaskFragment");
     }
 
+    public void updateWorkbookStreakUI(){
+        int counter = 0;
+        ArrayList<TaskModel> todaysFiveTasks = datahandler.getTodaysTasks();
+        for(TaskModel task : todaysFiveTasks){
+            if(task.isCompleted()){
+                counter++;
+            }
+        }
+        switch(counter){
+            case 0:
+                taskStreak1.setImageResource(R.drawable.task_incomplete);
+                taskStreak2.setImageResource(R.drawable.task_incomplete);
+                taskStreak3.setImageResource(R.drawable.task_incomplete);
+                break;
+
+            case 1:
+                taskStreak1.setImageResource(R.drawable.task_completed);
+                taskStreak2.setImageResource(R.drawable.task_incomplete);
+                taskStreak3.setImageResource(R.drawable.task_incomplete);
+                break;
+
+            case 2:
+                taskStreak1.setImageResource(R.drawable.task_completed);
+                taskStreak2.setImageResource(R.drawable.task_completed);
+                taskStreak3.setImageResource(R.drawable.task_incomplete);
+                break;
+
+            case 3:
+                taskStreak1.setImageResource(R.drawable.task_completed);
+                taskStreak2.setImageResource(R.drawable.task_completed);
+                taskStreak3.setImageResource(R.drawable.task_completed);
+                break;
+
+            case 4:
+                taskStreak1.setImageResource(R.drawable.task_completed);
+                taskStreak2.setImageResource(R.drawable.task_completed);
+                taskStreak3.setImageResource(R.drawable.task_completed);
+                break;
+
+            case 5:
+                taskStreak1.setImageResource(R.drawable.task_completed);
+                taskStreak2.setImageResource(R.drawable.task_completed);
+                taskStreak3.setImageResource(R.drawable.task_completed);
+                break;
+        }
+    }
 
     @Override
     public void onDialogCompleted() {
         updateWorkbookUI();
+        updateWorkbookStreakUI();
     }
 }
