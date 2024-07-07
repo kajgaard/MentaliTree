@@ -60,7 +60,7 @@
    <com.google.android.material.button.MaterialButton
        android:id="@+id/review1Btn"
        android:layout_width="match_parent"
-       android:layout_height="match_parent"
+       android:layout_height="wrap_content"
        app:icon="@drawable/circle_icon"
        style="@style/Platform.MaterialComponents.Light"
        app:iconTint="@color/green"
@@ -78,7 +78,7 @@
     <com.google.android.material.button.MaterialButton
         android:id="@+id/review2Btn"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         app:icon="@drawable/square_icon"
         style="@style/Platform.MaterialComponents.Light"
         app:iconTint="@color/light_blue"
@@ -96,7 +96,7 @@
     <com.google.android.material.button.MaterialButton
         android:id="@+id/review3Btn"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         app:icon="@drawable/diamond_icon"
         style="@style/Platform.MaterialComponents.Light"
         app:iconTint="@color/light_grey"
@@ -114,7 +114,7 @@
     <com.google.android.material.button.MaterialButton
         android:id="@+id/review4Btn"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         app:icon="@drawable/hexagon_icon"
         style="@style/Platform.MaterialComponents.Light"
         app:iconTint="@color/dark_blueish_grey"
@@ -130,9 +130,9 @@
         android:textSize="18sp"/>
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/goodReviewBtn"
+        android:id="@+id/review5Btn"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         app:icon="@drawable/triangle_icon"
         style="@style/Platform.MaterialComponents.Light"
         app:iconTint="@color/red"

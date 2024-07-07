@@ -5,6 +5,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -25,7 +26,7 @@ import java.time.format.DateTimeFormatter;
 import java.time.temporal.TemporalAdjusters;
 import java.util.ArrayList;
 
-public class TodayFragment extends Fragment implements TaskSelectListener, WorkbookTaskFragment.OnDialogConfirmedListener {
+public class TodayFragment extends Fragment implements TaskSelectListener, WorkbookTaskFragment.OnDialogConfirmedListener, ReviewFragment.OnReviewCompletedListener, View.OnClickListener {
 
     private FragmentTodayBinding binding;
      ArrayList<TaskModel> workbookTasks = new ArrayList<>();
@@ -35,6 +36,7 @@ public class TodayFragment extends Fragment implements TaskSelectListener, Workb
     DataHandler datahandler = DataHandler.getInstance();
     private static final String TAG = "MMTODAYFRAG";
     public static String DATE_FORMAT_INPUT = "yyyy-MM-dd-HH:mm:ss";
+    Button reviewBtn;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -61,6 +63,8 @@ public class TodayFragment extends Fragment implements TaskSelectListener, Workb
         taskStreak2 = binding.taskTwoIv;
         taskStreak3 = binding.taskThreeIv;
 
+        reviewBtn = binding.reviewDayBtn;
+        reviewBtn.setOnClickListener(this);
 
         updateStreak();
         //updateWorkbookTasks();
@@ -321,5 +325,19 @@ public class TodayFragment extends Fragment implements TaskSelectListener, Workb
     public void onDialogCompleted() {
         updateWorkbookUI();
         updateWorkbookStreakUI();
+    }
+
+    @Override
+    public void onReviewCompleted() {
+
+    }
+
+    @Override
+    public void onClick(View view) {
+        if(view == reviewBtn){
+            ReviewFragment reviewFragment = new ReviewFragment();
+            reviewFragment.setListener(this);
+            reviewFragment.show(getParentFragmentManager(), "ReviewFragment");
+        }
     }
 }

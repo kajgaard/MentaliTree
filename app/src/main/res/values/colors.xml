@@ -21,5 +21,6 @@
     <color name="greenish_white">#FBFFF7</color>
     <color name="grey">#FF606566</color>
     <color name="dark_blueish_grey">#FF4B5463</color>
+    <color name="light_stroke_grey">#E2E2E2</color>
 
 </resources>

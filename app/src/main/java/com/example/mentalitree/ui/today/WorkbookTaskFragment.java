@@ -34,7 +34,11 @@ public class WorkbookTaskFragment extends DialogFragment implements View.OnClick
     TextView doneBtnTv, taskDescTv;
     DataHandler dataHandler = DataHandler.getInstance();
     private OnDialogConfirmedListener confirmedListener;
-
+    String hintText;
+    ImageView closeBtnIv, taskLogoIv;
+    EditText inputFieldEt;
+    FragmentWorkbookTaskBinding binding;
+    TaskModel taskObject;
 
 
 
@@ -77,11 +81,7 @@ public class WorkbookTaskFragment extends DialogFragment implements View.OnClick
         //return super.onCreateDialog(savedInstanceState);
     }
 
-    String hintText;
-    ImageView closeBtnIv, taskLogoIv;
-    EditText inputFieldEt;
-    FragmentWorkbookTaskBinding binding;
-    TaskModel taskObject;
+
 
 
     public WorkbookTaskFragment() {
