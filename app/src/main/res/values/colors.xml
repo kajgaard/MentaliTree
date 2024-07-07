@@ -20,4 +20,6 @@
     <color name="yellowish_white">#FFFCFCFA</color>
     <color name="greenish_white">#FBFFF7</color>
     <color name="grey">#FF606566</color>
+    <color name="dark_blueish_grey">#FF4B5463</color>
+
 </resources>

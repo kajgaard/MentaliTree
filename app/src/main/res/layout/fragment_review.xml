@@ -1,0 +1,200 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".ui.today.ReviewFragment"
+    android:background="@drawable/workbook_task_card_bg"
+    android:orientation="vertical">
+
+
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:background="@drawable/header_for_dialog"
+    android:padding="15dp"
+    android:weightSum="1">
+
+    <ImageView
+        android:id="@+id/closeReviewDialogIv"
+        android:layout_width="35dp"
+        android:layout_height="match_parent"
+        android:src="@drawable/close_icon"
+        android:layout_weight="0.5"
+        android:gravity="start"/>
+
+    <TextView
+        android:id="@+id/doneWithReviewTv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.5"
+        android:gravity="end"
+        android:text="Done"
+        android:textColor="@color/blue"
+        android:textSize="20sp"
+        android:textStyle="bold" />
+
+</LinearLayout>
+
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingTop="15dp"
+    android:paddingHorizontal="15dp"
+    android:weightSum="1"
+    android:background="@color/yellowish_white"
+    >
+
+    <TextView
+        android:id="@+id/howAreYouTv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="How have you been feeling today?"
+        android:layout_weight="0.2"
+        android:layout_gravity="center_vertical"
+        android:textSize="16sp"
+        android:textStyle="bold"/>
+
+   <com.google.android.material.button.MaterialButton
+       android:id="@+id/review1Btn"
+       android:layout_width="match_parent"
+       android:layout_height="match_parent"
+       app:icon="@drawable/circle_icon"
+       style="@style/Platform.MaterialComponents.Light"
+       app:iconTint="@color/green"
+       app:iconSize="25dp"
+       app:iconPadding="15dp"
+       android:padding="15dp"
+       app:backgroundTint="@color/white"
+       app:strokeColor="#E2E2E2"
+       app:strokeWidth="1.5dp"
+       app:cornerRadius="8dp"
+       android:text="Good"
+       android:gravity="center_vertical"
+       android:textSize="18sp"/>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/review2Btn"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:icon="@drawable/square_icon"
+        style="@style/Platform.MaterialComponents.Light"
+        app:iconTint="@color/light_blue"
+        app:iconSize="25dp"
+        app:iconPadding="15dp"
+        android:padding="15dp"
+        app:backgroundTint="@color/white"
+        app:strokeColor="#E2E2E2"
+        app:strokeWidth="1.5dp"
+        app:cornerRadius="8dp"
+        android:text="Okay"
+        android:gravity="center_vertical"
+        android:textSize="18sp"/>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/review3Btn"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:icon="@drawable/diamond_icon"
+        style="@style/Platform.MaterialComponents.Light"
+        app:iconTint="@color/light_grey"
+        app:iconSize="25dp"
+        app:iconPadding="15dp"
+        android:padding="15dp"
+        app:backgroundTint="@color/white"
+        app:strokeColor="#E2E2E2"
+        app:strokeWidth="1.5dp"
+        app:cornerRadius="8dp"
+        android:text="Not sure"
+        android:gravity="center_vertical"
+        android:textSize="18sp"/>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/review4Btn"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:icon="@drawable/hexagon_icon"
+        style="@style/Platform.MaterialComponents.Light"
+        app:iconTint="@color/dark_blueish_grey"
+        app:iconSize="25dp"
+        app:iconPadding="15dp"
+        android:padding="15dp"
+        app:backgroundTint="@color/white"
+        app:strokeColor="#E2E2E2"
+        app:strokeWidth="1.5dp"
+        app:cornerRadius="8dp"
+        android:text="Poorly"
+        android:gravity="center_vertical"
+        android:textSize="18sp"/>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/goodReviewBtn"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:icon="@drawable/triangle_icon"
+        style="@style/Platform.MaterialComponents.Light"
+        app:iconTint="@color/red"
+        app:iconSize="25dp"
+        app:iconPadding="15dp"
+        android:padding="15dp"
+        app:backgroundTint="@color/white"
+        app:strokeColor="#E2E2E2"
+        app:strokeWidth="1.5dp"
+        app:cornerRadius="8dp"
+        android:text="Very bad"
+        android:gravity="center_vertical"
+        android:textSize="18sp"/>
+
+    <TextView
+        android:id="@+id/addNotesTitleTv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Add notes"
+        android:layout_weight="0.2"
+        android:layout_gravity="center_vertical"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:layout_marginVertical="10dp"/>
+
+
+
+</LinearLayout>
+
+<View
+    android:layout_width="match_parent"
+    android:layout_height="1dp"
+    android:background="@color/lightest_grey"
+    android:orientation="vertical" />
+
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="15dp">
+
+    <EditText
+        android:id="@+id/userInputReviewNotesEt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/transparent"
+        android:paddingBottom="30dp"
+        android:hint="This can be anything you wish to remember about today..."
+        android:textColorHint="@color/light_grey"
+        android:textCursorDrawable="@drawable/blue_cursor"/>
+
+</LinearLayout>
+
+<View
+    android:layout_width="match_parent"
+    android:layout_height="1dp"
+    android:background="@color/lightest_grey"
+    android:orientation="vertical" />
+
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="40dp"
+    android:background="@drawable/footer_for_dialog"/>
+
+</LinearLayout>
