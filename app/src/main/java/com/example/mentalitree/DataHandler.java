@@ -6,6 +6,7 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 
+import com.example.mentalitree.ui.motivation.QuoteModel;
 import com.example.mentalitree.ui.today.TaskModel;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -421,6 +422,32 @@ public class DataHandler {
         updateChosenTasksInDatabase();
     }
 
+    public void getQuoteListFromDB(MyFirebaseQuoteListCallback firebaseCallback){
+        db.collection("quotes")
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        ArrayList<QuoteModel> quoteList  = new ArrayList<>();
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                Map<String, Object> dataObject;
+                                dataObject = document.getData();
+                                QuoteModel quote = new QuoteModel(dataObject.get("motivational_quote").toString(),
+                                        dataObject.get("date").toString());
+                                quoteList.add(quote);
+
+                                Log.d(TAG, document.getId() + " => " + document.getData()+"\nI made a quote object like: "+quote.toString());
+                            }
+                            Log.d(TAG, "Sending callback with list: "+ quoteList);
+                            firebaseCallback.onCallback(quoteList);
+                        } else {
+                            Log.d(TAG, "Error getting documents: ", task.getException());
+                        }
+                    }
+                });
+    }
+
     public interface MyFirebaseBooleanCallBack {
 
         void onCallback(boolean flag);
@@ -434,7 +461,9 @@ public class DataHandler {
     public interface MyFirebaseTaskModelListCallback{
         void onCallback(ArrayList<TaskModel> list);
     }
-
+    public interface MyFirebaseQuoteListCallback {
+        void onCallback(ArrayList<QuoteModel> list);
+    }
 
 }
 

@@ -12,15 +12,16 @@
 
     <TextView
         android:id="@+id/oldQuoteTv"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:padding="20dp"
         android:gravity="center_vertical"
+        android:padding="20dp"
         android:text="Just one small posistive thought in the morning can change your whole day"
-        android:textSize="16sp"/>
+        android:textAlignment="textStart"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 
     <LinearLayout
