@@ -23,7 +23,7 @@ public class Onboarding3 extends AppCompatActivity implements View.OnClickListen
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_onboarding2);
+        setContentView(R.layout.activity_onboarding3);
         nextBtn = findViewById(R.id.goToOnboarding4btn);
         nextBtn.setOnClickListener(this);
         checkboxLl = findViewById(R.id.understandCheck);

@@ -56,7 +56,7 @@ We all need a little help from time to time, we just need to be mindful of whe
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintBottom_toTopOf="@+id/goToOnboarding3btn"
+        app:layout_constraintBottom_toTopOf="@+id/goToOnboarding4btn"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/DisclaimerTv">

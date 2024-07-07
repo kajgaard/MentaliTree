@@ -6,5 +6,213 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".Onboarding5">
+    <ImageView
+        android:id="@+id/backgroundIv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:scaleType="centerCrop"
+        android:src="@drawable/background_blurred"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
+    <TextView
+        android:id="@+id/prefTv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Your preferences"
+        android:textColor="#424242"
+        android:textSize="34sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.171" />
+
+    <TextView
+        android:id="@+id/AliasTitleTv"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="25dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginEnd="25dp"
+        android:text="Your alias"
+        android:textAlignment="center"
+        android:textColor="#AFAFAF"
+        android:textSize="12sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/prefTv" />
+
+    <TextView
+        android:id="@+id/AliasTextTv"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="50dp"
+        android:layout_marginEnd="50dp"
+        android:text="This is the name the application will refer to you by."
+        android:textAlignment="center"
+        android:textColor="#424242"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/AliasTitleTv" />
+
+
+    <EditText
+        android:id="@+id/AliasEt"
+        android:layout_width="350dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="30dp"
+        android:background="@drawable/rounded_edit_text"
+        android:ems="10"
+        android:inputType="text"
+        android:text=""
+        android:textAlignment="center"
+        android:textSize="25dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/AliasTextTv" />
+
+    <TextView
+        android:id="@+id/AvatarTitleTv"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="25dp"
+        android:layout_marginTop="50dp"
+        android:layout_marginEnd="25dp"
+        android:text="Your avatar"
+        android:textAlignment="center"
+        android:textColor="#AFAFAF"
+        android:textSize="12sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/AliasEt" />
+
+    <TextView
+        android:id="@+id/AvatarTextTv"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="50dp"
+        android:layout_marginEnd="50dp"
+        android:text="This is the image that will be shown on your profile page."
+        android:textAlignment="center"
+        android:textColor="#424242"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/AvatarTitleTv" />
+
+    <LinearLayout
+
+        android:id="@+id/AvatarSelection"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/AvatarTextTv">
+
+        <ImageView
+            android:id="@+id/BearCheckedIv"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_marginLeft="2dp"
+            android:layout_marginRight="2dp"
+            android:src="@drawable/bearchecked" />
+
+        <ImageView
+            android:id="@+id/BunnyIv"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_marginLeft="2dp"
+            android:layout_marginRight="2dp"
+            android:src="@drawable/bunny" />
+
+        <ImageView
+            android:id="@+id/PandaIv"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_marginLeft="2dp"
+            android:layout_marginRight="2dp"
+            android:src="@drawable/panda" />
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/goToApp"
+        android:textAllCaps="false"
+        android:layout_width="0dp"
+        android:layout_height="75dp"
+        android:backgroundTint="#71B6D6"
+        android:textSize="20sp"
+        android:textColor="#ffffff"
+        android:text="I'm ready!"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent" />
+    <LinearLayout
+
+        android:id="@+id/navigationDots"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toTopOf="@+id/prefTv"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/dot1Iv"
+            android:layout_width="10dp"
+            android:layout_height="10dp"
+            android:layout_marginLeft="2dp"
+            android:layout_marginRight="2dp"
+            android:src="@drawable/filled_dot_icon" />
+
+        <ImageView
+            android:id="@+id/dot2Iv"
+            android:layout_width="10dp"
+            android:layout_height="10dp"
+            android:layout_marginLeft="2dp"
+            android:layout_marginRight="2dp"
+            android:src="@drawable/filled_dot_icon" />
+
+        <ImageView
+            android:id="@+id/dot3Iv"
+            android:layout_width="10dp"
+            android:layout_height="10dp"
+            android:layout_marginLeft="2dp"
+            android:layout_marginRight="2dp"
+            android:src="@drawable/filled_dot_icon" />
+
+        <ImageView
+            android:id="@+id/dot4Iv"
+            android:layout_width="10dp"
+            android:layout_height="10dp"
+            android:layout_marginLeft="2dp"
+            android:layout_marginRight="2dp"
+            android:src="@drawable/filled_dot_icon" />
+
+        <ImageView
+            android:id="@+id/dot5Iv"
+            android:layout_width="10dp"
+            android:layout_height="10dp"
+            android:layout_marginLeft="2dp"
+            android:layout_marginRight="2dp"
+            android:src="@drawable/filled_dot_icon" />
+
+
+    </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
