@@ -43,6 +43,7 @@ public class DataHandler {
     int usersCurrentStreak;
     ArrayList<TaskModel> todaysTasks = new ArrayList<>();
     boolean firstLogonToday;
+    boolean firstLoginEver;
 
 
     private DataHandler() {
@@ -106,10 +107,20 @@ public class DataHandler {
                                 list.add(timeStamp);
                                 Log.d(TAG, "Found document: "+ document.getId() + " => " + document.getData());
                             }
-                            LocalDate lastEntry = convert(list.get(list.size()-2));
-                            Log.d(TAG, "LastEntry is: " + lastEntry);
-                            increaseCurrentStreakIfNessercary(lastEntry);
-                            firebaseCallBack.onCallback(list);
+                            try {
+                                LocalDate lastEntry = convert(list.get(list.size() - 2));
+                                Log.d(TAG, "LastEntry is: " + lastEntry);
+                                increaseCurrentStreakIfNessercary(lastEntry);
+                                firebaseCallBack.onCallback(list);
+                            }catch (Exception e){
+                                //LocalDate lastEntry = LocalDate.now().plusDays(1);
+                                LocalDate lastEntry = convert(list.get(list.size() - 1));
+                                firstLoginEver = true;
+                                Log.d(TAG, "LastEntry is: " + lastEntry);
+                                increaseCurrentStreakIfNessercary(lastEntry);
+                                firebaseCallBack.onCallback(list);
+                            }
+
                         } else {
                             Log.d(TAG, "Error getting documents: ", task.getException());
                         }
@@ -188,7 +199,20 @@ public class DataHandler {
                 });
             });
 
-        }else if(lastEntry.isEqual(today)){
+        }else if((lastEntry.isEqual(today)) && firstLoginEver){
+
+            Log.d(TAG, "Seems like this is your first login ever! I will create new tasks ");
+            firstLogonToday = true;
+            usersCurrentStreak++;
+            updateStreakInDatabase();
+            getWorkbookTaskFromDatabase(list -> {
+                Log.d(TAG, "(1)Hello from shitty method: list is: "+ list + "\ntodays tasks are: "+todaysTasks);
+                todaysTasks = list;
+                Log.d(TAG, "(2)Hello from shitty method: list is: "+ list + "\ntodays tasks are: "+todaysTasks);
+                writeTodaysChosenTasksToLog(flag -> {
+                    Log.d(TAG, "I am done updating the db with chosen tasks");
+                });
+            });
             /*Log.d(TAG, "Today is normal same day...");
             usersCurrentStreak++;
             updateStreakInDatabase();
