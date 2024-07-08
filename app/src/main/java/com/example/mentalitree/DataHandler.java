@@ -238,7 +238,7 @@ public class DataHandler {
             });
 
 
-        }else if(lastEntry.isEqual(today.minusDays(1))){
+        }else if((lastEntry.isEqual(today.minusDays(1))) && !firstLogonToday){
             Log.d(TAG, "Yes you hit the streak yay!");
             firstLogonToday = true;
             usersCurrentStreak++;
