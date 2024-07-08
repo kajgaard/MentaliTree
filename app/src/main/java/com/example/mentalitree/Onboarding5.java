@@ -23,7 +23,8 @@ public class Onboarding5 extends AppCompatActivity implements View.OnClickListen
     ImageView avatar3;
     EditText userIdEt, userPinEt, confirmPinEt;
     int avatarSelect = 1;
-    SharedPreferences sharedPreferences;
+
+    DataHandler dataHandler = DataHandler.getInstance();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -64,8 +65,15 @@ public class Onboarding5 extends AppCompatActivity implements View.OnClickListen
         if(view == nextBtn){
 
             if(areCredentialsOkay()){
-                Intent intent = new Intent(this, LogInActivity.class);
-                startActivity(intent);
+                Toast.makeText(this, "Perfect! Creating user...", Toast.LENGTH_SHORT).show();
+                dataHandler.setAvatarPref(avatarSelect);
+                dataHandler.setUserId(userIdEt.getText().toString());
+                dataHandler.setUserPin(userPinEt.getText().toString());
+                dataHandler.createUserInDatabase(flag -> {
+                    Intent intent = new Intent(this, LogInActivity.class);
+                    startActivity(intent);
+                });
+
             }else{
                 Toast.makeText(this, "Please make sure your information is valid", Toast.LENGTH_LONG).show();
             }
@@ -94,11 +102,5 @@ public class Onboarding5 extends AppCompatActivity implements View.OnClickListen
 
         return flag;
     }
-    public void setHasUserBoolInSharedPrefs(){
-        sharedPreferences = getSharedPreferences("mUserPrefs", Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor;
-        editor = sharedPreferences.edit();
-        editor.putBoolean("has_user", true);
-        editor.apply();
-    }
+
 }

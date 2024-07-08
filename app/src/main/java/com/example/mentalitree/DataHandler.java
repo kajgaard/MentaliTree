@@ -47,6 +47,8 @@ public class DataHandler {
     boolean firstLoginEver;
     boolean hasReviewedToday;
     PrivateDataHandler privateDataHandler = PrivateDataHandler.getInstance();
+    int avatarPref;
+
 
 
     private DataHandler() {
@@ -65,6 +67,22 @@ public class DataHandler {
     public void setUpcCredentialAttempt (String userId, String userPin){
         this.userId = userId;
         this.userPin = userPin;
+    }
+
+    public int getAvatarPref() {
+        return avatarPref;
+    }
+
+    public void setUserPin(String userPin) {
+        this.userPin = userPin;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
+
+    public void setAvatarPref(int avatarPref) {
+        this.avatarPref = avatarPref;
     }
 
     public void userAuthenticationSuccessful(MyFirebaseBooleanCallBack firebaseCallBack){
@@ -92,6 +110,38 @@ public class DataHandler {
                 Log.d(TAG, "Error getting documents: ", task.getException());
             }
         });
+
+    }
+
+    public void createUserInDatabase(MyFirebaseBooleanCallBack firebaseCallBack){
+        String pattern = "yyyy-MM-dd-HH:mm:ss";
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
+
+        String date = simpleDateFormat.format(new Date());
+        System.out.println(date);
+
+        Map<String, Object> newUser = new HashMap<>();
+        newUser.put("creationDate", date);
+        newUser.put("userId", userId);
+        newUser.put("userPin", userPin);
+        newUser.put("currentStreak", 0);
+        newUser.put("avatar", avatarPref);
+
+        db.collection("users").document()
+                .set(newUser)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        firebaseCallBack.onCallback(true);
+                        Log.d(TAG, "DocumentSnapshot for new user successfully written!");
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.w(TAG, "Error writing document", e);
+                    }
+                });
 
     }
 
