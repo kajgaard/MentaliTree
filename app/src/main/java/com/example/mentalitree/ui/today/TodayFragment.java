@@ -41,6 +41,7 @@ public class TodayFragment extends Fragment implements TaskSelectListener, Workb
     public static String DATE_FORMAT_INPUT = "yyyy-MM-dd-HH:mm:ss";
     Button reviewBtn;
     ArrayList<LocalDate> activityLog;
+    boolean hasCompletedNoneTasks;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -312,38 +313,52 @@ public class TodayFragment extends Fragment implements TaskSelectListener, Workb
                 taskStreak1.setImageResource(R.drawable.task_incomplete);
                 taskStreak2.setImageResource(R.drawable.task_incomplete);
                 taskStreak3.setImageResource(R.drawable.task_incomplete);
+                hasCompletedNoneTasks = true;
+                blockReviewButton();
                 break;
 
             case 1:
                 taskStreak1.setImageResource(R.drawable.task_completed);
                 taskStreak2.setImageResource(R.drawable.task_incomplete);
                 taskStreak3.setImageResource(R.drawable.task_incomplete);
+                hasCompletedNoneTasks = false;
+                unBlockReviewButton();
                 break;
 
             case 2:
                 taskStreak1.setImageResource(R.drawable.task_completed);
                 taskStreak2.setImageResource(R.drawable.task_completed);
                 taskStreak3.setImageResource(R.drawable.task_incomplete);
+                hasCompletedNoneTasks = false;
                 break;
 
             case 3:
                 taskStreak1.setImageResource(R.drawable.task_completed);
                 taskStreak2.setImageResource(R.drawable.task_completed);
                 taskStreak3.setImageResource(R.drawable.task_completed);
+                hasCompletedNoneTasks = false;
                 break;
 
             case 4:
                 taskStreak1.setImageResource(R.drawable.task_completed);
                 taskStreak2.setImageResource(R.drawable.task_completed);
                 taskStreak3.setImageResource(R.drawable.task_completed);
+                hasCompletedNoneTasks = false;
                 break;
 
             case 5:
                 taskStreak1.setImageResource(R.drawable.task_completed);
                 taskStreak2.setImageResource(R.drawable.task_completed);
                 taskStreak3.setImageResource(R.drawable.task_completed);
+                hasCompletedNoneTasks = false;
                 break;
         }
+    }
+
+    public void blockReviewButton(){
+        Drawable drawableBg = getResources().getDrawable(R.drawable.call_to_action_btn_blocked_bg);
+        reviewBtn.setBackground(drawableBg);
+
     }
 
     @Override
@@ -363,15 +378,30 @@ public class TodayFragment extends Fragment implements TaskSelectListener, Workb
         reviewBtn.setText("Reviewed");
         Drawable drawableBg = getResources().getDrawable(R.drawable.call_to_action_btn_deactivated_bg);
         reviewBtn.setBackground(drawableBg);
-        reviewBtn.setClickable(false);
+    }
+
+    public void unBlockReviewButton(){
+        reviewBtn.setText("Review your day");
+        Drawable drawableBg = getResources().getDrawable(R.drawable.call_to_action_btn_bg);
+        reviewBtn.setBackground(drawableBg);
+        reviewBtn.setClickable(true);
     }
 
     @Override
     public void onClick(View view) {
         if(view == reviewBtn){
-            ReviewFragment reviewFragment = new ReviewFragment();
-            reviewFragment.setListener(this);
-            reviewFragment.show(getParentFragmentManager(), "ReviewFragment");
+            if(hasCompletedNoneTasks) {
+                Toast.makeText(getContext(), "You need to complete at least one workbook task to review your day", Toast.LENGTH_LONG).show();
+
+            } else if (datahandler.isHasReviewedToday()) {
+                Toast.makeText(getContext(), "You have already reviewed your day today", Toast.LENGTH_LONG).show();
+
+            } else{
+                ReviewFragment reviewFragment = new ReviewFragment();
+                reviewFragment.setListener(this);
+                reviewFragment.show(getParentFragmentManager(), "ReviewFragment");
+            }
+
             //privateDataHandler.testEncryption();
             /*String encrypted = privateDataHandler.encryptString("Hej babsi");
             Log.e(TAG, "I have an encrypted string: "+ encrypted);
