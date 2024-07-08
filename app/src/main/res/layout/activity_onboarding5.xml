@@ -57,7 +57,7 @@
         android:background="@drawable/rounded_edit_text"
         android:maxLength="3"
         android:hint="UserID"
-        android:paddingLeft="10dp"
+        android:paddingHorizontal="10dp"
         android:inputType="number"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -71,7 +71,7 @@
         android:background="@drawable/rounded_edit_text"
         android:hint="Pincode"
         android:maxLength="4"
-        android:paddingLeft="10dp"
+        android:paddingHorizontal="10dp"
         android:inputType="numberPassword"
         app:layout_constraintStart_toStartOf="@+id/userIdEt"
         app:layout_constraintTop_toBottomOf="@+id/userIdEt" />
@@ -84,7 +84,7 @@
         android:background="@drawable/rounded_edit_text"
         android:maxLength="4"
         android:hint="Confirm pincode"
-        android:paddingLeft="10dp"
+        android:paddingHorizontal="10dp"
         android:inputType="numberPassword"
         app:layout_constraintStart_toStartOf="@+id/pincodeEt"
         app:layout_constraintTop_toBottomOf="@+id/pincodeEt" />
