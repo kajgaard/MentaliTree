@@ -8,61 +8,131 @@
     tools:context=".LogInActivity">
 
     <ImageView
-        android:id="@+id/userLogonIconIv"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="50dp"
-        android:layout_marginTop="50dp"
+        android:id="@+id/loginBackgroundIv"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:scaleType="centerCrop"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/user_id_icon" />
+        app:layout_constraintVertical_bias="0.0"
+        app:srcCompat="@drawable/login_background" />
+
+    <ImageView
+        android:id="@+id/loginSquareIv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:scaleType="centerCrop"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/login_square_info_holder" />
+
 
     <EditText
         android:id="@+id/userIdEt"
-        android:layout_width="150dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:hint="User ID"
+        android:layout_width="220dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="5dp"
+        android:background="@drawable/rounded_edit_text"
         android:inputType="number"
         android:maxLength="3"
+        android:paddingHorizontal="10dp"
         android:textSize="24sp"
-        app:layout_constraintBottom_toBottomOf="@+id/userLogonIconIv"
-        app:layout_constraintStart_toEndOf="@+id/userLogonIconIv"
-        app:layout_constraintTop_toTopOf="@+id/userLogonIconIv" />
+        app:layout_constraintEnd_toEndOf="@+id/loginSquareIv"
+        app:layout_constraintHorizontal_bias="0.487"
+        app:layout_constraintStart_toStartOf="@+id/loginSquareIv"
+        app:layout_constraintTop_toBottomOf="@+id/userIdTv" />
 
-    <ImageView
-        android:id="@+id/pincodeLogonIconIv"
+    <TextView
+        android:id="@+id/loginTitleTv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
-        app:layout_constraintEnd_toEndOf="@+id/userLogonIconIv"
-        app:layout_constraintStart_toStartOf="@+id/userLogonIconIv"
-        app:layout_constraintTop_toBottomOf="@+id/userLogonIconIv"
-        app:srcCompat="@drawable/pincode_icon" />
+        android:layout_marginTop="35dp"
+        android:text="LOGIN"
+        android:textColor="#909090"
+        android:textSize="28sp"
+        app:layout_constraintStart_toStartOf="@+id/userIdEt"
+        app:layout_constraintTop_toTopOf="@+id/loginSquareIv" />
+
+    <TextView
+        android:id="@+id/userIdTv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:text="UserID"
+        android:textColor="#909090"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="@+id/userIdEt"
+        app:layout_constraintTop_toBottomOf="@+id/loginTitleTv" />
 
     <EditText
         android:id="@+id/pincodeEt"
-        android:layout_width="150dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:hint="Pincode"
+        android:layout_width="220dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="5dp"
+        android:background="@drawable/rounded_edit_text"
         android:inputType="numberPassword"
         android:maxLength="4"
+        android:paddingHorizontal="10dp"
         android:textSize="24sp"
-        app:layout_constraintBottom_toBottomOf="@+id/pincodeLogonIconIv"
-        app:layout_constraintStart_toEndOf="@+id/pincodeLogonIconIv"
-        app:layout_constraintTop_toTopOf="@+id/pincodeLogonIconIv" />
+        app:layout_constraintStart_toStartOf="@+id/userIdEt"
+        app:layout_constraintTop_toBottomOf="@+id/pincodeTv" />
+
+    <TextView
+        android:id="@+id/pincodeTv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="25dp"
+        android:text="Pincode"
+        android:textColor="#909090"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="@+id/pincodeEt"
+        app:layout_constraintTop_toBottomOf="@+id/userIdEt" />
+
+    <TextView
+        android:id="@+id/userIdHintTv"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="20dp"
+        android:text="@string/login_helptext"
+        android:textAlignment="center"
+        android:textColor="@color/light_grey"
+        android:textSize="13sp"
+        app:layout_constraintBottom_toBottomOf="@+id/loginSquareIv"
+        app:layout_constraintEnd_toEndOf="@+id/logonBtn"
+        app:layout_constraintStart_toStartOf="@+id/logonBtn" />
 
     <Button
         android:id="@+id/logonBtn"
+        android:layout_width="220dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:background="@drawable/call_to_action_btn_bg"
+        android:text="SIGN IN"
+        android:textColor="#FFFFFF"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/pincodeEt" />
+
+    <TextView
+        android:id="@+id/retakeOnboardingBtnTv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Enter"
+        android:text="@string/create_user"
+        android:textColor="@color/white"
+        android:textSize="18sp"
+        android:textAlignment="center"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/pincodeEt"
-        app:layout_constraintVertical_bias="0.5" />
+        app:layout_constraintEnd_toEndOf="@+id/loginSquareIv"
+        app:layout_constraintStart_toStartOf="@+id/loginSquareIv"
+        app:layout_constraintTop_toBottomOf="@+id/loginSquareIv" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

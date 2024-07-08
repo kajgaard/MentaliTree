@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -18,6 +19,7 @@ public class LogInActivity extends AppCompatActivity implements View.OnClickList
     EditText userId, userPin;
     Intent intent;
     DataHandler datahandler = DataHandler.getInstance();
+    TextView retakeOnboarding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,6 +31,9 @@ public class LogInActivity extends AppCompatActivity implements View.OnClickList
 
         userId = findViewById(R.id.userIdEt);
         userPin = findViewById(R.id.pincodeEt);
+
+        retakeOnboarding = findViewById(R.id.retakeOnboardingBtnTv);
+        retakeOnboarding.setOnClickListener(this);
 
         intent = new Intent(getApplicationContext(), MainActivity.class);
 
@@ -50,6 +55,9 @@ public class LogInActivity extends AppCompatActivity implements View.OnClickList
                 }
             });
 
+        }else if(view == retakeOnboarding){
+            Intent intent = new Intent(getApplicationContext(), OnboardingActivity.class);
+            startActivity(intent);
         }
     }
 

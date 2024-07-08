@@ -23,7 +23,7 @@ public class LauncherActivity extends AppCompatActivity {
         fakeValueAsTrue();
 
         if(hasExistingUser()){
-            Intent intent = new Intent(this, LogInActivity.class);
+            Intent intent = new Intent(this, OnboardingActivity.class);
             startActivity(intent);
             //privateDataHandler.createKeyForSharedPreferences();
             privateDataHandler.getUserKeyFromSharedPreferences();
