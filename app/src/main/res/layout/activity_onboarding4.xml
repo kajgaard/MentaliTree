@@ -9,8 +9,8 @@
 
     <ImageView
         android:id="@+id/backgroundIv"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:scaleType="centerCrop"
         android:src="@drawable/background_blurred"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -52,6 +52,7 @@
         android:id="@+id/saplingIv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
         android:scaleType="centerCrop"
         android:src="@drawable/tree_1"
         app:layout_constraintEnd_toEndOf="parent"
@@ -62,7 +63,7 @@
         android:id="@+id/HatTv"
         android:layout_width="180dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="20dp"
         android:text="You are in charge of nursing this tree as its gardener"
         android:textAlignment="viewStart"
         android:textColor="#424242"
@@ -74,9 +75,9 @@
         android:id="@+id/hatIv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
         android:scaleType="centerCrop"
         android:src="@drawable/hat"
+        app:layout_constraintBottom_toBottomOf="@+id/HatTv"
         app:layout_constraintEnd_toEndOf="@+id/SaplingTv"
         app:layout_constraintTop_toTopOf="@+id/HatTv" />
 
@@ -84,31 +85,33 @@
         android:id="@+id/TreeTv"
         android:layout_width="150dp"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="10dp"
-        android:layout_marginBottom="50dp"
         android:text="By staying
 consistent and completing daily reflections and workbook tasks, the sapling will grow into a majestic tree!"
         android:textAlignment="viewEnd"
         android:textColor="#424242"
         android:textSize="16sp"
-        app:layout_constraintBottom_toTopOf="@+id/goToOnboarding5btn"
-        app:layout_constraintEnd_toEndOf="@+id/SaplingTv" />
+        app:layout_constraintBottom_toBottomOf="@+id/treeIv"
+        app:layout_constraintEnd_toEndOf="@+id/SaplingTv"
+        app:layout_constraintTop_toTopOf="@+id/treeIv" />
 
     <ImageView
         android:id="@+id/treeIv"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:scaleType="centerCrop"
+        android:layout_height="0dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginBottom="15dp"
+        android:scaleType="fitCenter"
         android:src="@drawable/tree_5"
         app:layout_constraintBottom_toTopOf="@+id/goToOnboarding5btn"
-        app:layout_constraintStart_toStartOf="@+id/HatTv" />
+        app:layout_constraintStart_toStartOf="@+id/HatTv"
+        app:layout_constraintTop_toBottomOf="@+id/HatTv" />
 
     <Button
         android:id="@+id/goToOnboarding5btn"
         android:textAllCaps="false"
         android:layout_width="0dp"
         android:layout_height="75dp"
-        android:backgroundTint="#71B6D6"
+android:background="@drawable/call_to_action_onboarding_btn_bg"
         android:textSize="20sp"
         android:textColor="#ffffff"
         android:text="Next"
@@ -166,7 +169,7 @@ consistent and completing daily reflections and workbook tasks, the sapling will
             android:layout_height="10dp"
             android:layout_marginLeft="2dp"
             android:layout_marginRight="2dp"
-            android:src="@drawable/filled_dot_icon" />
+            android:src="@drawable/unfilled_dot_icon" />
 
 
     </LinearLayout>

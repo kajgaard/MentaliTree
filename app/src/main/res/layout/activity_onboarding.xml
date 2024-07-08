@@ -52,7 +52,7 @@
         android:textAllCaps="false"
         android:layout_width="0dp"
         android:layout_height="75dp"
-        android:backgroundTint="#71B6D6"
+        android:background="@drawable/call_to_action_onboarding_btn_bg"
         android:textSize="20sp"
         android:textColor="#ffffff"
         android:text="Get started"
@@ -62,7 +62,6 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <LinearLayout
-
         android:id="@+id/navigationDots"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -73,9 +72,9 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
+            android:id="@+id/dot1Iv"
             android:layout_marginLeft="2dp"
             android:layout_marginRight="2dp"
-            android:id="@+id/dot1Iv"
             android:layout_width="10dp"
             android:layout_height="10dp"
             android:src="@drawable/filled_dot_icon" />
@@ -86,7 +85,7 @@
             android:id="@+id/dot2Iv"
             android:layout_width="10dp"
             android:layout_height="10dp"
-            android:src="@drawable/filled_dot_icon" />
+            android:src="@drawable/unfilled_dot_icon" />
 
         <ImageView
             android:layout_marginLeft="2dp"
@@ -94,7 +93,7 @@
             android:id="@+id/dot3Iv"
             android:layout_width="10dp"
             android:layout_height="10dp"
-            android:src="@drawable/filled_dot_icon" />
+            android:src="@drawable/unfilled_dot_icon" />
 
         <ImageView
             android:layout_marginLeft="2dp"
@@ -102,7 +101,7 @@
             android:id="@+id/dot4Iv"
             android:layout_width="10dp"
             android:layout_height="10dp"
-            android:src="@drawable/filled_dot_icon" />
+            android:src="@drawable/unfilled_dot_icon" />
 
         <ImageView
             android:layout_marginLeft="2dp"
@@ -110,7 +109,7 @@
             android:id="@+id/dot5Iv"
             android:layout_width="10dp"
             android:layout_height="10dp"
-            android:src="@drawable/filled_dot_icon" />
+            android:src="@drawable/unfilled_dot_icon" />
 
 
     </LinearLayout>

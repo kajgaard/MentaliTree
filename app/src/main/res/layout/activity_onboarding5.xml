@@ -8,8 +8,8 @@
     tools:context=".Onboarding5">
     <ImageView
         android:id="@+id/backgroundIv"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:scaleType="centerCrop"
         android:src="@drawable/background_blurred"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -55,7 +55,7 @@
         android:layout_height="50dp"
         android:layout_marginTop="10dp"
         android:background="@drawable/rounded_edit_text"
-        android:ems="10"
+        android:maxLength="3"
         android:hint="UserID"
         android:paddingLeft="10dp"
         android:inputType="number"
@@ -69,10 +69,10 @@
         android:layout_height="50dp"
         android:layout_marginTop="15dp"
         android:background="@drawable/rounded_edit_text"
-        android:ems="10"
         android:hint="Pincode"
+        android:maxLength="4"
         android:paddingLeft="10dp"
-        android:inputType="number"
+        android:inputType="numberPassword"
         app:layout_constraintStart_toStartOf="@+id/userIdEt"
         app:layout_constraintTop_toBottomOf="@+id/userIdEt" />
 
@@ -82,10 +82,10 @@
         android:layout_height="50dp"
         android:layout_marginTop="15dp"
         android:background="@drawable/rounded_edit_text"
-        android:ems="10"
+        android:maxLength="4"
         android:hint="Confirm pincode"
         android:paddingLeft="10dp"
-        android:inputType="number"
+        android:inputType="numberPassword"
         app:layout_constraintStart_toStartOf="@+id/pincodeEt"
         app:layout_constraintTop_toBottomOf="@+id/pincodeEt" />
 
@@ -99,7 +99,7 @@
         android:text="Your avatar"
         android:textAlignment="center"
         android:textColor="#AFAFAF"
-        android:textSize="12sp"
+        android:textSize="16sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -163,7 +163,7 @@
         android:textAllCaps="false"
         android:layout_width="0dp"
         android:layout_height="75dp"
-        android:backgroundTint="#71B6D6"
+        android:background="@drawable/call_to_action_onboarding_btn_bg"
         android:textSize="20sp"
         android:textColor="#ffffff"
         android:text="I'm ready!"

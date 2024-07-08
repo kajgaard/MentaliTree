@@ -8,8 +8,8 @@
     tools:context=".Onboarding3">
     <ImageView
         android:id="@+id/backgroundIv"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:scaleType="centerCrop"
         android:src="@drawable/background_blurred"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -65,25 +65,18 @@ We all need a little help from time to time, we just need to be mindful of whe
             android:id="@+id/uncheckedBoxIv"
             android:layout_width="25dp"
             android:layout_height="25dp"
-            android:src="@drawable/unchecked_box"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.311"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.843" />
+            android:layout_gravity="center_vertical"
+            android:src="@drawable/unchecked_box" />
 
         <TextView
             android:id="@+id/IUnderstandTv"
-            android:layout_width="100dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="25dp"
-            android:layout_marginEnd="25dp"
+            android:gravity="center_vertical"
+            android:paddingHorizontal="15dp"
             android:text="I understand"
-            android:textAlignment="center"
             android:textColor="#424242"
             android:textSize="16sp" />
-
     </LinearLayout>
 
     <Button
@@ -91,7 +84,7 @@ We all need a little help from time to time, we just need to be mindful of whe
         android:textAllCaps="false"
         android:layout_width="0dp"
         android:layout_height="75dp"
-        android:backgroundTint="#71B6D6"
+android:background="@drawable/call_to_action_onboarding_btn_bg"
         android:textSize="20sp"
         android:textColor="#ffffff"
         android:text="Next"
@@ -141,7 +134,7 @@ We all need a little help from time to time, we just need to be mindful of whe
             android:layout_height="10dp"
             android:layout_marginLeft="2dp"
             android:layout_marginRight="2dp"
-            android:src="@drawable/filled_dot_icon" />
+            android:src="@drawable/unfilled_dot_icon" />
 
         <ImageView
             android:id="@+id/dot5Iv"
@@ -149,7 +142,7 @@ We all need a little help from time to time, we just need to be mindful of whe
             android:layout_height="10dp"
             android:layout_marginLeft="2dp"
             android:layout_marginRight="2dp"
-            android:src="@drawable/filled_dot_icon" />
+            android:src="@drawable/unfilled_dot_icon" />
 
 
     </LinearLayout>
