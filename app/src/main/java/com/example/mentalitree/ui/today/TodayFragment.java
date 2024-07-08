@@ -403,10 +403,38 @@ public class TodayFragment extends Fragment implements TaskSelectListener, Workb
             }
 
             //privateDataHandler.testEncryption();
-            /*String encrypted = privateDataHandler.encryptString("Hej babsi");
-            Log.e(TAG, "I have an encrypted string: "+ encrypted);
-            String decrypted = privateDataHandler.decryptString(encrypted);
-            Log.e(TAG, "Now i have decrypted it again: " + decrypted);*/
+
+
         }
+    }
+
+    public void generateDummyEncryptedStrings(){
+
+            ArrayList<String> testStrings = new ArrayList<>();
+            testStrings.add("Finished a challenging puzzle today. The sense of accomplishment feels really good.");
+            testStrings.add("1");
+            testStrings.add("Had a heartwarming chat with an old friend. It brought back many happy memories.");
+            testStrings.add("1");
+            testStrings.add("Took a walk outside, felt peaceful.");
+            testStrings.add("3");
+            testStrings.add("Organized my desk this morning. The clean space is refreshing and helps me think clearly.");
+            testStrings.add("2");
+            testStrings.add("Enjoyed a quiet evening reading a captivating book; it was very relaxing.");
+            testStrings.add("2");
+            testStrings.add("Cat is feeling much better. I am extremely relieved");
+            testStrings.add("2");
+            testStrings.add("I have been crying all day, im am really worried");
+            testStrings.add("5");
+            testStrings.add("Today i found out my cat is sick. I start to feel worried");
+            testStrings.add("4");
+            testStrings.add("");
+
+
+            for(int i=0; i<testStrings.size(); i++){
+                String encrypted = privateDataHandler.encryptString(testStrings.get(i));
+                Log.e(TAG, "String: "+ testStrings.get(i)+ "encrypted as:" + encrypted+"!");
+                //String decrypted = privateDataHandler.decryptString(encrypted);
+                //Log.e(TAG, "Now i have decrypted it again: " + decrypted);
+            }
     }
 }

@@ -24,7 +24,27 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Finished a challenging puzzle today. The sense of accomplishment feels really good."
-        android:paddingBottom="10dp"/>
+        android:paddingBottom="5dp"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingBottom="10dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Rating: "
+            android:textStyle="bold"/>
+
+        <TextView
+            android:id="@+id/dayRatingOnNoteTv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Good"/>
+
+    </LinearLayout>
 
     <View
         android:layout_width="match_parent"

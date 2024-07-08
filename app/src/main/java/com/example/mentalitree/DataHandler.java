@@ -7,6 +7,7 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 
 import com.example.mentalitree.ui.motivation.QuoteModel;
+import com.example.mentalitree.ui.profile.submenus.notes.NoteModel;
 import com.example.mentalitree.ui.today.TaskModel;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -45,6 +46,7 @@ public class DataHandler {
     boolean firstLogonToday;
     boolean firstLoginEver;
     boolean hasReviewedToday;
+    PrivateDataHandler privateDataHandler = PrivateDataHandler.getInstance();
 
 
     private DataHandler() {
@@ -484,6 +486,35 @@ public class DataHandler {
         this.hasReviewedToday = hasReviewedToday;
     }
 
+    public void getNotesDecryptedFromDatabase(MyFirebaseNoteListCallback firebaseCallback){
+        db.collection("users").document(userToken).collection("notesLog")
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        ArrayList<NoteModel> noteList  = new ArrayList<>();
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                Map<String, Object> dataObject;
+                                dataObject = document.getData();
+                                String decryptedNote = privateDataHandler.decryptString(dataObject.get("note").toString());
+                                String decryptedRating = privateDataHandler.decryptString(dataObject.get("rating").toString());
+
+                                NoteModel note = new NoteModel(dataObject.get("date").toString(),decryptedNote,Integer.parseInt(decryptedRating));
+                                noteList.add(note);
+
+
+                                Log.d(TAG, document.getId() + " => " + document.getData()+"\nI made a note object like: "+note.toString());
+                            }
+                            Log.d(TAG, "Sending callback with list: "+ noteList);
+                            firebaseCallback.onCallback(noteList);
+                        } else {
+                            Log.d(TAG, "Error getting documents: ", task.getException());
+                        }
+                    }
+                });
+    }
+
     public void hasUserReviewedToday(MyFirebaseBooleanCallBack firebaseCallBack){
         CollectionReference usersRef = db.collection("users").document(userToken).collection("notesLog");
 
@@ -530,6 +561,10 @@ public class DataHandler {
     }
     public interface MyFirebaseQuoteListCallback {
         void onCallback(ArrayList<QuoteModel> list);
+    }
+
+    public interface  MyFirebaseNoteListCallback{
+        void onCallback(ArrayList<NoteModel> list);
     }
 
 }
