@@ -15,7 +15,6 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -444,6 +443,38 @@ public class DataHandler {
                         } else {
                             Log.d(TAG, "Error getting documents: ", task.getException());
                         }
+                    }
+                });
+    }
+
+    public void saveEncryptedNoteToDatabase(String encryptedString, String encryptedRating){
+        String pattern = "yyyy-MM-dd-HH:mm:ss";
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
+
+        String shortPattern = "yyyy-MM-dd";
+        SimpleDateFormat shortSimpleDateFormat = new SimpleDateFormat(shortPattern);
+
+        String shortDate = shortSimpleDateFormat.format(new Date());
+        String date = simpleDateFormat.format(new Date());
+
+        Map<String, String> noteEntry = new HashMap<>();
+        noteEntry.put("timeStamp", date);
+        noteEntry.put("date",shortDate);
+        noteEntry.put("note",encryptedString);
+        noteEntry.put("rating", encryptedRating);
+
+        db.collection("users").document(userToken).collection("notesLog").document(shortDate)
+                .set(noteEntry)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Log.d(TAG, "DocumentSnapshot for NoteEntry successfully written!");
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.w(TAG, "Error writing document", e);
                     }
                 });
     }

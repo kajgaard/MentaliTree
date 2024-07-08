@@ -15,6 +15,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,6 +24,8 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.mentalitree.DataHandler;
+import com.example.mentalitree.PrivateDataHandler;
 import com.example.mentalitree.R;
 import com.example.mentalitree.databinding.FragmentReviewBinding;
 import com.example.mentalitree.databinding.FragmentWorkbookTaskBinding;
@@ -30,13 +33,16 @@ import com.google.android.material.button.MaterialButton;
 
 public class ReviewFragment extends DialogFragment implements View.OnClickListener {
 
+    private static final String TAG = "MMREVIEWFRAG";
     EditText userNoteInput;
     MaterialButton rating1Btn, rating2Btn, rating3Btn, rating4Btn, rating5Btn;
     FragmentReviewBinding binding;
     OnReviewCompletedListener listener;
     ImageView closeBtnIv;
     TextView doneBtnTv;
-    int dynamicRating;
+    String dynamicRating;
+    PrivateDataHandler privateDataHandler = PrivateDataHandler.getInstance();
+    DataHandler datahandler = DataHandler.getInstance();
     public ReviewFragment() {
         // Required empty public constructor
     }
@@ -105,30 +111,34 @@ public class ReviewFragment extends DialogFragment implements View.OnClickListen
         if(view == closeBtnIv){
             dismiss();
         }else if(view == doneBtnTv){
-
+            String input = userNoteInput.getText().toString();
+            String encryptedNote = privateDataHandler.encryptString(input);
+            String encryptedRating = privateDataHandler.encryptString(dynamicRating);
+            datahandler.saveEncryptedNoteToDatabase(encryptedNote, encryptedRating);
             //save notes and review
             dismiss();
         }else if(view == rating1Btn){
             resetAllButtons();
             setButtonChosen(rating1Btn);
-            dynamicRating = 1;
+            dynamicRating = "1";
         } else if (view == rating2Btn) {
             resetAllButtons();
             setButtonChosen(rating2Btn);
-            dynamicRating = 2;
+            dynamicRating = "2";
         } else if (view == rating3Btn) {
             resetAllButtons();
             setButtonChosen(rating3Btn);
-            dynamicRating = 3;
+            dynamicRating = "3";
         } else if (view == rating4Btn) {
             resetAllButtons();
             setButtonChosen(rating4Btn);
-            dynamicRating = 4;
+            dynamicRating = "4";
         } else if (view == rating5Btn) {
             resetAllButtons();
             setButtonChosen(rating5Btn);
-            dynamicRating = 5;
+            dynamicRating = "5";
         }
+
     }
 
     @SuppressLint("ResourceAsColor")
