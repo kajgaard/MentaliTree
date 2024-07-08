@@ -115,6 +115,11 @@ public class ReviewFragment extends DialogFragment implements View.OnClickListen
             String encryptedNote = privateDataHandler.encryptString(input);
             String encryptedRating = privateDataHandler.encryptString(dynamicRating);
             datahandler.saveEncryptedNoteToDatabase(encryptedNote, encryptedRating);
+            if(listener != null){
+                datahandler.setHasReviewedToday(true);
+                listener.onReviewCompleted();
+
+            }
             //save notes and review
             dismiss();
         }else if(view == rating1Btn){

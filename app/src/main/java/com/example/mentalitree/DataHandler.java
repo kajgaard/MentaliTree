@@ -44,6 +44,7 @@ public class DataHandler {
     ArrayList<TaskModel> todaysTasks = new ArrayList<>();
     boolean firstLogonToday;
     boolean firstLoginEver;
+    boolean hasReviewedToday;
 
 
     private DataHandler() {
@@ -477,6 +478,41 @@ public class DataHandler {
                         Log.w(TAG, "Error writing document", e);
                     }
                 });
+    }
+
+    public void setHasReviewedToday(boolean hasReviewedToday) {
+        this.hasReviewedToday = hasReviewedToday;
+    }
+
+    public void hasUserReviewedToday(MyFirebaseBooleanCallBack firebaseCallBack){
+        CollectionReference usersRef = db.collection("users").document(userToken).collection("notesLog");
+
+        String shortPattern = "yyyy-MM-dd";
+        SimpleDateFormat shortSimpleDateFormat = new SimpleDateFormat(shortPattern);
+
+        String shortDate = shortSimpleDateFormat.format(new Date());
+        Query query = usersRef.whereEqualTo("date", shortDate);
+
+        query.get().addOnCompleteListener(task -> {
+            if(task.isSuccessful()){
+
+                if(!task.getResult().isEmpty()) {
+                    this.hasReviewedToday = true;
+                    firebaseCallBack.onCallback(true);
+
+                }else{
+                    this.hasReviewedToday = false;
+                    firebaseCallBack.onCallback(false);
+                }
+            }else{
+                Log.d(TAG, "Error getting documents: ", task.getException());
+            }
+        });
+
+    }
+
+    public boolean isHasReviewedToday() {
+        return hasReviewedToday;
     }
 
     public interface MyFirebaseBooleanCallBack {

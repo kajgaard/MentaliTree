@@ -1,5 +1,6 @@
 package com.example.mentalitree.ui.today;
 
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -39,6 +40,7 @@ public class TodayFragment extends Fragment implements TaskSelectListener, Workb
     private static final String TAG = "MMTODAYFRAG";
     public static String DATE_FORMAT_INPUT = "yyyy-MM-dd-HH:mm:ss";
     Button reviewBtn;
+    ArrayList<LocalDate> activityLog;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -68,10 +70,24 @@ public class TodayFragment extends Fragment implements TaskSelectListener, Workb
         reviewBtn = binding.reviewDayBtn;
         reviewBtn.setOnClickListener(this);
 
-        updateStreak();
+        datahandler.hasUserReviewedToday(value ->{
+            if(value){
+                setReviewButtonInactive();
+            }
+            updateStreak();
+        });
+
         //updateWorkbookTasks();
 
         return root;
+    }
+
+    public void updateReviewToday(){
+        datahandler.hasUserReviewedToday(value ->{
+            if(value){
+                setReviewButtonInactive();
+            }
+        });
     }
 
     public void updateWorkbookTasks(){
@@ -159,7 +175,8 @@ public class TodayFragment extends Fragment implements TaskSelectListener, Workb
                 listOfDateStrings.add(convert(date).toString());
             }
             Log.d(TAG, "The list is now of LocalDates: "+ listOfDates.toString());
-            updateStreakUI(listOfDates);
+            activityLog = listOfDates;
+            updateStreakUI();
             updateTotalDayCounter(listOfDateStrings);
             updateCurrentStreak();
             updateWorkbookTasks();
@@ -171,9 +188,9 @@ public class TodayFragment extends Fragment implements TaskSelectListener, Workb
         return (LocalDate.parse(dateStr, DateTimeFormatter.ofPattern(DATE_FORMAT_INPUT)));
     }
 
-    public void updateStreakUI(ArrayList<LocalDate> activityDates){
+    public void updateStreakUI(){
         LocalDate today = LocalDate.now();
-
+        ArrayList<LocalDate> activityDates = this.activityLog;
         LocalDate lastSaturday = today.with(TemporalAdjusters.previous(DayOfWeek.SATURDAY));
         LocalDate lastFriday = today.with(TemporalAdjusters.previous(DayOfWeek.FRIDAY));
         LocalDate lastThursday = today.with(TemporalAdjusters.previous(DayOfWeek.THURSDAY));
@@ -236,7 +253,13 @@ public class TodayFragment extends Fragment implements TaskSelectListener, Workb
 
     public void streakHit(LocalDate hitDate, ArrayList<LocalDate> activityDates, ImageView imageView){
         if(activityDates.contains(hitDate)){
-            imageView.setImageResource(R.drawable.completed_streak);
+            if(hitDate.isEqual(LocalDate.now()) && !datahandler.isHasReviewedToday()){
+                imageView.setImageResource(R.drawable.today_pending_streak);
+            }else if(hitDate.isEqual(LocalDate.now()) && datahandler.isHasReviewedToday()){
+                imageView.setImageResource(R.drawable.completed_streak);
+            }else{
+                imageView.setImageResource(R.drawable.completed_streak);
+            }
         }else{
             if(hitDate == LocalDate.now()){
                 imageView.setImageResource(R.drawable.today_pending_streak);
@@ -331,7 +354,16 @@ public class TodayFragment extends Fragment implements TaskSelectListener, Workb
 
     @Override
     public void onReviewCompleted() {
+        setReviewButtonInactive();
+        updateStreakUI();
 
+    }
+
+    public void setReviewButtonInactive(){
+        reviewBtn.setText("Reviewed");
+        Drawable drawableBg = getResources().getDrawable(R.drawable.call_to_action_btn_deactivated_bg);
+        reviewBtn.setBackground(drawableBg);
+        reviewBtn.setClickable(false);
     }
 
     @Override
