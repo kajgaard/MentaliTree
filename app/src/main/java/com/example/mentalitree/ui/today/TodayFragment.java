@@ -71,7 +71,9 @@ public class TodayFragment extends Fragment implements TaskSelectListener, Workb
         reviewBtn = binding.reviewDayBtn;
         reviewBtn.setOnClickListener(this);
 
+        Log.e(TAG, "Running OnCreateView");
         datahandler.hasUserReviewedToday(value ->{
+            Log.e(TAG, "dataHandler.hasUserReviewedToday: "+value);
             if(value){
                 setReviewButtonInactive();
             }
@@ -84,7 +86,9 @@ public class TodayFragment extends Fragment implements TaskSelectListener, Workb
     }
 
     public void updateReviewToday(){
+        Log.e(TAG, "Running updateReviewToday method");
         datahandler.hasUserReviewedToday(value ->{
+            Log.e(TAG, "Running updateReviewToday value is: "+value);
             if(value){
                 setReviewButtonInactive();
             }
@@ -149,8 +153,9 @@ public class TodayFragment extends Fragment implements TaskSelectListener, Workb
     @Override
     public void onResume() {
         super.onResume();
-        Log.d(TAG, "onResume called");
+        Log.e(TAG, "onResume called");
         updateWorkbookUI();
+        updateReviewToday();
     }
 
     public void updateWorkbookUI(){
@@ -322,7 +327,10 @@ public class TodayFragment extends Fragment implements TaskSelectListener, Workb
                 taskStreak2.setImageResource(R.drawable.task_incomplete);
                 taskStreak3.setImageResource(R.drawable.task_incomplete);
                 hasCompletedNoneTasks = false;
-                unBlockReviewButton();
+
+                if(!datahandler.isHasReviewedToday()) {
+                    unBlockReviewButton();
+                }
                 break;
 
             case 2:
@@ -375,6 +383,7 @@ public class TodayFragment extends Fragment implements TaskSelectListener, Workb
     }
 
     public void setReviewButtonInactive(){
+        Log.e(TAG, "Setting button inactive");
         reviewBtn.setText("Reviewed");
         Drawable drawableBg = getResources().getDrawable(R.drawable.call_to_action_btn_deactivated_bg);
         reviewBtn.setBackground(drawableBg);
@@ -382,6 +391,7 @@ public class TodayFragment extends Fragment implements TaskSelectListener, Workb
 
     public void unBlockReviewButton(){
         reviewBtn.setText("Review your day");
+        Log.e(TAG, "unBlockReviewbutton");
         Drawable drawableBg = getResources().getDrawable(R.drawable.call_to_action_btn_bg);
         reviewBtn.setBackground(drawableBg);
         reviewBtn.setClickable(true);
