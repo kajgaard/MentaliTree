@@ -8,61 +8,113 @@
     tools:context=".LogInActivity">
 
     <ImageView
-        android:id="@+id/userLogonIconIv"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="50dp"
-        android:layout_marginTop="50dp"
+        android:id="@+id/loginBackgroundIv"
+        android:layout_width="450dp"
+        android:layout_height="800dp"
+        android:scaleType="centerCrop"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/user_id_icon" />
+        app:srcCompat="@drawable/login_background" />
+
+    <ImageView
+        android:id="@+id/loginSquareIv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:scaleType="centerCrop"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/login_square_info_holder" />
+
 
     <EditText
         android:id="@+id/userIdEt"
-        android:layout_width="150dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:hint="User ID"
+        android:layout_width="220dp"
+        android:layout_height="40dp"
+        android:background="@drawable/rounded_edit_text"
         android:inputType="number"
         android:maxLength="3"
         android:textSize="24sp"
-        app:layout_constraintBottom_toBottomOf="@+id/userLogonIconIv"
-        app:layout_constraintStart_toEndOf="@+id/userLogonIconIv"
-        app:layout_constraintTop_toTopOf="@+id/userLogonIconIv" />
+        app:layout_constraintEnd_toEndOf="@+id/loginSquareIv"
+        app:layout_constraintHorizontal_bias="0.487"
+        app:layout_constraintStart_toStartOf="@+id/loginSquareIv"
+        app:layout_constraintTop_toBottomOf="@+id/userIdTv" />
 
-    <ImageView
-        android:id="@+id/pincodeLogonIconIv"
+    <TextView
+        android:id="@+id/loginTitleTv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
-        app:layout_constraintEnd_toEndOf="@+id/userLogonIconIv"
-        app:layout_constraintStart_toStartOf="@+id/userLogonIconIv"
-        app:layout_constraintTop_toBottomOf="@+id/userLogonIconIv"
-        app:srcCompat="@drawable/pincode_icon" />
+        android:layout_marginTop="35dp"
+        android:text="LOGIN"
+        android:textColor="#909090"
+        android:textSize="28sp"
+        app:layout_constraintStart_toStartOf="@+id/userIdEt"
+        app:layout_constraintTop_toTopOf="@+id/loginSquareIv" />
+
+    <TextView
+        android:id="@+id/userIdTv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:text="UserID"
+        android:textColor="#909090"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="@+id/userIdEt"
+        app:layout_constraintTop_toBottomOf="@+id/loginTitleTv" />
 
     <EditText
         android:id="@+id/pincodeEt"
-        android:layout_width="150dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:hint="Pincode"
+        android:layout_width="220dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="5dp"
+        android:background="@drawable/rounded_edit_text"
         android:inputType="numberPassword"
         android:maxLength="4"
         android:textSize="24sp"
-        app:layout_constraintBottom_toBottomOf="@+id/pincodeLogonIconIv"
-        app:layout_constraintStart_toEndOf="@+id/pincodeLogonIconIv"
-        app:layout_constraintTop_toTopOf="@+id/pincodeLogonIconIv" />
+        app:layout_constraintStart_toStartOf="@+id/userIdEt"
+        app:layout_constraintTop_toBottomOf="@+id/pincodeTv" />
+
+    <TextView
+        android:id="@+id/pincodeTv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:text="Pincode"
+        android:textColor="#909090"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="@+id/pincodeEt"
+        app:layout_constraintTop_toBottomOf="@+id/userIdEt" />
+
+    <TextView
+        android:id="@+id/userIdHintTv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        android:text="You can find your UserID in the Email you\n downloaded the app from"
+        android:textAlignment="center"
+        android:textColor="#909090"
+        android:textSize="12sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/loginSquareIv"
+        app:layout_constraintEnd_toEndOf="@+id/loginSquareIv"
+        app:layout_constraintStart_toStartOf="@+id/loginSquareIv" />
 
     <Button
         android:id="@+id/logonBtn"
-        android:layout_width="wrap_content"
+        android:layout_width="220dp"
         android:layout_height="wrap_content"
-        android:text="Enter"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginTop="30dp"
+        android:background="#71B7D7"
+        android:text="SIGN IN"
+        android:textColor="#FFFFFF"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/pincodeEt"
-        app:layout_constraintVertical_bias="0.5" />
+        app:layout_constraintTop_toBottomOf="@+id/pincodeEt" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
