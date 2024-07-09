@@ -100,6 +100,7 @@ public class DataHandler {
                         this.userToken = document.getId();
                         Map<String, Object> data = document.getData();
                         this.usersCurrentStreak = ((Long) data.get("currentStreak")).intValue();
+                        this.avatarPref = document.getLong("avatar").intValue();
                     }
                     addTimestampToLog();
                     firebaseCallBack.onCallback(true);

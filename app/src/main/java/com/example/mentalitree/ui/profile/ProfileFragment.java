@@ -5,12 +5,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.example.mentalitree.DataHandler;
 import com.example.mentalitree.R;
 import com.example.mentalitree.databinding.FragmentProfileBinding;
 import com.example.mentalitree.ui.profile.submenus.notes.NotesFragment;
@@ -20,10 +22,14 @@ import com.example.mentalitree.ui.profile.submenus.workbook.WorkbookFragment;
 
 import java.util.ArrayList;
 
+import kotlin._Assertions;
+
 public class ProfileFragment extends Fragment implements View.OnClickListener {
 
     private FragmentProfileBinding binding;
     private Button settingsBtn, notesBtn, workbookBtn, statisticsBtn;
+    ImageView avatarIv;
+    DataHandler dataHandler = DataHandler.getInstance();
 
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -41,6 +47,25 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         workbookBtn.setOnClickListener(this);
         statisticsBtn = binding.statisticsBtn;
         statisticsBtn.setOnClickListener(this);
+        avatarIv = binding.profileAvatarIv;
+
+        switch (dataHandler.getAvatarPref()){
+            case 1:
+                avatarIv.setImageResource(R.drawable.bear_profile_avatar);
+                break;
+
+            case 2:
+                avatarIv.setImageResource(R.drawable.panda_profile_avatar);
+                break;
+
+            case 3:
+                avatarIv.setImageResource(R.drawable.bunny_profile_avatar);
+                break;
+
+            default:
+                avatarIv.setImageResource(R.drawable.bear_profile_avatar);
+        }
+
 
 
 
