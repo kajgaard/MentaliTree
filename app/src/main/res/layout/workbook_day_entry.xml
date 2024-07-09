@@ -15,6 +15,7 @@
     <TextView
         android:id="@+id/dateOfWorkbookLogTv"
         android:layout_width="wrap_content"
+        android:textColor="@color/light_grey"
         android:layout_height="wrap_content"
         android:text="June 12th 2024"
         android:padding="10dp"/>
