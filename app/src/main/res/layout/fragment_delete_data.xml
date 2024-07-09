@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".ui.profile.submenus.settings.DeleteDataFragment"
+    android:background="@drawable/workbook_task_card_bg"
+    android:padding="20dp"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/deleteDataTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Delete all personal data"
+        android:textSize="20sp"
+        android:textStyle="bold"/>
+
+    <TextView
+        android:id="@+id/deletionInfoTv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="You are about to delete all your recorded data.\n\nThis includes all the notes you have taken in the application. \n\nIt also means all your streaks and tasks will be deleted.\n\nYour personal tree will also return to being the sapling you met at the beginning of your use of the application."
+        android:layout_marginTop="10dp"/>
+
+    <TextView
+        android:id="@+id/deletionInto2Tv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="This action can not be undone."
+        android:textStyle="bold"
+        android:layout_marginTop="10dp"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Are you sure you want to proceed?"
+        android:textSize="18sp"
+        android:gravity="center"
+        android:paddingVertical="20sp"/>
+
+
+        <RadioGroup
+            android:id="@+id/deleteRadioGroup"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            >
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="2" />
+
+            <RadioButton
+                android:id="@+id/yesDeleteRadio"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                />
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="2" />
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="2" />
+            <RadioButton
+                android:id="@+id/dontDeleteRadio"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="2" />
+        </RadioGroup>
+
+
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:paddingVertical="5dp">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text="Yes, delete my data"
+        android:layout_weight="1"
+        android:gravity="center"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:text="No, keep my data"
+        android:gravity="center"/>
+</LinearLayout>
+
+
+<Button
+    android:id="@+id/confirmBtn"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:text="Keep my data"
+    android:layout_marginTop="20dp"
+    android:background="@drawable/green_btn_bg"
+    android:textColor="@color/white"/>
+
+
+</LinearLayout>

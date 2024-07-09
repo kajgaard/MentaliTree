@@ -5,6 +5,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,9 +14,11 @@ import android.widget.Toast;
 
 import com.example.mentalitree.R;
 import com.example.mentalitree.databinding.FragmentProfileSettingsBinding;
+import com.example.mentalitree.ui.today.ReviewFragment;
 
 public class SettingsFragment extends Fragment implements View.OnClickListener {
 
+    private static final String TAG = "MMSETTINGS";
     Button resetPreferencesBtn, deleteDataBtn;
     private FragmentProfileSettingsBinding binding;
 
@@ -49,10 +52,12 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
 
     @Override
     public void onClick(View view) {
-
+        Log.d(TAG, "you clicked : "+ view.toString());
         if(view == deleteDataBtn){
-            //TODO: delete data
-        }else if(view == resetPreferencesBtn){
+            DeleteDataFragment deleteDataFragment = new DeleteDataFragment();
+            deleteDataFragment.show(getParentFragmentManager(), "DeleteFragment");
+        }
+        if(view == resetPreferencesBtn){
             Toast.makeText(getContext(), "We haven't implemented any preferences to reset yet, sorry!", Toast.LENGTH_LONG).show();
         }
     }
