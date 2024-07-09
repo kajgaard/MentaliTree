@@ -1,6 +1,6 @@
 package com.example.mentalitree.ui.profile.submenus.workbook;
 
-import android.text.style.IconMarginSpan;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,9 +11,11 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.mentalitree.R;
-import com.example.mentalitree.ui.today.TaskModel;
 
+import java.time.LocalDate;
+import java.time.format.TextStyle;
 import java.util.ArrayList;
+import java.util.Locale;
 
 public class WorkbookDayAdapter extends RecyclerView.Adapter<WorkbookDayAdapter.MyViewHolder> {
 
@@ -35,10 +37,10 @@ public class WorkbookDayAdapter extends RecyclerView.Adapter<WorkbookDayAdapter.
 
     @Override
     public void onBindViewHolder(@NonNull WorkbookDayAdapter.MyViewHolder holder, int position) {
-        holder.dateTv.setText(workbookDays.get(position).getDate());
-        WorkbookDayTaskAdapter taskAdapter = new WorkbookDayTaskAdapter(workbookDays.get(position).getTasksCompleted());
+        holder.dateTv.setText(convertDate(workbookDays.get(position).getTimeStamp()));
+        WorkbookDayTaskAdapter taskAdapter = new WorkbookDayTaskAdapter(workbookDays.get(position).getChosenTasks());
         LinearLayoutManager layoutManager = new LinearLayoutManager(holder.completedTasksRecyclerView.getContext(), LinearLayoutManager.VERTICAL, false);
-        layoutManager.setInitialPrefetchItemCount(workbookDays.get(position).getTasksCompleted().size());
+        layoutManager.setInitialPrefetchItemCount(workbookDays.get(position).getChosenTasks().size());
 
         holder.completedTasksRecyclerView.setAdapter(taskAdapter);
         holder.completedTasksRecyclerView.setLayoutManager(layoutManager);
@@ -61,6 +63,36 @@ public class WorkbookDayAdapter extends RecyclerView.Adapter<WorkbookDayAdapter.
 
             dateTv = itemView.findViewById(R.id.dateOfWorkbookLogTv);
             completedTasksRecyclerView = itemView.findViewById(R.id.completedTasksRv);
+        }
+    }
+
+    public String convertDate(String dateString){
+        // Parse the date string into a LocalDate object
+        LocalDate date = LocalDate.parse(dateString);
+
+        // Get the day of the week, month, and day of the month
+        String dayOfWeek = date.getDayOfWeek().getDisplayName(TextStyle.FULL, Locale.ENGLISH);
+        String month = date.getMonth().getDisplayName(TextStyle.FULL, Locale.ENGLISH);
+        int dayOfMonth = date.getDayOfMonth();
+
+        // Format the day of the month with the appropriate suffix (st, nd, rd, th)
+        String dayOfMonthSuffix = getDayOfMonthSuffix(dayOfMonth);
+
+        // Create the final formatted date string
+        String formattedDate = String.format("%s %s %d%s", dayOfWeek, month, dayOfMonth, dayOfMonthSuffix);
+        return formattedDate;
+    }
+
+    // Method to get the appropriate suffix for the day of the month
+    private static String getDayOfMonthSuffix(int n) {
+        if (n >= 11 && n <= 13) {
+            return "th";
+        }
+        switch (n % 10) {
+            case 1:  return "st";
+            case 2:  return "nd";
+            case 3:  return "rd";
+            default: return "th";
         }
     }
 }

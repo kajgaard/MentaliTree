@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.mentalitree.DataHandler;
 import com.example.mentalitree.R;
 import com.example.mentalitree.databinding.FragmentProfileNotesBinding;
 import com.example.mentalitree.databinding.FragmentProfileWorkbookBinding;
@@ -17,12 +18,14 @@ import com.example.mentalitree.ui.today.TaskModel;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Collections;
 
 
 public class WorkbookFragment extends Fragment {
 
     RecyclerView workbookDaysRecyclerView;
     FragmentProfileWorkbookBinding binding;
+    DataHandler dataHandler = DataHandler.getInstance();
 
     public WorkbookFragment() {
         // Required empty public constructor
@@ -42,17 +45,15 @@ public class WorkbookFragment extends Fragment {
         binding = FragmentProfileWorkbookBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
         workbookDaysRecyclerView = binding.workbookDaysRecyclerView;
-        WorkbookDayAdapter adapter = new WorkbookDayAdapter(getWorkbookLog());
-        workbookDaysRecyclerView.setAdapter(adapter);
 
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
-        workbookDaysRecyclerView.setLayoutManager(linearLayoutManager);
+        getWorkbookLog();
+
 
         return root;
     }
 
-    public ArrayList<WorkbookDayModel> getWorkbookLog(){
-        ArrayList<WorkbookDayModel> workbookDays = new ArrayList<>();
+    public void getWorkbookLog(){
+       /* ArrayList<WorkbookDayModel> workbookDays = new ArrayList<>();
         ArrayList<TaskModel> arr1 = new ArrayList<>();
         arr1.add(new TaskModel("Affirmations about yourself", R.drawable.reflection_task_icon));
         arr1.add(new TaskModel("Get social", R.drawable.social_task_icon));
@@ -72,6 +73,15 @@ public class WorkbookFragment extends Fragment {
         arr3.add(new TaskModel("Listing relaxing activity", R.drawable.talking_task_icon));
         workbookDays.add(new WorkbookDayModel("Saturday June 8th", arr3));
 
-        return workbookDays;
+        return workbookDays;*/
+
+        dataHandler.getLogOfCompletedTasks(list -> {
+            Collections.reverse(list);
+            WorkbookDayAdapter adapter = new WorkbookDayAdapter(list);
+            workbookDaysRecyclerView.setAdapter(adapter);
+
+            LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
+            workbookDaysRecyclerView.setLayoutManager(linearLayoutManager);
+        });
     }
 }

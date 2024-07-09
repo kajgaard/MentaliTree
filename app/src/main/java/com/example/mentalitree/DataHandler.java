@@ -8,6 +8,7 @@ import androidx.annotation.NonNull;
 
 import com.example.mentalitree.ui.motivation.QuoteModel;
 import com.example.mentalitree.ui.profile.submenus.notes.NoteModel;
+import com.example.mentalitree.ui.profile.submenus.workbook.WorkbookDayModel;
 import com.example.mentalitree.ui.today.TaskModel;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -183,6 +184,41 @@ public class DataHandler {
 
     public LocalDate convert(String dateStr) {
         return (LocalDate.parse(dateStr, DateTimeFormatter.ofPattern(DATE_FORMAT_INPUT)));
+    }
+
+    public void getLogOfCompletedTasks(MyFirebaseWorkbookDayListCallback firebaseCallback){
+        String pattern = "yyyy-MM-dd";
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
+
+        String date = simpleDateFormat.format(new Date());
+        db.collection("users").document(userToken).collection("taskLog")
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+
+                        if (task.isSuccessful()) {
+
+                            ArrayList<WorkbookDayModel> listOfWorkbookDays = new ArrayList<>();
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+
+                                    WorkbookDayModel entry = document.toObject(WorkbookDayModel.class);
+                                    Log.d(TAG, "MADE A NEW WORKBOOKDAYMODEL: " + entry);
+
+                                    if (entry != null) {
+                                        listOfWorkbookDays.add(entry);
+
+                                    }
+
+                            }
+
+                            firebaseCallback.onCallback(listOfWorkbookDays);
+
+                        } else {
+                            Log.d(TAG, "Error getting documents: ", task.getException());
+                        }
+                    }
+                });
     }
 
     public void addTimestampToLog(){
@@ -617,5 +653,8 @@ public class DataHandler {
         void onCallback(ArrayList<NoteModel> list);
     }
 
+    public interface  MyFirebaseWorkbookDayListCallback{
+        void onCallback(ArrayList<WorkbookDayModel> list );
+    }
 }
 

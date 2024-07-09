@@ -5,27 +5,35 @@ import com.example.mentalitree.ui.today.TaskModel;
 import java.util.ArrayList;
 
 public class WorkbookDayModel {
-    String date;
-    ArrayList<TaskModel> tasksCompleted;
+    String timeStamp;
+    ArrayList<TaskModel> chosenTasks;
 
     public WorkbookDayModel(String date, ArrayList<TaskModel> tasksCompleted) {
-        this.date = date;
-        this.tasksCompleted = tasksCompleted;
+        this.timeStamp = date;
+        this.chosenTasks = tasksCompleted;
     }
 
-    public String getDate() {
-        return date;
+    public WorkbookDayModel(){}
+
+    public String getTimeStamp() {
+        return timeStamp;
     }
 
-    public void setDate(String date) {
-        this.date = date;
+    public void setTimeStamp(String timeStamp) {
+        this.timeStamp = timeStamp;
     }
 
-    public ArrayList<TaskModel> getTasksCompleted() {
-        return tasksCompleted;
+    public ArrayList<TaskModel> getChosenTasks() {
+        ArrayList<TaskModel> completedChosenTasks = new ArrayList<>();
+        for(TaskModel task : chosenTasks){
+            if(task.isCompleted()){
+                completedChosenTasks.add(task);
+            }
+        }
+        return completedChosenTasks;
     }
 
-    public void setTasksCompleted(ArrayList<TaskModel> tasksCompleted) {
-        this.tasksCompleted = tasksCompleted;
+    public void setChosenTasks(ArrayList<TaskModel> chosenTasks) {
+        this.chosenTasks = chosenTasks;
     }
 }
