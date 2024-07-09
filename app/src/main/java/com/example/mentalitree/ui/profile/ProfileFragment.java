@@ -22,7 +22,6 @@ import com.example.mentalitree.ui.profile.submenus.workbook.WorkbookFragment;
 
 import java.util.ArrayList;
 
-import kotlin._Assertions;
 
 public class ProfileFragment extends Fragment implements View.OnClickListener {
 
@@ -70,7 +69,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
 
 
         // on below line creating a child fragment
-        Fragment childFragment = new SettingsFragment();
+        Fragment childFragment = new WorkbookFragment();
 
         // on below line creating a fragment transaction and initializing it.
         FragmentTransaction transaction = getChildFragmentManager().beginTransaction();

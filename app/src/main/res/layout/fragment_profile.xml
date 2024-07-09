@@ -33,12 +33,12 @@
             android:paddingHorizontal="5dp">
 
             <Button
-                android:id="@+id/settings_btn"
+                android:id="@+id/workbook_btn"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:background="@drawable/active_submenu_bg"
-                android:text="Settings"
+                android:text="Workbook"
                 android:textColor="@color/white" />
 
             <Button
@@ -51,15 +51,6 @@
                 android:textColor="@color/light_grey" />
 
             <Button
-                android:id="@+id/workbook_btn"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:background="@drawable/inactive_submenu_bg"
-                android:text="Workbook"
-                android:textColor="@color/light_grey" />
-
-            <Button
                 android:id="@+id/statistics_btn"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -67,6 +58,16 @@
                 android:background="@drawable/inactive_submenu_bg"
                 android:text="Statistics"
                 android:textColor="@color/light_grey" />
+
+            <Button
+                android:id="@+id/settings_btn"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/inactive_submenu_bg"
+                android:text="Settings"
+                android:textColor="@color/light_grey" />
+
         </LinearLayout>
 
         <FrameLayout
