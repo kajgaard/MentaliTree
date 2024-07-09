@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.example.mentalitree.R;
 import com.example.mentalitree.databinding.FragmentProfileSettingsBinding;
@@ -52,7 +53,7 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
         if(view == deleteDataBtn){
             //TODO: delete data
         }else if(view == resetPreferencesBtn){
-            //TODO: reset preferences
+            Toast.makeText(getContext(), "We haven't implemented any preferences to reset yet, sorry!", Toast.LENGTH_LONG).show();
         }
     }
 }

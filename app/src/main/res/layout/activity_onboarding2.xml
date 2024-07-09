@@ -88,7 +88,7 @@
         android:layout_marginStart="25dp"
         android:layout_marginTop="50dp"
         android:layout_marginEnd="25dp"
-        android:text="Data stored plsinly in the cloud for development purposes"
+        android:text="Data stored plainly in the cloud for development purposes"
         android:textAlignment="center"
         android:textColor="#AFAFAF"
         android:textSize="16sp"

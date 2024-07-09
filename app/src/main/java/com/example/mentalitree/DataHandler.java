@@ -183,6 +183,32 @@ public class DataHandler {
                 });
     }
 
+    public void addLogEntryForReviewToDatabase(){
+        String pattern = "yyyy-MM-dd-HH:mm:ss";
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
+
+        String date = simpleDateFormat.format(new Date());
+        System.out.println(date);
+
+        Map<String, String> timeStamp = new HashMap<>();
+        timeStamp.put("timeStamp", date);
+
+        db.collection("users").document(userToken).collection("reviewLog").document(date)
+                .set(timeStamp)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Log.d(TAG, "DocumentSnapshot for timestamp successfully written!");
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.w(TAG, "Error writing document", e);
+                    }
+                });
+    }
+
     public LocalDate convert(String dateStr) {
         return (LocalDate.parse(dateStr, DateTimeFormatter.ofPattern(DATE_FORMAT_INPUT)));
     }
@@ -567,6 +593,8 @@ public class DataHandler {
                         Log.w(TAG, "Error writing document", e);
                     }
                 });
+
+        addLogEntryForReviewToDatabase();
     }
 
     public void setHasReviewedToday(boolean hasReviewedToday) {
