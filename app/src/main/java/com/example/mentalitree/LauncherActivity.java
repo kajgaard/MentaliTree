@@ -24,6 +24,7 @@ public class LauncherActivity extends AppCompatActivity {
 
 
         if(hasExistingUser()){
+            //recreateKeyForPixel8Emulator();
             Intent intent = new Intent(this, LogInActivity.class);
             startActivity(intent);
             //privateDataHandler.createKeyForSharedPreferences();
@@ -56,6 +57,13 @@ public class LauncherActivity extends AppCompatActivity {
         SharedPreferences.Editor editor;
         editor = sharedPreferences.edit();
         editor.putBoolean("has_user", true);
+        editor.apply();
+    }
+
+    public void recreateKeyForPixel8Emulator(){
+        SharedPreferences.Editor editor;
+        editor = sharedPreferences.edit();
+        editor.putString("cryptoKey", "dn+o/eO1JXM=");
         editor.apply();
     }
 }
