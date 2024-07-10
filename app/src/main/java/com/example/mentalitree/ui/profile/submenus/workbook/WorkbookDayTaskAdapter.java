@@ -1,6 +1,8 @@
 package com.example.mentalitree.ui.profile.submenus.workbook;
 
+import android.graphics.drawable.Drawable;
 import android.media.Image;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +12,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.mentalitree.MyApplication;
 import com.example.mentalitree.R;
 import com.example.mentalitree.ui.today.TaskModel;
 
@@ -35,7 +38,8 @@ public class WorkbookDayTaskAdapter extends RecyclerView.Adapter<WorkbookDayTask
     @Override
     public void onBindViewHolder(@NonNull WorkbookDayTaskAdapter.MyViewHolder holder, int position) {
         holder.titleTv.setText(completedTasks.get(position).getTaskName());
-        holder.iconIv.setImageResource(completedTasks.get(position).getImage());
+        //holder.iconIv.setImageResource(completedTasks.get(position).getImage());
+        holder.iconIv.setImageResource(completedTasks.get(position).getMatchingCategoryIcon(completedTasks.get(position).getCategory()));
     }
 
     @Override
