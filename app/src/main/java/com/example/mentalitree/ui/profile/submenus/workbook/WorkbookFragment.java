@@ -9,6 +9,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.Toast;
 
 import com.example.mentalitree.DataHandler;
 import com.example.mentalitree.R;
@@ -26,6 +28,7 @@ public class WorkbookFragment extends Fragment {
     RecyclerView workbookDaysRecyclerView;
     FragmentProfileWorkbookBinding binding;
     DataHandler dataHandler = DataHandler.getInstance();
+
 
     public WorkbookFragment() {
         // Required empty public constructor

@@ -38,7 +38,7 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
         // Inflate the layout for this fragment
         binding = FragmentProfileSettingsBinding.inflate(inflater, container, false);
 
-        //View root = binding.getRoot();
+        View root = binding.getRoot();
 
         resetPreferencesBtn = binding.resetPreferencesBtn;
         resetPreferencesBtn.setOnClickListener(this);
@@ -46,7 +46,7 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
         deleteDataBtn = binding.deleteDataBtn;
         deleteDataBtn.setOnClickListener(this);
 
-        return inflater.inflate(R.layout.fragment_profile_settings, container, false);
+        return root;
 
     }
 

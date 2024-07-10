@@ -17,7 +17,9 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.Toast;
 
+import com.example.mentalitree.DataHandler;
 import com.example.mentalitree.R;
 import com.example.mentalitree.databinding.FragmentDeleteDataBinding;
 
@@ -29,6 +31,7 @@ public class DeleteDataFragment extends DialogFragment {
     RadioGroup radioGroup;
     boolean acceptFlag = false;
     Button confirmBtn;
+    DataHandler dataHandler = DataHandler.getInstance();
 
     public DeleteDataFragment() {
         // Required empty public constructor
@@ -52,9 +55,11 @@ public class DeleteDataFragment extends DialogFragment {
             @Override
             public void onClick(View view) {
                 if(acceptFlag){
-
+                    Toast.makeText(getContext(), "will delete", Toast.LENGTH_SHORT).show();
+                    dataHandler.deleteDataFromDatabase();
                     dismiss();
                 }else{
+                    Toast.makeText(getContext(), "wont delete", Toast.LENGTH_SHORT).show();
                     dismiss();
                 }
             }

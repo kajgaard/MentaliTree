@@ -657,6 +657,54 @@ public class DataHandler {
 
     }
 
+    public void deleteDataFromDatabase(){
+        db.collection("users").document(userToken).collection("taskLog")
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        ArrayList<NoteModel> noteList  = new ArrayList<>();
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                db.collection("users").document(userToken).collection("taskLog").document(document.getId()).delete().addOnSuccessListener(new OnSuccessListener<Void>() {
+                                    @Override
+                                    public void onSuccess(Void unused) {
+                                        Log.d(TAG, "Successfully deleted document from taskLog: "+ document.getId());
+                                    }
+                                });
+                            }
+                            Log.d(TAG, "Finished deleting all documents in taskLog collection"+ noteList);
+
+                        } else {
+                            Log.d(TAG, "Error getting documents: ", task.getException());
+                        }
+                    }
+                });
+
+        db.collection("users").document(userToken).collection("notesLog")
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        ArrayList<NoteModel> noteList  = new ArrayList<>();
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                db.collection("users").document(userToken).collection("notesLog").document(document.getId()).delete().addOnSuccessListener(new OnSuccessListener<Void>() {
+                                    @Override
+                                    public void onSuccess(Void unused) {
+                                        Log.d(TAG, "Successfully deleted document from notesLog: "+ document.getId());
+                                    }
+                                });
+                            }
+                            Log.d(TAG, "Finished deleting all documents in notesLog collection"+ noteList);
+
+                        } else {
+                            Log.d(TAG, "Error getting documents: ", task.getException());
+                        }
+                    }
+                });
+    }
+
     public boolean isHasReviewedToday() {
         return hasReviewedToday;
     }
