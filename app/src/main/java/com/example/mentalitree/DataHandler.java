@@ -49,6 +49,7 @@ public class DataHandler {
     boolean hasReviewedToday;
     PrivateDataHandler privateDataHandler = PrivateDataHandler.getInstance();
     int avatarPref;
+    boolean hasUserJustDeleted = false;
 
 
 
@@ -315,10 +316,12 @@ public class DataHandler {
                 });
             });
 
-        }else if((lastEntry.isEqual(today)) && firstLoginEver){
+        }else if(((lastEntry.isEqual(today)) && firstLoginEver) || hasUserJustDeleted){
 
             Log.d(TAG, "Seems like this is your first login ever! I will create new tasks ");
             firstLogonToday = true;
+            firstLoginEver = false;
+            hasUserJustDeleted = false;
             usersCurrentStreak++;
             updateStreakInDatabase();
             getWorkbookTaskFromDatabase(list -> {
@@ -670,6 +673,8 @@ public class DataHandler {
                                     @Override
                                     public void onSuccess(Void unused) {
                                         Log.d(TAG, "Successfully deleted document from taskLog: "+ document.getId());
+                                        hasUserJustDeleted = true;
+                                        usersCurrentStreak = 0;
                                     }
                                 });
                             }
