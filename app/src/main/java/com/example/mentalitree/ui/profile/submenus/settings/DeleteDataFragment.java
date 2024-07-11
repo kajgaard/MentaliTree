@@ -1,13 +1,17 @@
 package com.example.mentalitree.ui.profile.submenus.settings;
 
+import static androidx.core.app.ActivityCompat.finishAffinity;
+
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 
@@ -20,6 +24,7 @@ import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import com.example.mentalitree.DataHandler;
+import com.example.mentalitree.LogInActivity;
 import com.example.mentalitree.R;
 import com.example.mentalitree.databinding.FragmentDeleteDataBinding;
 
@@ -56,8 +61,13 @@ public class DeleteDataFragment extends DialogFragment {
             public void onClick(View view) {
                 if(acceptFlag){
                     Toast.makeText(getContext(), "will delete", Toast.LENGTH_SHORT).show();
-                    dataHandler.deleteDataFromDatabase();
-                    dismiss();
+                    dataHandler.deleteDataFromDatabase(flag -> {
+                        dismiss();
+                        Intent intent = new Intent(getContext(), LogInActivity.class);
+                        startActivity(intent);
+                        getActivity().finish();
+                    });
+
                 }else{
                     Toast.makeText(getContext(), "wont delete", Toast.LENGTH_SHORT).show();
                     dismiss();
@@ -72,7 +82,7 @@ public class DeleteDataFragment extends DialogFragment {
                 acceptFlag = true;
                 Drawable drawable = getResources().getDrawable(R.drawable.red_btn_bg);
                 confirmBtn.setBackground(drawable);
-                confirmBtn.setText("Delete my data");
+                confirmBtn.setText("Delete my data & log out");
             } else if (idRadioButtonChosen == R.id.dontDeleteRadio) {
 
                 acceptFlag = false;

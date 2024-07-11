@@ -51,6 +51,7 @@ public class DataHandler {
     PrivateDataHandler privateDataHandler = PrivateDataHandler.getInstance();
     int avatarPref;
     boolean hasUserJustDeleted = false;
+    ArrayList<String> daysUserHasReviewed;
 
 
 
@@ -106,6 +107,7 @@ public class DataHandler {
                         this.avatarPref = document.getLong("avatar").intValue();
                     }
                     addTimestampToLog();
+                    getTimestampsFromNotesLog();
                     firebaseCallBack.onCallback(true);
 
                 }else{
@@ -179,6 +181,34 @@ public class DataHandler {
                                 increaseCurrentStreakIfNessercary(lastEntry);
                                 firebaseCallBack.onCallback(list);
                             }
+
+                        } else {
+                            Log.d(TAG, "Error getting documents: ", task.getException());
+                        }
+                    }
+                });
+    }
+
+    public void getTimestampsFromNotesLog(){
+        db.collection("users").document(userToken).collection("notesLog")
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+
+                            ArrayList<String> list = new ArrayList<>();
+                            if(task.getResult() != null) {
+                                for (QueryDocumentSnapshot document : task.getResult()) {
+                                    Map<String, Object> data = document.getData();
+                                    String timeStamp = data.get("timeStamp").toString();
+                                    list.add(timeStamp);
+                                    Log.d(TAG, "Found document: " + document.getId() + " => " + document.getData());
+                                }
+                            }
+                            daysUserHasReviewed = list;
+                            //firebaseCallBack.onCallback(list);
+
 
                         } else {
                             Log.d(TAG, "Error getting documents: ", task.getException());
@@ -597,6 +627,18 @@ public class DataHandler {
                 });
     }
 
+    public ArrayList<LocalDate> getDaysUserHasReviewed() {
+
+        ArrayList<LocalDate> convertedDates = new ArrayList<>();
+        for(String timestamp : daysUserHasReviewed){
+            convertedDates.add(convert(timestamp));
+
+        }
+        return convertedDates;
+
+
+    }
+
     public void saveEncryptedNoteToDatabase(String encryptedString, String encryptedRating){
         String pattern = "yyyy-MM-dd-HH:mm:ss";
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
@@ -691,7 +733,7 @@ public class DataHandler {
 
     }
 
-    public void deleteDataFromDatabase(){
+    public void deleteDataFromDatabase(MyFirebaseBooleanCallBack firebaseCallback){
         db.collection("users").document(userToken).collection("taskLog")
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -706,6 +748,7 @@ public class DataHandler {
                                         Log.d(TAG, "Successfully deleted document from taskLog: "+ document.getId());
                                         hasUserJustDeleted = true;
                                         usersCurrentStreak = 0;
+
                                     }
                                 });
                             }
@@ -729,10 +772,12 @@ public class DataHandler {
                                     @Override
                                     public void onSuccess(Void unused) {
                                         Log.d(TAG, "Successfully deleted document from notesLog: "+ document.getId());
+                                        firebaseCallback.onCallback(true);
                                     }
                                 });
                             }
                             Log.d(TAG, "Finished deleting all documents in notesLog collection"+ noteList);
+                            getTimestampsFromNotesLog();
 
                         } else {
                             Log.d(TAG, "Error getting documents: ", task.getException());

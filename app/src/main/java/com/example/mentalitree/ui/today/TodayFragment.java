@@ -258,18 +258,24 @@ public class TodayFragment extends Fragment implements TaskSelectListener, Workb
     }
 
     public void streakHit(LocalDate hitDate, ArrayList<LocalDate> activityDates, ImageView imageView){
-        if(activityDates.contains(hitDate)){
-            if(hitDate.isEqual(LocalDate.now()) && !datahandler.isHasReviewedToday()){
+
+        ArrayList<LocalDate> datesUserHasReviewed = datahandler.getDaysUserHasReviewed();
+
+        if(activityDates.contains(hitDate) && datesUserHasReviewed.contains(hitDate)){
+            /*if(hitDate.isEqual(LocalDate.now()) && !datahandler.isHasReviewedToday()){
                 imageView.setImageResource(R.drawable.today_pending_streak);
             }else if(hitDate.isEqual(LocalDate.now()) && datahandler.isHasReviewedToday()){
                 imageView.setImageResource(R.drawable.completed_streak);
-            }else{
+            }else{*/
                 imageView.setImageResource(R.drawable.completed_streak);
-            }
+            //}
         }else{
-            if(hitDate == LocalDate.now()){
+            if(hitDate.equals(LocalDate.now())  && !datahandler.isHasReviewedToday()){
                 imageView.setImageResource(R.drawable.today_pending_streak);
-            }else {
+            }else if(hitDate.equals(LocalDate.now())  && datahandler.isHasReviewedToday()){
+
+                imageView.setImageResource(R.drawable.completed_streak);
+            }else{
                 imageView.setImageResource(R.drawable.missed_streak);
             }
         }
