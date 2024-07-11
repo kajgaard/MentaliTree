@@ -180,7 +180,7 @@
         android:layout_height="wrap_content"
         android:background="@android:color/transparent"
         android:paddingBottom="30dp"
-        android:hint="This can be anything you wish to remember about today..."
+        android:hint="@string/review_hint"
         android:textColorHint="@color/light_grey"
         android:textCursorDrawable="@drawable/blue_cursor"/>
 

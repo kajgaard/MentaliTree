@@ -5,4 +5,5 @@
     <string name="title_notifications">Profile</string>
     <string name="login_helptext">You can <b><i>find your UserID in the email</i></b> you downloaded the app from</string>
     <string name="create_user">Don\'t have an user?\n<u>Retake onboarding here</u></string>
+    <string name="review_hint">This can be anything you wish to remember about today... \n <i>Ex. Today I was feeling a bit down, but then i did some nature tasks and felt better.</i></string>
 </resources>
