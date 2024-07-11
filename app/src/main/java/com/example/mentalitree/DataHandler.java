@@ -43,8 +43,9 @@ public class DataHandler {
     private static final String TAG = "MMDATAHANDLER";
     public static String DATE_FORMAT_INPUT = "yyyy-MM-dd-HH:mm:ss";
     int usersCurrentStreak;
+    int totalEffortStreak;
     ArrayList<TaskModel> todaysTasks = new ArrayList<>();
-    boolean firstLogonToday;
+    boolean hasUserLoggedInPreviouslyToday;
     boolean firstLoginEver;
     boolean hasReviewedToday;
     PrivateDataHandler privateDataHandler = PrivateDataHandler.getInstance();
@@ -101,6 +102,7 @@ public class DataHandler {
                         this.userToken = document.getId();
                         Map<String, Object> data = document.getData();
                         this.usersCurrentStreak = ((Long) data.get("currentStreak")).intValue();
+                        this.totalEffortStreak = ((Long) data.get("totalEffortStreak")).intValue();
                         this.avatarPref = document.getLong("avatar").intValue();
                     }
                     addTimestampToLog();
@@ -128,6 +130,7 @@ public class DataHandler {
         newUser.put("userId", userId);
         newUser.put("userPin", userPin);
         newUser.put("currentStreak", 0);
+        newUser.put("totalEffortStreak", 0);
         newUser.put("avatar", avatarPref);
 
         db.collection("users").document()
@@ -277,8 +280,8 @@ public class DataHandler {
 
     }
 
-    public boolean isFirstLogonToday() {
-        return firstLogonToday;
+    public boolean isHasUserLoggedInPreviouslyToday() {
+        return hasUserLoggedInPreviouslyToday;
     }
 
     public void increaseCurrentStreakIfNessercary(LocalDate lastEntry){
@@ -290,7 +293,8 @@ public class DataHandler {
         if(!(lastEntry.isEqual(today.minusDays(1))) && !(lastEntry.isEqual(today))){
             Log.d(TAG, "Ooops i dont think you hit the streak");
             usersCurrentStreak = 1;
-            firstLogonToday = true;
+            totalEffortStreak++;
+            hasUserLoggedInPreviouslyToday = true;
             updateStreakInDatabase();
             getWorkbookTaskFromDatabase(list -> {
                 Log.d(TAG, "(1)Hello from shitty method: list is: "+ list + "\ntodays tasks are: "+todaysTasks);
@@ -302,10 +306,11 @@ public class DataHandler {
             });
 
 
-        }else if((lastEntry.isEqual(today.minusDays(1))) && !firstLogonToday){
+        }else if((lastEntry.isEqual(today.minusDays(1))) && !hasUserLoggedInPreviouslyToday){
             Log.d(TAG, "Yes you hit the streak yay!");
-            firstLogonToday = true;
+            hasUserLoggedInPreviouslyToday = true;
             usersCurrentStreak++;
+            totalEffortStreak ++;
             updateStreakInDatabase();
             getWorkbookTaskFromDatabase(list -> {
                 Log.d(TAG, "(1)Hello from shitty method: list is: "+ list + "\ntodays tasks are: "+todaysTasks);
@@ -316,13 +321,38 @@ public class DataHandler {
                 });
             });
 
-        }else if(((lastEntry.isEqual(today)) && firstLoginEver) || hasUserJustDeleted){
+        }else if(((lastEntry.isEqual(today)) && firstLoginEver)){
 
             Log.d(TAG, "Seems like this is your first login ever! I will create new tasks ");
-            firstLogonToday = true;
+            hasUserLoggedInPreviouslyToday = true;
             firstLoginEver = false;
-            hasUserJustDeleted = false;
             usersCurrentStreak++;
+            totalEffortStreak++;
+            updateStreakInDatabase();
+            getWorkbookTaskFromDatabase(list -> {
+                Log.d(TAG, "(1)Hello from shitty method: list is: "+ list + "\ntodays tasks are: "+todaysTasks);
+                todaysTasks = list;
+                Log.d(TAG, "(2)Hello from shitty method: list is: "+ list + "\ntodays tasks are: "+todaysTasks);
+                writeTodaysChosenTasksToLog(flag -> {
+                    Log.d(TAG, "I am done updating the db with chosen tasks");
+                });
+            });
+            /*Log.d(TAG, "Today is normal same day...");
+            usersCurrentStreak++;
+            updateStreakInDatabase();
+            getWorkbookTaskFromDatabase(list -> {
+                Log.d(TAG, "(1)Hello from shitty method: list is: "+ list + "\ntodays tasks are: "+todaysTasks);
+                todaysTasks = list;
+                Log.d(TAG, "(2)Hello from shitty method: list is: "+ list + "\ntodays tasks are: "+todaysTasks);
+                writeTodaysChosenTasksToLog();
+            });*/
+        }else if(hasUserJustDeleted){
+
+            Log.d(TAG, "You have just deleted your user, and i will pretend this is your first login ever ");
+            hasUserLoggedInPreviouslyToday = true;
+            hasUserJustDeleted = false;
+            usersCurrentStreak = 1;
+            totalEffortStreak = 1;
             updateStreakInDatabase();
             getWorkbookTaskFromDatabase(list -> {
                 Log.d(TAG, "(1)Hello from shitty method: list is: "+ list + "\ntodays tasks are: "+todaysTasks);
@@ -513,6 +543,7 @@ public class DataHandler {
     public void updateStreakInDatabase(){
         Map<String, Object> streak = new HashMap<>();
         streak.put("currentStreak", usersCurrentStreak);
+        streak.put("totalEffortStreak", totalEffortStreak);
 
         db.collection("users").document(userToken)
                 .update(streak)
@@ -712,6 +743,10 @@ public class DataHandler {
 
     public boolean isHasReviewedToday() {
         return hasReviewedToday;
+    }
+
+    public int getTotalEffortStreak() {
+        return this.totalEffortStreak;
     }
 
     public interface MyFirebaseBooleanCallBack {

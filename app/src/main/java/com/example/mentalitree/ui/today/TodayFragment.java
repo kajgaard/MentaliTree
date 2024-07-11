@@ -97,8 +97,8 @@ public class TodayFragment extends Fragment implements TaskSelectListener, Workb
 
     public void updateWorkbookTasks(){
 
-        Log.d(TAG, "First logon today value is:" + datahandler.isFirstLogonToday());
-        if(datahandler.isFirstLogonToday()){
+        Log.d(TAG, "First logon today value is:" + datahandler.isHasUserLoggedInPreviouslyToday());
+        if(datahandler.isHasUserLoggedInPreviouslyToday()){
             datahandler.getWorkbookTaskFromDatabase(list -> {
                 Log.d(TAG, "(1)Hello from shitty method: list is: " + list + "\ntodays tasks are: " + datahandler.getTodaysTasks());
                 datahandler.setTodaysTasks(list);
@@ -276,15 +276,16 @@ public class TodayFragment extends Fragment implements TaskSelectListener, Workb
     }
 
     public void updateTotalDayCounter(ArrayList<String> list){
-        long n = list.stream().distinct().count();
-        String value = ""+n;
+        //long n = list.stream().distinct().count();
+        //String value = ""+n;
+        String value = ""+datahandler.getTotalEffortStreak();
         totalDaysCounter.setText(value);
     }
 
     public void updateCurrentStreak(){
         String value = String.valueOf(datahandler.getUsersCurrentStreak());
         Log.d(TAG, "I am setting value for current streak: " + value);
-       currentStreakCounter.setText(value);
+        currentStreakCounter.setText(value);
 
     }
 
