@@ -135,8 +135,8 @@ public class DataHandler {
         newUser.put("creationDate", date);
         newUser.put("userId", userId);
         newUser.put("userPin", userPin);
-        newUser.put("currentStreak", 0);
-        newUser.put("totalEffortStreak", 0);
+        newUser.put("currentStreak", 1);
+        newUser.put("totalEffortStreak", 1);
         newUser.put("avatar", avatarPref);
         ArrayList<CategoryProbability> initialCategoryProbabilities = new ArrayList<>();
         initialCategoryProbabilities.add(new CategoryProbability("reflection",false,""));
