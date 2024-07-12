@@ -13,7 +13,7 @@ public class TaskModel {
     boolean completed = false;
 
 
-    //constructor for use in get data from db
+
     public TaskModel(String taskName, String taskShortDescription, String category, String helpText, String taskId) {
         this.taskName = taskName;
         this.taskShortDescription = taskShortDescription;

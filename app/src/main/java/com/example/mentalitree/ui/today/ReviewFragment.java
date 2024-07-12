@@ -4,18 +4,14 @@ import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
-import android.content.res.ColorStateList;
 import android.graphics.Color;
-import android.graphics.PorterDuff;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
-import androidx.fragment.app.Fragment;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,7 +24,6 @@ import com.example.mentalitree.DataHandler;
 import com.example.mentalitree.PrivateDataHandler;
 import com.example.mentalitree.R;
 import com.example.mentalitree.databinding.FragmentReviewBinding;
-import com.example.mentalitree.databinding.FragmentWorkbookTaskBinding;
 import com.google.android.material.button.MaterialButton;
 
 public class ReviewFragment extends DialogFragment implements View.OnClickListener {
@@ -41,6 +36,7 @@ public class ReviewFragment extends DialogFragment implements View.OnClickListen
     ImageView closeBtnIv;
     TextView doneBtnTv;
     String dynamicRating;
+    String dynamicRatingDescriptiveString ="";
     PrivateDataHandler privateDataHandler = PrivateDataHandler.getInstance();
     DataHandler datahandler = DataHandler.getInstance();
     public ReviewFragment() {
@@ -115,6 +111,8 @@ public class ReviewFragment extends DialogFragment implements View.OnClickListen
             String encryptedNote = privateDataHandler.encryptString(input);
             String encryptedRating = privateDataHandler.encryptString(dynamicRating);
             datahandler.saveEncryptedNoteToDatabase(encryptedNote, encryptedRating);
+            datahandler.setTodaysUserRating(dynamicRatingDescriptiveString);
+            datahandler.updateCategoryProbabilitiesInDatabaseAfterReview();
             if(listener != null){
                 datahandler.setHasReviewedToday(true);
                 listener.onReviewCompleted();
@@ -126,22 +124,27 @@ public class ReviewFragment extends DialogFragment implements View.OnClickListen
             resetAllButtons();
             setButtonChosen(rating1Btn);
             dynamicRating = "1";
+            dynamicRatingDescriptiveString = "Good";
         } else if (view == rating2Btn) {
             resetAllButtons();
             setButtonChosen(rating2Btn);
             dynamicRating = "2";
+            dynamicRatingDescriptiveString = "Okay";
         } else if (view == rating3Btn) {
             resetAllButtons();
             setButtonChosen(rating3Btn);
             dynamicRating = "3";
+            dynamicRatingDescriptiveString = "Not sure";
         } else if (view == rating4Btn) {
             resetAllButtons();
             setButtonChosen(rating4Btn);
             dynamicRating = "4";
+            dynamicRatingDescriptiveString = "Poorly";
         } else if (view == rating5Btn) {
             resetAllButtons();
             setButtonChosen(rating5Btn);
             dynamicRating = "5";
+            dynamicRatingDescriptiveString = "Very bad";
         }
 
     }

@@ -10,6 +10,7 @@ import java.util.Random;
 public class AdaptiveAlgorithm {
     private static AdaptiveAlgorithm single_instance = null;
     public static final String TAG = "MMALGORITHM";
+    DataHandler dataHandler = DataHandler.getInstance();
 
     private AdaptiveAlgorithm() {
     }
@@ -25,9 +26,9 @@ public class AdaptiveAlgorithm {
     }
 
 
-    public ArrayList<TaskModel> offerTasks (ArrayList<TaskModel> allTasksInDatabase, ArrayList<CategoryProbability> categoryProbabilities){
+    public ArrayList<TaskModel> offerTasks (ArrayList<TaskModel> allTasksInDatabase){
         ArrayList<Double> allProbs = new ArrayList<>();
-        for (CategoryProbability category : categoryProbabilities){
+        for (CategoryProbability category : dataHandler.getCategoryProbabilities()){
             allProbs.add(category.calculateProbability());
         }
         Double totalProb = 0.0;
@@ -119,7 +120,8 @@ public class AdaptiveAlgorithm {
         }
 }
         //Log.e(TAG, "Amount of chosen tasks: "+finalChosenTasks.size());
-            DataHandler.getInstance().setHasUserLoggedInPreviouslyToday(true);
+        dataHandler.setHasUserLoggedInPreviouslyToday(true);
+        dataHandler.resetYesterdaysDataForCategoryProbabilitiesInDatabaseAfterCalculation();
         return finalChosenTasks;
     }
 }

@@ -10,7 +10,6 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
-import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,9 +21,7 @@ import android.widget.TextView;
 
 import com.example.mentalitree.DataHandler;
 import com.example.mentalitree.R;
-import com.example.mentalitree.databinding.FragmentProfileSettingsBinding;
 import com.example.mentalitree.databinding.FragmentWorkbookTaskBinding;
-import com.example.mentalitree.databinding.WorkbookTaskBinding;
 
 import java.util.ArrayList;
 
@@ -130,6 +127,7 @@ public class WorkbookTaskFragment extends DialogFragment implements View.OnClick
 
             dataHandler.addCompletedTaskToLog(taskObject);
             dataHandler.setTodaysTasks(masterList);
+            dataHandler.updateCategoryProbabilitiesOnRelevantOnSpecificCategoryInDatabase(taskObject);
             //ArrayList<TaskModel> newUpdatedList = oldListBeforeUpdate.get()
             if(confirmedListener != null){
                 confirmedListener.onDialogCompleted();

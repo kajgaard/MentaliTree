@@ -28,7 +28,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 public class DataHandler {
 
@@ -54,6 +53,7 @@ public class DataHandler {
     boolean hasUserJustDeleted = false;
     ArrayList<String> daysUserHasReviewed;
     ArrayList<CategoryProbability> categoryProbabilities;
+    String todaysUserRating = "";
 
 
     private DataHandler() {
@@ -326,6 +326,14 @@ public class DataHandler {
 
     }
 
+    public ArrayList<CategoryProbability> getCategoryProbabilities() {
+        return categoryProbabilities;
+    }
+
+    public void setCategoryProbabilities(ArrayList<CategoryProbability> categoryProbabilities) {
+        this.categoryProbabilities = categoryProbabilities;
+    }
+
     public boolean isHasUserLoggedInPreviouslyToday() {
         return hasUserLoggedInPreviouslyToday;
     }
@@ -459,6 +467,107 @@ public class DataHandler {
    //                 }
    //             });
    // }
+
+
+    public void updateCategoryProbabilitiesOnRelevantOnSpecificCategoryInDatabase(TaskModel relevantTask){
+
+                for(CategoryProbability category : categoryProbabilities){
+                    if(category.getCategory().equals(relevantTask.getCategory())){
+                        category.setPickedLastTime(true);
+                        category.setPickAmountCounter((category.pickAmountCounter)+1);
+                        category.setPickrateAmountEligibleModifierString(todaysUserRating);
+                    }
+                }
+
+
+
+        Map<String, Object> updatedCategoryProbabilities = new HashMap<>();
+        updatedCategoryProbabilities.put("categoryProbabilities", this.categoryProbabilities);
+
+        db.collection("users").document(userToken)
+                .update(updatedCategoryProbabilities)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Log.d(TAG, "DataHandler:494: I just updated todays category probabilities in the database with: " + categoryProbabilities.toString());
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.w(TAG, "Error writing document", e);
+                    }
+                });
+    }
+
+    public void updateCategoryProbabilitiesInDatabaseAfterReview(){
+        for(TaskModel task : todaysTasks){
+            if(task.isCompleted()){
+                for(CategoryProbability category : categoryProbabilities){
+                    if(category.getCategory().equals(task.getCategory())){
+                        category.setPickrateAmountEligibleModifierString(todaysUserRating);
+                    }
+                }
+            }
+        }
+
+        Map<String, Object> updatedCategoryProbabilities = new HashMap<>();
+        updatedCategoryProbabilities.put("categoryProbabilities", this.categoryProbabilities);
+
+        db.collection("users").document(userToken)
+                .update(updatedCategoryProbabilities)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Log.d(TAG, "DataHandler:494: I just updated todays category probabilities in the database with: " + categoryProbabilities.toString());
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.w(TAG, "Error writing document", e);
+                    }
+                });
+    }
+
+    public void resetYesterdaysDataForCategoryProbabilitiesInDatabaseAfterCalculation(){
+
+                for(CategoryProbability category : this.categoryProbabilities){
+
+                        category.setPickrateAmountEligibleModifierString("");
+                        category.setPickedLastTime(false);
+
+                }
+
+
+                Map<String, Object> updatedCategoryProbabilities = new HashMap<>();
+                updatedCategoryProbabilities.put("categoryProbabilities", this.categoryProbabilities);
+
+                db.collection("users").document(userToken)
+                        .update(updatedCategoryProbabilities)
+                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void aVoid) {
+                                Log.d(TAG, "DataHandler:494: I just updated todays category probabilities in the database with: " + categoryProbabilities.toString());
+                            }
+                        })
+                        .addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Log.w(TAG, "Error writing document", e);
+                            }
+                        });
+    }
+
+
+
+    public String getTodaysUserRating() {
+        return todaysUserRating;
+    }
+
+    public void setTodaysUserRating(String todaysUserRating) {
+        this.todaysUserRating = todaysUserRating;
+    }
 
     public void addCompletedTaskToLog(TaskModel taskModel){
 
@@ -612,6 +721,8 @@ public class DataHandler {
 
                                 }else{
                                     todaysTasks = chooseTodaysTasks(allTasksInDatabase);
+                                    todaysUserRating = "";
+                                    setAllNewChosenTasksToBeUncompleted();
                                     saveNewChosenTasksToTaskLogInDatabase();
                                     Log.d(TAG,"DataHandler:614: I had trouble converting todays entry to a WorkDayLogEntry object. Instead i just made new ones:  "+todaysTasks);
                                     firebaseCallback.onCallback(todaysTasks);
@@ -619,6 +730,8 @@ public class DataHandler {
 
                             }else{
                                 todaysTasks = chooseTodaysTasks(allTasksInDatabase);
+                                todaysUserRating = "";
+                                setAllNewChosenTasksToBeUncompleted();
                                 Log.d(TAG,"DataHandler:620: There was no taskLog entry for todays date, so i better make new ones! See here what i made:  "+todaysTasks);
                                 saveNewChosenTasksToTaskLogInDatabase();
                                 firebaseCallback.onCallback(todaysTasks);
@@ -630,6 +743,13 @@ public class DataHandler {
                     }
                 });
 
+
+    }
+
+    public void setAllNewChosenTasksToBeUncompleted(){
+        for ( TaskModel task : todaysTasks){
+            task.setCompleted(false);
+        }
     }
 
     public ArrayList<TaskModel> chooseTodaysTasks(ArrayList<TaskModel> list){
@@ -637,7 +757,7 @@ public class DataHandler {
         //        chosen = (ArrayList<TaskModel>) list.stream().limit(5).collect(Collectors.toList());
         //return chosen;
         AdaptiveAlgorithm adaptiveAlgorithm = AdaptiveAlgorithm.getInstance();
-        return adaptiveAlgorithm.offerTasks(list,categoryProbabilities);
+        return adaptiveAlgorithm.offerTasks(list);
     }
 
     public void writeTodaysChosenTasksToLog(MyFirebaseBooleanCallBack firebaseBooleanCallBack){
@@ -864,6 +984,33 @@ public class DataHandler {
     }
 
     public void deleteDataFromDatabase(MyFirebaseBooleanCallBack firebaseCallback){
+
+
+        db.collection("users").document(userToken).collection("notesLog")
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        ArrayList<NoteModel> noteList  = new ArrayList<>();
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                db.collection("users").document(userToken).collection("notesLog").document(document.getId()).delete().addOnSuccessListener(new OnSuccessListener<Void>() {
+                                    @Override
+                                    public void onSuccess(Void unused) {
+                                        //Log.d(TAG, "Successfully deleted document from notesLog: "+ document.getId());
+
+                                    }
+                                });
+                            }
+                            //Log.d(TAG, "Finished deleting all documents in notesLog collection"+ noteList);
+                            getTimestampsFromNotesLog();
+
+                        } else {
+                            //Log.d(TAG, "Error getting documents: ", task.getException());
+                        }
+                    }
+                });
+
         db.collection("users").document(userToken).collection("taskLog")
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -879,36 +1026,12 @@ public class DataHandler {
                                         hasUserJustDeleted = true;
                                         usersCurrentStreak = 0;
                                         updateStreakInDatabase();
+                                        firebaseCallback.onCallback(true);
 
                                     }
                                 });
                             }
                             //Log.d(TAG, "Finished deleting all documents in taskLog collection"+ noteList);
-
-                        } else {
-                            //Log.d(TAG, "Error getting documents: ", task.getException());
-                        }
-                    }
-                });
-
-        db.collection("users").document(userToken).collection("notesLog")
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        ArrayList<NoteModel> noteList  = new ArrayList<>();
-                        if (task.isSuccessful()) {
-                            for (QueryDocumentSnapshot document : task.getResult()) {
-                                db.collection("users").document(userToken).collection("notesLog").document(document.getId()).delete().addOnSuccessListener(new OnSuccessListener<Void>() {
-                                    @Override
-                                    public void onSuccess(Void unused) {
-                                        //Log.d(TAG, "Successfully deleted document from notesLog: "+ document.getId());
-                                        firebaseCallback.onCallback(true);
-                                    }
-                                });
-                            }
-                            //Log.d(TAG, "Finished deleting all documents in notesLog collection"+ noteList);
-                            getTimestampsFromNotesLog();
 
                         } else {
                             //Log.d(TAG, "Error getting documents: ", task.getException());
