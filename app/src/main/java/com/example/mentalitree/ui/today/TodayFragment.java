@@ -25,8 +25,10 @@ import com.example.mentalitree.databinding.FragmentTodayBinding;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.time.format.TextStyle;
 import java.time.temporal.TemporalAdjusters;
 import java.util.ArrayList;
+import java.util.Locale;
 
 public class TodayFragment extends Fragment implements TaskSelectListener, WorkbookTaskFragment.OnDialogConfirmedListener, ReviewFragment.OnReviewCompletedListener, View.OnClickListener {
 
@@ -35,7 +37,7 @@ public class TodayFragment extends Fragment implements TaskSelectListener, Workb
      RecyclerView workbookTasksRv;
      ImageView mondayIv, tuesdayIv, wednesdayIv, thursdayIv, fridayIv, saturdayIv, sundayIv, taskStreak1, taskStreak2, taskStreak3;
      ImageView treeProgressIv, landscapeIv;
-     TextView totalDaysCounter, currentStreakCounter;
+     TextView totalDaysCounter, currentStreakCounter, todaysDateTv;
     DataHandler datahandler = DataHandler.getInstance();
     PrivateDataHandler privateDataHandler = PrivateDataHandler.getInstance();
     private static final String TAG = "MMTODAYFRAG";
@@ -76,6 +78,8 @@ public class TodayFragment extends Fragment implements TaskSelectListener, Workb
         landscapeIv = binding.landscapeIv;
         treeProgressIv.setMaxHeight((int) (landscapeIv.getHeight()*0.75));
 
+        todaysDateTv = binding.todaysDateTv;
+        todaysDateTv.setText(convertDate(LocalDate.now().toString()));
         //Log.e(TAG, "Running OnCreateView");
         datahandler.hasUserReviewedToday(value ->{
             //Log.e(TAG, "dataHandler.hasUserReviewedToday: "+value);
@@ -185,6 +189,7 @@ public class TodayFragment extends Fragment implements TaskSelectListener, Workb
     @Override
     public void onResume() {
         super.onResume();
+
         //Log.e(TAG, "onResume called");
         updateReviewToday();
     }
@@ -491,5 +496,35 @@ public class TodayFragment extends Fragment implements TaskSelectListener, Workb
                 //String decrypted = privateDataHandler.decryptString(encrypted);
                 ////Log.e(TAG, "Now i have decrypted it again: " + decrypted);
             }
+    }
+    public String convertDate(String dateString){
+        // Parse the date string into a LocalDate object
+        LocalDate date = LocalDate.parse(dateString);
+
+        // Get the day of the week, month, and day of the month
+        String dayOfWeek = date.getDayOfWeek().getDisplayName(TextStyle.FULL, Locale.ENGLISH);
+        String month = date.getMonth().getDisplayName(TextStyle.FULL, Locale.ENGLISH);
+        int dayOfMonth = date.getDayOfMonth();
+
+        // Format the day of the month with the appropriate suffix (st, nd, rd, th)
+        String dayOfMonthSuffix = getDayOfMonthSuffix(dayOfMonth);
+
+        // Create the final formatted date string
+        String formattedDate = String.format("%s %s %d%s", dayOfWeek, month, dayOfMonth, dayOfMonthSuffix);
+        return formattedDate;
+    }
+
+    // Method to get the appropriate suffix for the day of the month
+    private static String getDayOfMonthSuffix(int n) {
+        Log.d(TAG,"I am trying to get a suffix for date"+ n );
+        if (n >= 11 && n <= 13) {
+            return "th";
+        }
+        switch (n % 10) {
+            case 1:  return "st";
+            case 2:  return "nd";
+            case 3:  return "rd";
+            default: return "th";
+        }
     }
 }
