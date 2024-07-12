@@ -34,6 +34,7 @@ public class TodayFragment extends Fragment implements TaskSelectListener, Workb
      ArrayList<TaskModel> workbookTasks = new ArrayList<>();
      RecyclerView workbookTasksRv;
      ImageView mondayIv, tuesdayIv, wednesdayIv, thursdayIv, fridayIv, saturdayIv, sundayIv, taskStreak1, taskStreak2, taskStreak3;
+     ImageView treeProgressIv, landscapeIv;
      TextView totalDaysCounter, currentStreakCounter;
     DataHandler datahandler = DataHandler.getInstance();
     PrivateDataHandler privateDataHandler = PrivateDataHandler.getInstance();
@@ -71,6 +72,10 @@ public class TodayFragment extends Fragment implements TaskSelectListener, Workb
         reviewBtn = binding.reviewDayBtn;
         reviewBtn.setOnClickListener(this);
 
+        treeProgressIv = binding.treeIv;
+        landscapeIv = binding.landscapeIv;
+        treeProgressIv.setMaxHeight((int) (landscapeIv.getHeight()*0.75));
+
         //Log.e(TAG, "Running OnCreateView");
         datahandler.hasUserReviewedToday(value ->{
             //Log.e(TAG, "dataHandler.hasUserReviewedToday: "+value);
@@ -85,6 +90,7 @@ public class TodayFragment extends Fragment implements TaskSelectListener, Workb
             Log.d(TAG, "TodayFragment:84: I just got the chosentasks back from Datahandler with: "+list);
             updateWorkbookUI();
             updateWorkbookStreakUI();
+            updateTreeStage();
         });
 
         //updateWorkbookTasks();
@@ -102,6 +108,22 @@ public class TodayFragment extends Fragment implements TaskSelectListener, Workb
         });
     }
 
+    public void updateTreeStage(){
+
+        if(datahandler.getTotalEffortStreak() >= 14){
+            treeProgressIv.setImageResource(R.drawable.tree_5);
+        } else if (datahandler.getTotalEffortStreak() >= 11) {
+            treeProgressIv.setImageResource(R.drawable.tree_4);
+        } else if (datahandler.getTotalEffortStreak() >= 8) {
+            treeProgressIv.setImageResource(R.drawable.tree_3);
+        } else if (datahandler.getTotalEffortStreak() >= 5) {
+            treeProgressIv.setImageResource(R.drawable.tree_2);
+        } else if (datahandler.getTotalEffortStreak() >= 2) {
+            treeProgressIv.setImageResource(R.drawable.tree_1);
+        } else {
+            treeProgressIv.setImageResource(R.drawable.tree_0);
+        }
+    }
     public void updateWorkbookTasks(){
 
 //       //Log.d(TAG, "Has user logged in previously today value: " + datahandler.isHasUserLoggedInPreviouslyToday());
