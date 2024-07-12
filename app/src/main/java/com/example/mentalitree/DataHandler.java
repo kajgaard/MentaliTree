@@ -340,7 +340,7 @@ public class DataHandler {
         //Log.d(TAG, "Hello from increasing streak method");
 
         //Log.d(TAG, "Todays date for comp is: " + today+"\nlastEntry is: " + lastEntry + "\ntoday.minusDays(1): " + today.minusDays(1));
-        if(!(lastEntry.isEqual(today.minusDays(1))) && !(lastEntry.isEqual(today))){
+        if(!(lastEntry.isEqual(today.minusDays(1))) && !(lastEntry.isEqual(today)) && !hasUserLoggedInPreviouslyToday){
             //Log.d(TAG, "Ooops i dont think you hit the streak");
             usersCurrentStreak = 1;
             totalEffortStreak++;
