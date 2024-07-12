@@ -84,6 +84,7 @@ public class TodayFragment extends Fragment implements TaskSelectListener, Workb
         datahandler.returnOrMakeChosenTasksForToday(list -> {
             Log.d(TAG, "TodayFragment:84: I just got the chosentasks back from Datahandler with: "+list);
             updateWorkbookUI();
+            updateWorkbookStreakUI();
         });
 
         //updateWorkbookTasks();
