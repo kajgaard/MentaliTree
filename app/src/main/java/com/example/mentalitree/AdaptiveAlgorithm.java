@@ -95,10 +95,10 @@ public class AdaptiveAlgorithm {
                         }
                         break;
                     default:
-                        Log.e(TAG,"Exception!! Counter: "+ counter);
+                        //Log.e(TAG,"Exception!! Counter: "+ counter);
                 }
         }
-        Log.e(TAG,"chosenCatgories:"+chosenCategories);
+        //Log.e(TAG,"chosenCatgories:"+chosenCategories);
         ArrayList<TaskModel> dataList = allTasksInDatabase;
         ArrayList<TaskModel> finalChosenTasks = new ArrayList<>();
         ArrayList<TaskModel> relevantTaskModels = new ArrayList<>();
@@ -110,7 +110,7 @@ public class AdaptiveAlgorithm {
                 }
             }
         }
-        Log.e(TAG,"Total tasks in task pool of 5 task genres (should be 25):  "+relevantTaskModels.size());
+        //Log.e(TAG,"Total tasks in task pool of 5 task genres (should be 25):  "+relevantTaskModels.size());
         while(finalChosenTasks.size()<5) {
             int index = rand.nextInt(relevantTaskModels.size());
             TaskModel chosenTask = relevantTaskModels.get(index);
@@ -118,7 +118,7 @@ public class AdaptiveAlgorithm {
                 finalChosenTasks.add(chosenTask);
         }
 }
-        Log.e(TAG, "Amount of chosen tasks: "+finalChosenTasks.size());
+        //Log.e(TAG, "Amount of chosen tasks: "+finalChosenTasks.size());
             DataHandler.getInstance().setHasUserLoggedInPreviouslyToday(true);
         return finalChosenTasks;
     }

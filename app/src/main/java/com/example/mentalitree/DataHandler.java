@@ -45,6 +45,7 @@ public class DataHandler {
     int usersCurrentStreak;
     int totalEffortStreak;
     ArrayList<TaskModel> todaysTasks = new ArrayList<>();
+    ArrayList<TaskModel> allTasksInDatabase = new ArrayList<>();
     boolean hasUserLoggedInPreviouslyToday;
     boolean firstLoginEver;
     boolean hasReviewedToday;
@@ -345,14 +346,14 @@ public class DataHandler {
             totalEffortStreak++;
             hasUserLoggedInPreviouslyToday = true;
             updateStreakInDatabase();
-            getWorkbookTaskFromDatabase(list -> {
+            /*getWorkbookTaskFromDatabase(list -> {
                 //Log.d(TAG, "(1)Hello from shitty method: list is: "+ list + "\ntodays tasks are: "+todaysTasks);
                 todaysTasks = list;
                 //Log.d(TAG, "(2)Hello from shitty method: list is: "+ list + "\ntodays tasks are: "+todaysTasks);
                 writeTodaysChosenTasksToLog(flag -> {
                     //Log.d(TAG, "I am done updating the db with chosen tasks");
                 });
-            });
+            });*/
 
 
         }else if((lastEntry.isEqual(today.minusDays(1))) && !hasUserLoggedInPreviouslyToday){
@@ -361,14 +362,14 @@ public class DataHandler {
             usersCurrentStreak++;
             totalEffortStreak ++;
             updateStreakInDatabase();
-            getWorkbookTaskFromDatabase(list -> {
+            /*getWorkbookTaskFromDatabase(list -> {
                 //Log.d(TAG, "(1)Hello from shitty method: list is: "+ list + "\ntodays tasks are: "+todaysTasks);
                 todaysTasks = list;
                 //Log.d(TAG, "(2)Hello from shitty method: list is: "+ list + "\ntodays tasks are: "+todaysTasks);
                 writeTodaysChosenTasksToLog(flag -> {
                     //Log.d(TAG, "I am done updating the db with chosen tasks");
                 });
-            });
+            });*/
 
         }else if(((lastEntry.isEqual(today)) && firstLoginEver && this.todaysTasks.isEmpty())){
 
@@ -378,6 +379,7 @@ public class DataHandler {
             usersCurrentStreak++;
             totalEffortStreak++;
             updateStreakInDatabase();
+            /*
             getWorkbookTaskFromDatabase(list -> {
                 //Log.d(TAG, "(1)Hello from shitty method: list is: "+ list + "\ntodays tasks are: "+todaysTasks);
                 todaysTasks = list;
@@ -385,8 +387,9 @@ public class DataHandler {
                 writeTodaysChosenTasksToLog(flag -> {
                     //Log.d(TAG, "I am done updating the db with chosen tasks");
                 });
-            });
-            /*//Log.d(TAG, "Today is normal same day...");
+            });/*
+            /*
+            //Log.d(TAG, "Today is normal same day...");
             usersCurrentStreak++;
             updateStreakInDatabase();
             getWorkbookTaskFromDatabase(list -> {
@@ -402,7 +405,7 @@ public class DataHandler {
             hasUserJustDeleted = false;
             usersCurrentStreak = 1;
             totalEffortStreak = 1;
-            updateStreakInDatabase();
+            updateStreakInDatabase();/*
             getWorkbookTaskFromDatabase(list -> {
                 //Log.d(TAG, "(1)Hello from shitty method: list is: "+ list + "\ntodays tasks are: "+todaysTasks);
                 todaysTasks = list;
@@ -410,7 +413,7 @@ public class DataHandler {
                 writeTodaysChosenTasksToLog(flag -> {
                     //Log.d(TAG, "I am done updating the db with chosen tasks");
                 });
-            });
+            });*/
             /*//Log.d(TAG, "Today is normal same day...");
             usersCurrentStreak++;
             updateStreakInDatabase();
@@ -423,39 +426,39 @@ public class DataHandler {
         }
     }
 
-    public void getChosenTasksFromDatabase(MyFirebaseTaskModelListCallback firebaseCallback){
-
-        String pattern = "yyyy-MM-dd";
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
-
-        String date = simpleDateFormat.format(new Date());
-        db.collection("users").document(userToken).collection("taskLog").document(date)
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                        if (task.isSuccessful()) {
-
-                            DocumentSnapshot document = task.getResult();
-                            if(document.exists()) {
-
-                                WorkDayLogEntry entry = document.toObject(WorkDayLogEntry.class);
-                                //Log.d(TAG,"FINALLY THE OBJECT IS: "+entry);
-                                if(entry != null) {
-                                    todaysTasks = entry.getChosenTasks();
-                                    //Log.d(TAG,"SEEEE WHAT TODAYS TASKS ARE: "+todaysTasks);
-                                    firebaseCallback.onCallback(todaysTasks);
-
-                                }
-
-                            }
-
-                        } else {
-                            //Log.d(TAG, "Error getting documents: ", task.getException());
-                        }
-                    }
-                });
-    }
+   // public void getChosenTasksFromDatabase(MyFirebaseTaskModelListCallback firebaseCallback){
+//
+   //     String pattern = "yyyy-MM-dd";
+   //     SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
+//
+   //     String date = simpleDateFormat.format(new Date());
+   //     db.collection("users").document(userToken).collection("taskLog").document(date)
+   //             .get()
+   //             .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+   //                 @Override
+   //                 public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+   //                     if (task.isSuccessful()) {
+//
+   //                         DocumentSnapshot document = task.getResult();
+   //                         if(document.exists()) {
+//
+   //                             WorkDayLogEntry entry = document.toObject(WorkDayLogEntry.class);
+   //                             //Log.d(TAG,"FINALLY THE OBJECT IS: "+entry);
+   //                             if(entry != null) {
+   //                                 todaysTasks = entry.getChosenTasks();
+   //                                 //Log.d(TAG,"SEEEE WHAT TODAYS TASKS ARE: "+todaysTasks);
+   //                                 firebaseCallback.onCallback(todaysTasks);
+//
+   //                             }
+//
+   //                         }
+//
+   //                     } else {
+   //                         //Log.d(TAG, "Error getting documents: ", task.getException());
+   //                     }
+   //                 }
+   //             });
+   // }
 
     public void addCompletedTaskToLog(TaskModel taskModel){
 
@@ -553,6 +556,82 @@ public class DataHandler {
                 });
     }
 
+    public void getWorkbookTasksFromDatabaseAndPutInClassVariable(){
+        Log.d(TAG, "Datanahandler:560: Running the getWorkbookTasksFromDatabaseAndPutInClassVariable()");
+        db.collection("workbook-tasks")
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        ArrayList<TaskModel> taskList  =new ArrayList<>();
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                Map<String, Object> dataObject;
+                                dataObject = document.getData();
+                                TaskModel workbookTask = new TaskModel(dataObject.get("taskName").toString(),
+                                        dataObject.get("shortDescription").toString(),
+                                        dataObject.get("category").toString(),
+                                        dataObject.get("additionalText").toString(),
+                                        dataObject.get("taskId").toString());
+                                taskList.add(workbookTask);
+
+                                //Log.d(TAG, document.getId() + " => " + document.getData()+"\nI made a taskModel object like: "+workbookTask.toString());
+                            }
+                            Log.d(TAG, "Datahandler:579: I found a lot of tasks in the database " + taskList);
+                            allTasksInDatabase = taskList;
+
+                        } else {
+                            //Log.d(TAG, "Error getting documents: ", task.getException());
+                        }
+                    }
+                });
+    }
+
+    public void returnOrMakeChosenTasksForToday(MyFirebaseTaskModelListCallback firebaseCallback){
+        Log.d(TAG, "DataHandler:591: I am now inside the returnOrMakeChosenTasksForToday");
+        String pattern = "yyyy-MM-dd";
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
+
+        String date = simpleDateFormat.format(new Date());
+        db.collection("users").document(userToken).collection("taskLog").document(date)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                        if (task.isSuccessful()) {
+
+                            DocumentSnapshot document = task.getResult();
+                            if(document.exists()) {
+
+                                WorkDayLogEntry entry = document.toObject(WorkDayLogEntry.class);
+                                Log.d(TAG,"DataHandler:603: I just tried to find chosen tasks for today in the database, and i found the following: "+entry);
+                                if(entry != null) {
+                                    todaysTasks = entry.getChosenTasks();
+                                    Log.d(TAG,"DataHandler:606: I see that we already had chosen tasks for today, see here:  "+todaysTasks);
+                                    firebaseCallback.onCallback(todaysTasks);
+
+                                }else{
+                                    todaysTasks = chooseTodaysTasks(allTasksInDatabase);
+                                    saveNewChosenTasksToTaskLogInDatabase();
+                                    Log.d(TAG,"DataHandler:614: I had trouble converting todays entry to a WorkDayLogEntry object. Instead i just made new ones:  "+todaysTasks);
+                                    firebaseCallback.onCallback(todaysTasks);
+                                }
+
+                            }else{
+                                todaysTasks = chooseTodaysTasks(allTasksInDatabase);
+                                Log.d(TAG,"DataHandler:620: There was no taskLog entry for todays date, so i better make new ones! See here what i made:  "+todaysTasks);
+                                saveNewChosenTasksToTaskLogInDatabase();
+                                firebaseCallback.onCallback(todaysTasks);
+                            }
+
+                        } else {
+                            Log.d(TAG, "Error getting todays TaskLog documents: ", task.getException());
+                        }
+                    }
+                });
+
+    }
+
     public ArrayList<TaskModel> chooseTodaysTasks(ArrayList<TaskModel> list){
         //ArrayList<TaskModel> chosen = new ArrayList<>();
         //        chosen = (ArrayList<TaskModel>) list.stream().limit(5).collect(Collectors.toList());
@@ -588,6 +667,36 @@ public class DataHandler {
                             Log.w(TAG, "Error writing document", e);
                         }
                     });
+
+    }
+
+    public void saveNewChosenTasksToTaskLogInDatabase(){
+
+        String pattern = "yyyy-MM-dd";
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
+
+        String date = simpleDateFormat.format(new Date());
+        System.out.println(date);
+
+        Map<String, Object> taskLog = new HashMap<>();
+        taskLog.put("timeStamp", date);
+        taskLog.put("chosenTasks", this.todaysTasks);
+
+        db.collection("users").document(userToken).collection("taskLog").document(date)
+                .set(taskLog)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Log.d(TAG, "DocumentSnapshot for taskLog successfully written!");
+
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.w(TAG, "Error writing document", e);
+                    }
+                });
 
     }
 

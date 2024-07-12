@@ -12,6 +12,7 @@ public class LauncherActivity extends AppCompatActivity {
 
     SharedPreferences sharedPreferences;
     PrivateDataHandler privateDataHandler = PrivateDataHandler.getInstance();
+    DataHandler dataHandler = DataHandler.getInstance();
     private static final String TAG  ="MMLAUNCHER";
 
     @Override
@@ -20,6 +21,7 @@ public class LauncherActivity extends AppCompatActivity {
         setContentView(R.layout.activity_launcher);
 
         sharedPreferences = getSharedPreferences("mUserPrefs", Context.MODE_PRIVATE);
+        dataHandler.getWorkbookTasksFromDatabaseAndPutInClassVariable();
 
 
 

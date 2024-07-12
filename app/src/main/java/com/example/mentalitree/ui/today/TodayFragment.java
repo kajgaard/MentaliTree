@@ -80,6 +80,12 @@ public class TodayFragment extends Fragment implements TaskSelectListener, Workb
             updateStreak();
         });
 
+        Log.d(TAG, "TodayFragment:83: Next up on my list is running the datahandler.returnOrMakeChosenTasksForToday();");
+        datahandler.returnOrMakeChosenTasksForToday(list -> {
+            Log.d(TAG, "TodayFragment:84: I just got the chosentasks back from Datahandler with: "+list);
+            updateWorkbookUI();
+        });
+
         //updateWorkbookTasks();
 
         return root;
@@ -97,42 +103,42 @@ public class TodayFragment extends Fragment implements TaskSelectListener, Workb
 
     public void updateWorkbookTasks(){
 
-        //Log.d(TAG, "Has user logged in previously today value: " + datahandler.isHasUserLoggedInPreviouslyToday());
-        if(datahandler.isHasUserLoggedInPreviouslyToday()){
-            datahandler.getWorkbookTaskFromDatabase(list -> {
-                //Log.d(TAG, "(1)Hello from shitty method: list is: " + list + "\ntodays tasks are: " + datahandler.getTodaysTasks());
-                datahandler.setTodaysTasks(list);
-                //Log.d(TAG, "(2)Hello from shitty method: list is: " + list + "\ntodays tasks are: " + datahandler.getTodaysTasks());
-                datahandler.writeTodaysChosenTasksToLog(flag -> {
-                            //Log.d(TAG, "I am done updating the db with chosen tasks"));
-                        });
-                WorkbookTaskAdapter adapter = new WorkbookTaskAdapter(list, this);
-                workbookTasksRv.setAdapter(adapter);
-                LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity()) {
-                    @Override
-                    public boolean canScrollVertically() {
-                        return false;
-                    }
-                };
-                workbookTasksRv.setLayoutManager(linearLayoutManager);
-                updateWorkbookStreakUI();
+//       //Log.d(TAG, "Has user logged in previously today value: " + datahandler.isHasUserLoggedInPreviouslyToday());
+//       if(datahandler.isHasUserLoggedInPreviouslyToday()){
+//           datahandler.getWorkbookTaskFromDatabase(list -> {
+//               //Log.d(TAG, "(1)Hello from shitty method: list is: " + list + "\ntodays tasks are: " + datahandler.getTodaysTasks());
+//               datahandler.setTodaysTasks(list);
+//               //Log.d(TAG, "(2)Hello from shitty method: list is: " + list + "\ntodays tasks are: " + datahandler.getTodaysTasks());
+//               datahandler.writeTodaysChosenTasksToLog(flag -> {
+//                           //Log.d(TAG, "I am done updating the db with chosen tasks"));
+//                       });
+//               WorkbookTaskAdapter adapter = new WorkbookTaskAdapter(list, this);
+//               workbookTasksRv.setAdapter(adapter);
+//               LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity()) {
+//                   @Override
+//                   public boolean canScrollVertically() {
+//                       return false;
+//                   }
+//               };
+//               workbookTasksRv.setLayoutManager(linearLayoutManager);
+//               updateWorkbookStreakUI();
 
-            });
-        }else{
-            datahandler.getChosenTasksFromDatabase(list -> {
-                //Log.e(TAG, "OOOOOOOOOOOOOOOOOO Populating recyclerview with chosen taskslist : "+list);
-                WorkbookTaskAdapter adapter = new WorkbookTaskAdapter(list, this);
-                workbookTasksRv.setAdapter(adapter);
-                LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity()) {
-                    @Override
-                    public boolean canScrollVertically() {
-                        return false;
-                    }
-                };
-                workbookTasksRv.setLayoutManager(linearLayoutManager);
-                updateWorkbookStreakUI();
-            });
-        }
+//           });
+//       }else{
+//           datahandler.getChosenTasksFromDatabase(list -> {
+//               //Log.e(TAG, "OOOOOOOOOOOOOOOOOO Populating recyclerview with chosen taskslist : "+list);
+//               WorkbookTaskAdapter adapter = new WorkbookTaskAdapter(list, this);
+//               workbookTasksRv.setAdapter(adapter);
+//               LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity()) {
+//                   @Override
+//                   public boolean canScrollVertically() {
+//                       return false;
+//                   }
+//               };
+//               workbookTasksRv.setLayoutManager(linearLayoutManager);
+//               updateWorkbookStreakUI();
+//           });
+//       }
 
 
 
@@ -157,15 +163,21 @@ public class TodayFragment extends Fragment implements TaskSelectListener, Workb
     public void onResume() {
         super.onResume();
         //Log.e(TAG, "onResume called");
-        updateWorkbookUI();
         updateReviewToday();
     }
 
     public void updateWorkbookUI(){
 
         WorkbookTaskAdapter adapter = new WorkbookTaskAdapter(datahandler.getTodaysTasks(), this);
-        //Log.d(TAG, "Updated adapter with list: " + datahandler.getTodaysTasks());
+        Log.d(TAG, "TodayFragment:173: Hello from the updateWorkbookUI method! Updated adapter with list: " + datahandler.getTodaysTasks());
         workbookTasksRv.setAdapter(adapter);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity()) {
+            @Override
+            public boolean canScrollVertically() {
+                return false;
+            }
+        };
+        workbookTasksRv.setLayoutManager(linearLayoutManager);
     }
 
     @Override
@@ -188,7 +200,7 @@ public class TodayFragment extends Fragment implements TaskSelectListener, Workb
             updateStreakUI();
             updateTotalDayCounter(listOfDateStrings);
             updateCurrentStreak();
-            updateWorkbookTasks();
+            //updateWorkbookTasks();
         });
 
     }
