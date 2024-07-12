@@ -1,12 +1,15 @@
 package com.example.mentalitree;
 
-public class CategoryProbability {
+import androidx.annotation.NonNull;
+
+public class CategoryProbability{
     String category;
     int pickAmountCounter;
     Boolean pickedLastTime;
     String pickrateAmountEligibleModifierString;
     Double currentCalculatedProbability;
     Double cumulativeReviewStringModifier;
+    int image;
 
 
     public CategoryProbability(){
@@ -104,6 +107,55 @@ public class CategoryProbability {
 
     public void setCurrentCalculatedProbability(Double currentCalculatedProbability) {
         this.currentCalculatedProbability = currentCalculatedProbability;
+    }
+
+    @NonNull
+    @Override
+    public String toString() {
+        return "CategoryProbability " + this.getCategory() + " Probaility: " + this.getCurrentCalculatedProbability();
+    }
+
+    public int getMatchingCategoryIcon(String category){
+        switch (category){
+            case "nutrition":
+                this.image = R.drawable.healthy_food_task_icon;
+                break;
+
+            case "reflection":
+                this.image = R.drawable.reflection_task_icon;
+                break;
+
+            case "nature":
+                this.image = R.drawable.nature_task_icon;
+                break;
+
+            case "cleaning":
+                this.image = R.drawable.clean_task_icon;
+                break;
+
+            case "fitness":
+                this.image = R.drawable.fitness_task_icon;
+                break;
+
+            case "social":
+                this.image = R.drawable.social_task_icon;
+                break;
+
+            case "talking":
+                this.image =  R.drawable.talking_task_icon;
+                break;
+
+            case "mindfulness":
+                this.image = R.drawable.hand_with_heart_task_icon;
+                break;
+
+            case "thankfulness":
+                this.image = R.drawable.butterfly_task_icon;
+                break;
+        }
+
+        return this.image;
+
     }
 }
 
