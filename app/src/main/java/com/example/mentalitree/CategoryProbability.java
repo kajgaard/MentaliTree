@@ -6,6 +6,7 @@ public class CategoryProbability {
     Boolean pickedLastTime;
     String pickrateAmountEligibleModifierString;
     Double currentCalculatedProbability;
+    Double cumulativeReviewStringModifier;
 
 
     public CategoryProbability(){
@@ -26,13 +27,14 @@ public class CategoryProbability {
         this.pickedLastTime = pickedLastTime;
         this.pickrateAmountEligibleModifierString = pickrateAmountEligibleModifierString;
         this.currentCalculatedProbability = 0.5;
+        this.cumulativeReviewStringModifier = 0.0;
     }
 
     public Double calculateProbability(){
         Double finalProbability = this.currentCalculatedProbability;
         Double pickedYesterdayModifier = -0.2;
-        Double goodRatingModifier = 0.01;
-        Double okayRatingModifier = 0.02;
+        Double goodRatingModifier = 0.02;
+        Double okayRatingModifier = 0.01;
         int habitStartInt = 30;
         int habitEndInt = 60;
 
@@ -42,24 +44,25 @@ public class CategoryProbability {
         }else {
 
         }
-        if(this.pickAmountCounter < habitStartInt){
-            if(this.pickrateAmountEligibleModifierString.equals("Okay") ){
-                finalProbability = finalProbability + (okayRatingModifier *pickAmountCounter);
-                this.currentCalculatedProbability = currentCalculatedProbability+(okayRatingModifier *pickAmountCounter);
+        if(this.pickAmountCounter < habitStartInt) {
+            if(this.pickrateAmountEligibleModifierString.equals("Okay")) {
+                this.cumulativeReviewStringModifier = this.cumulativeReviewStringModifier + okayRatingModifier;
+                finalProbability = finalProbability + this.cumulativeReviewStringModifier;
+                this.currentCalculatedProbability = 0.5 + this.cumulativeReviewStringModifier;
             } else if (this.pickrateAmountEligibleModifierString.equals("Good")) {
-                finalProbability = finalProbability + (goodRatingModifier *pickAmountCounter);
-                this.currentCalculatedProbability = currentCalculatedProbability + (goodRatingModifier * pickAmountCounter);
+                this.cumulativeReviewStringModifier = this.cumulativeReviewStringModifier + goodRatingModifier;
+                finalProbability = finalProbability + this.cumulativeReviewStringModifier;
+                this.currentCalculatedProbability = 0.5 + this.cumulativeReviewStringModifier;
             }
         }
         else if (this.pickAmountCounter >= habitStartInt && this.pickAmountCounter < habitEndInt) {
             if(this.pickrateAmountEligibleModifierString.equals("Okay")){
-                finalProbability = finalProbability + (okayRatingModifier *habitStartInt);
-                this.currentCalculatedProbability = currentCalculatedProbability + (okayRatingModifier *habitStartInt);
-            } else if (this.pickrateAmountEligibleModifierString.equals("Very good")) {
-                finalProbability = finalProbability + (goodRatingModifier *habitStartInt);
-                this.currentCalculatedProbability = currentCalculatedProbability + (goodRatingModifier *habitStartInt);
+                finalProbability = finalProbability + this.cumulativeReviewStringModifier;
+            } else if (this.pickrateAmountEligibleModifierString.equals("Good")) {
+                finalProbability = finalProbability + this.cumulativeReviewStringModifier;
             }
         } else {
+            this.setCumulativeReviewStringModifier(0.0);
             this.setPickAmountCounter(0);
         }
         return  finalProbability;
@@ -68,6 +71,13 @@ public class CategoryProbability {
     public String getCategory() {return category;}
     public int getPickAmountCounter() {return pickAmountCounter;}
 
+    public Double getCumulativeReviewStringModifier() {
+        return cumulativeReviewStringModifier;
+    }
+
+    public void setCumulativeReviewStringModifier(Double cumulativeReviewStringModifier) {
+        this.cumulativeReviewStringModifier = cumulativeReviewStringModifier;
+    }
 
     public Boolean getPickedLastTime() {
         return pickedLastTime;
