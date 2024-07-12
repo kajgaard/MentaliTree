@@ -66,6 +66,7 @@ public class DeleteDataFragment extends DialogFragment {
                         Intent intent = new Intent(getContext(), LogInActivity.class);
                         startActivity(intent);
                         getActivity().finish();
+
                     });
 
                 }else{

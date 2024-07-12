@@ -35,7 +35,7 @@ public class DataHandler {
     public int getUsersCurrentStreak() {
         return usersCurrentStreak;
     }
-
+    DatabaseUsermodel user;
     private static DataHandler single_instance = null;
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     String userPin, userId;
@@ -52,7 +52,7 @@ public class DataHandler {
     int avatarPref;
     boolean hasUserJustDeleted = false;
     ArrayList<String> daysUserHasReviewed;
-
+    ArrayList<CategoryProbability> categoryProbabilities;
 
 
     private DataHandler() {
@@ -99,12 +99,15 @@ public class DataHandler {
 
                 if(!task.getResult().isEmpty()) {
                     for (QueryDocumentSnapshot document : task.getResult()) {
-                        Log.d(TAG, document.getId() + " => " + document.getData());
+                        //Log.d(TAG, document.getId() + " => " + document.getData());
+                        this.user = document.toObject(DatabaseUsermodel.class);
+                        this.categoryProbabilities = user.categoryProbabilities;
                         this.userToken = document.getId();
                         Map<String, Object> data = document.getData();
                         this.usersCurrentStreak = ((Long) data.get("currentStreak")).intValue();
                         this.totalEffortStreak = ((Long) data.get("totalEffortStreak")).intValue();
                         this.avatarPref = document.getLong("avatar").intValue();
+                        //Log.e(TAG,"categoryProbabilities are now: "+categoryProbabilities);
                     }
                     addTimestampToLog();
                     getTimestampsFromNotesLog();
@@ -114,7 +117,7 @@ public class DataHandler {
                     firebaseCallBack.onCallback(false);
                 }
             }else{
-                Log.d(TAG, "Error getting documents: ", task.getException());
+                //Log.d(TAG, "Error getting documents: ", task.getException());
             }
         });
 
@@ -134,6 +137,18 @@ public class DataHandler {
         newUser.put("currentStreak", 0);
         newUser.put("totalEffortStreak", 0);
         newUser.put("avatar", avatarPref);
+        ArrayList<CategoryProbability> initialCategoryProbabilities = new ArrayList<>();
+        initialCategoryProbabilities.add(new CategoryProbability("reflection",false,""));
+        initialCategoryProbabilities.add(new CategoryProbability("nutrition",false,""));
+        initialCategoryProbabilities.add(new CategoryProbability("cleaning",false,""));
+        initialCategoryProbabilities.add(new CategoryProbability("nature",false,""));
+        initialCategoryProbabilities.add(new CategoryProbability("fitness",false,""));
+        initialCategoryProbabilities.add(new CategoryProbability("social",false,""));
+        initialCategoryProbabilities.add(new CategoryProbability("talking",false,""));
+        initialCategoryProbabilities.add(new CategoryProbability("mindfulness",false,""));
+        initialCategoryProbabilities.add(new CategoryProbability("thankfulness",false,""));
+
+        newUser.put("categoryProbabilities", initialCategoryProbabilities);
 
         db.collection("users").document()
                 .set(newUser)
@@ -141,7 +156,7 @@ public class DataHandler {
                     @Override
                     public void onSuccess(Void aVoid) {
                         firebaseCallBack.onCallback(true);
-                        Log.d(TAG, "DocumentSnapshot for new user successfully written!");
+                        //Log.d(TAG, "DocumentSnapshot for new user successfully written!");
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
@@ -166,24 +181,24 @@ public class DataHandler {
                                 Map<String, Object> data = document.getData();
                                 String timeStamp = data.get("timeStamp").toString();
                                 list.add(timeStamp);
-                                Log.d(TAG, "Found document: "+ document.getId() + " => " + document.getData());
+                                //Log.d(TAG, "Found document: "+ document.getId() + " => " + document.getData());
                             }
                             try {
                                 LocalDate lastEntry = convert(list.get(list.size() - 2));
-                                Log.d(TAG, "LastEntry is: " + lastEntry);
+                                //Log.d(TAG, "LastEntry is: " + lastEntry);
                                 increaseCurrentStreakIfNessercary(lastEntry);
                                 firebaseCallBack.onCallback(list);
                             }catch (Exception e){
                                 //LocalDate lastEntry = LocalDate.now().plusDays(1);
                                 LocalDate lastEntry = convert(list.get(list.size() - 1));
                                 firstLoginEver = true;
-                                Log.d(TAG, "LastEntry is: " + lastEntry);
+                                //Log.d(TAG, "LastEntry is: " + lastEntry);
                                 increaseCurrentStreakIfNessercary(lastEntry);
                                 firebaseCallBack.onCallback(list);
                             }
 
                         } else {
-                            Log.d(TAG, "Error getting documents: ", task.getException());
+                            //Log.d(TAG, "Error getting documents: ", task.getException());
                         }
                     }
                 });
@@ -203,7 +218,7 @@ public class DataHandler {
                                     Map<String, Object> data = document.getData();
                                     String timeStamp = data.get("timeStamp").toString();
                                     list.add(timeStamp);
-                                    Log.d(TAG, "Found document: " + document.getId() + " => " + document.getData());
+                                    //Log.d(TAG, "Found document: " + document.getId() + " => " + document.getData());
                                 }
                             }
                             daysUserHasReviewed = list;
@@ -211,7 +226,7 @@ public class DataHandler {
 
 
                         } else {
-                            Log.d(TAG, "Error getting documents: ", task.getException());
+                            //Log.d(TAG, "Error getting documents: ", task.getException());
                         }
                     }
                 });
@@ -232,7 +247,7 @@ public class DataHandler {
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
-                        Log.d(TAG, "DocumentSnapshot for timestamp successfully written!");
+                        //Log.d(TAG, "DocumentSnapshot for timestamp successfully written!");
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
@@ -264,7 +279,7 @@ public class DataHandler {
                             for (QueryDocumentSnapshot document : task.getResult()) {
 
                                     WorkbookDayModel entry = document.toObject(WorkbookDayModel.class);
-                                    Log.d(TAG, "MADE A NEW WORKBOOKDAYMODEL: " + entry);
+                                    //Log.d(TAG, "MADE A NEW WORKBOOKDAYMODEL: " + entry);
 
                                     if (entry != null) {
                                         listOfWorkbookDays.add(entry);
@@ -276,7 +291,7 @@ public class DataHandler {
                             firebaseCallback.onCallback(listOfWorkbookDays);
 
                         } else {
-                            Log.d(TAG, "Error getting documents: ", task.getException());
+                            //Log.d(TAG, "Error getting documents: ", task.getException());
                         }
                     }
                 });
@@ -298,7 +313,7 @@ public class DataHandler {
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
-                        Log.d(TAG, "DocumentSnapshot for timestamp successfully written!");
+                        ////Log.d(TAG, "DocumentSnapshot for timestamp successfully written!");
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
@@ -314,91 +329,95 @@ public class DataHandler {
         return hasUserLoggedInPreviouslyToday;
     }
 
+    public void setHasUserLoggedInPreviouslyToday(boolean hasUserLoggedInPreviouslyToday) {
+        this.hasUserLoggedInPreviouslyToday = hasUserLoggedInPreviouslyToday;
+    }
+
     public void increaseCurrentStreakIfNessercary(LocalDate lastEntry){
         LocalDate today = LocalDate.now();
 
-        Log.d(TAG, "Hello from increasing streak method");
+        //Log.d(TAG, "Hello from increasing streak method");
 
-        Log.d(TAG, "Todays date for comp is: " + today+"\nlastEntry is: " + lastEntry + "\ntoday.minusDays(1): " + today.minusDays(1));
+        //Log.d(TAG, "Todays date for comp is: " + today+"\nlastEntry is: " + lastEntry + "\ntoday.minusDays(1): " + today.minusDays(1));
         if(!(lastEntry.isEqual(today.minusDays(1))) && !(lastEntry.isEqual(today))){
-            Log.d(TAG, "Ooops i dont think you hit the streak");
+            //Log.d(TAG, "Ooops i dont think you hit the streak");
             usersCurrentStreak = 1;
             totalEffortStreak++;
             hasUserLoggedInPreviouslyToday = true;
             updateStreakInDatabase();
             getWorkbookTaskFromDatabase(list -> {
-                Log.d(TAG, "(1)Hello from shitty method: list is: "+ list + "\ntodays tasks are: "+todaysTasks);
+                //Log.d(TAG, "(1)Hello from shitty method: list is: "+ list + "\ntodays tasks are: "+todaysTasks);
                 todaysTasks = list;
-                Log.d(TAG, "(2)Hello from shitty method: list is: "+ list + "\ntodays tasks are: "+todaysTasks);
+                //Log.d(TAG, "(2)Hello from shitty method: list is: "+ list + "\ntodays tasks are: "+todaysTasks);
                 writeTodaysChosenTasksToLog(flag -> {
-                    Log.d(TAG, "I am done updating the db with chosen tasks");
+                    //Log.d(TAG, "I am done updating the db with chosen tasks");
                 });
             });
 
 
         }else if((lastEntry.isEqual(today.minusDays(1))) && !hasUserLoggedInPreviouslyToday){
-            Log.d(TAG, "Yes you hit the streak yay!");
+            //Log.d(TAG, "Yes you hit the streak yay!");
             hasUserLoggedInPreviouslyToday = true;
             usersCurrentStreak++;
             totalEffortStreak ++;
             updateStreakInDatabase();
             getWorkbookTaskFromDatabase(list -> {
-                Log.d(TAG, "(1)Hello from shitty method: list is: "+ list + "\ntodays tasks are: "+todaysTasks);
+                //Log.d(TAG, "(1)Hello from shitty method: list is: "+ list + "\ntodays tasks are: "+todaysTasks);
                 todaysTasks = list;
-                Log.d(TAG, "(2)Hello from shitty method: list is: "+ list + "\ntodays tasks are: "+todaysTasks);
+                //Log.d(TAG, "(2)Hello from shitty method: list is: "+ list + "\ntodays tasks are: "+todaysTasks);
                 writeTodaysChosenTasksToLog(flag -> {
-                    Log.d(TAG, "I am done updating the db with chosen tasks");
+                    //Log.d(TAG, "I am done updating the db with chosen tasks");
                 });
             });
 
-        }else if(((lastEntry.isEqual(today)) && firstLoginEver)){
+        }else if(((lastEntry.isEqual(today)) && firstLoginEver && this.todaysTasks.isEmpty())){
 
-            Log.d(TAG, "Seems like this is your first login ever! I will create new tasks ");
+            //Log.d(TAG, "Seems like this is your first login ever! I will create new tasks ");
             hasUserLoggedInPreviouslyToday = true;
             firstLoginEver = false;
             usersCurrentStreak++;
             totalEffortStreak++;
             updateStreakInDatabase();
             getWorkbookTaskFromDatabase(list -> {
-                Log.d(TAG, "(1)Hello from shitty method: list is: "+ list + "\ntodays tasks are: "+todaysTasks);
+                //Log.d(TAG, "(1)Hello from shitty method: list is: "+ list + "\ntodays tasks are: "+todaysTasks);
                 todaysTasks = list;
-                Log.d(TAG, "(2)Hello from shitty method: list is: "+ list + "\ntodays tasks are: "+todaysTasks);
+                //Log.d(TAG, "(2)Hello from shitty method: list is: "+ list + "\ntodays tasks are: "+todaysTasks);
                 writeTodaysChosenTasksToLog(flag -> {
-                    Log.d(TAG, "I am done updating the db with chosen tasks");
+                    //Log.d(TAG, "I am done updating the db with chosen tasks");
                 });
             });
-            /*Log.d(TAG, "Today is normal same day...");
+            /*//Log.d(TAG, "Today is normal same day...");
             usersCurrentStreak++;
             updateStreakInDatabase();
             getWorkbookTaskFromDatabase(list -> {
-                Log.d(TAG, "(1)Hello from shitty method: list is: "+ list + "\ntodays tasks are: "+todaysTasks);
+                //Log.d(TAG, "(1)Hello from shitty method: list is: "+ list + "\ntodays tasks are: "+todaysTasks);
                 todaysTasks = list;
-                Log.d(TAG, "(2)Hello from shitty method: list is: "+ list + "\ntodays tasks are: "+todaysTasks);
+                //Log.d(TAG, "(2)Hello from shitty method: list is: "+ list + "\ntodays tasks are: "+todaysTasks);
                 writeTodaysChosenTasksToLog();
             });*/
         }else if(hasUserJustDeleted){
 
-            Log.d(TAG, "You have just deleted your user, and i will pretend this is your first login ever ");
+            //Log.d(TAG, "You have just deleted your user, and i will pretend this is your first login ever ");
             hasUserLoggedInPreviouslyToday = true;
             hasUserJustDeleted = false;
             usersCurrentStreak = 1;
             totalEffortStreak = 1;
             updateStreakInDatabase();
             getWorkbookTaskFromDatabase(list -> {
-                Log.d(TAG, "(1)Hello from shitty method: list is: "+ list + "\ntodays tasks are: "+todaysTasks);
+                //Log.d(TAG, "(1)Hello from shitty method: list is: "+ list + "\ntodays tasks are: "+todaysTasks);
                 todaysTasks = list;
-                Log.d(TAG, "(2)Hello from shitty method: list is: "+ list + "\ntodays tasks are: "+todaysTasks);
+                //Log.d(TAG, "(2)Hello from shitty method: list is: "+ list + "\ntodays tasks are: "+todaysTasks);
                 writeTodaysChosenTasksToLog(flag -> {
-                    Log.d(TAG, "I am done updating the db with chosen tasks");
+                    //Log.d(TAG, "I am done updating the db with chosen tasks");
                 });
             });
-            /*Log.d(TAG, "Today is normal same day...");
+            /*//Log.d(TAG, "Today is normal same day...");
             usersCurrentStreak++;
             updateStreakInDatabase();
             getWorkbookTaskFromDatabase(list -> {
-                Log.d(TAG, "(1)Hello from shitty method: list is: "+ list + "\ntodays tasks are: "+todaysTasks);
+                //Log.d(TAG, "(1)Hello from shitty method: list is: "+ list + "\ntodays tasks are: "+todaysTasks);
                 todaysTasks = list;
-                Log.d(TAG, "(2)Hello from shitty method: list is: "+ list + "\ntodays tasks are: "+todaysTasks);
+                //Log.d(TAG, "(2)Hello from shitty method: list is: "+ list + "\ntodays tasks are: "+todaysTasks);
                 writeTodaysChosenTasksToLog();
             });*/
         }
@@ -421,10 +440,10 @@ public class DataHandler {
                             if(document.exists()) {
 
                                 WorkDayLogEntry entry = document.toObject(WorkDayLogEntry.class);
-                                Log.d(TAG,"FINALLY THE OBJECT IS: "+entry);
+                                //Log.d(TAG,"FINALLY THE OBJECT IS: "+entry);
                                 if(entry != null) {
                                     todaysTasks = entry.getChosenTasks();
-                                    Log.d(TAG,"SEEEE WHAT TODAYS TASKS ARE: "+todaysTasks);
+                                    //Log.d(TAG,"SEEEE WHAT TODAYS TASKS ARE: "+todaysTasks);
                                     firebaseCallback.onCallback(todaysTasks);
 
                                 }
@@ -432,7 +451,7 @@ public class DataHandler {
                             }
 
                         } else {
-                            Log.d(TAG, "Error getting documents: ", task.getException());
+                            //Log.d(TAG, "Error getting documents: ", task.getException());
                         }
                     }
                 });
@@ -458,7 +477,7 @@ public class DataHandler {
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
-                        Log.d(TAG, "DocumentSnapshot for logentry successfully written!");
+                        //Log.d(TAG, "DocumentSnapshot for logentry successfully written!");
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
@@ -492,7 +511,7 @@ public class DataHandler {
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
-                        Log.d(TAG, "DocumentSnapshot for dayentry successfully written!");
+                        //Log.d(TAG, "DocumentSnapshot for dayentry successfully written!");
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
@@ -523,21 +542,23 @@ public class DataHandler {
                                         dataObject.get("taskId").toString());
                                 taskList.add(workbookTask);
 
-                                Log.d(TAG, document.getId() + " => " + document.getData()+"\nI made a taskModel object like: "+workbookTask.toString());
+                                //Log.d(TAG, document.getId() + " => " + document.getData()+"\nI made a taskModel object like: "+workbookTask.toString());
                             }
-                            Log.d(TAG, "Sending callback with list: "+ chooseTodaysTasks(taskList));
+                            //Log.d(TAG, "Sending callback with list: "+ chooseTodaysTasks(taskList));
                             firebaseCallback.onCallback(chooseTodaysTasks(taskList));
                         } else {
-                            Log.d(TAG, "Error getting documents: ", task.getException());
+                            //Log.d(TAG, "Error getting documents: ", task.getException());
                         }
                     }
                 });
     }
 
     public ArrayList<TaskModel> chooseTodaysTasks(ArrayList<TaskModel> list){
-        ArrayList<TaskModel> chosen = new ArrayList<>();
-                chosen = (ArrayList<TaskModel>) list.stream().limit(5).collect(Collectors.toList());
-        return chosen;
+        //ArrayList<TaskModel> chosen = new ArrayList<>();
+        //        chosen = (ArrayList<TaskModel>) list.stream().limit(5).collect(Collectors.toList());
+        //return chosen;
+        AdaptiveAlgorithm adaptiveAlgorithm = AdaptiveAlgorithm.getInstance();
+        return adaptiveAlgorithm.offerTasks(list,categoryProbabilities);
     }
 
     public void writeTodaysChosenTasksToLog(MyFirebaseBooleanCallBack firebaseBooleanCallBack){
@@ -557,7 +578,7 @@ public class DataHandler {
                     .addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
                         public void onSuccess(Void aVoid) {
-                            Log.d(TAG, "DocumentSnapshot for taskLog successfully written!");
+                            //Log.d(TAG, "DocumentSnapshot for taskLog successfully written!");
                             firebaseBooleanCallBack.onCallback(true);
                         }
                     })
@@ -580,7 +601,7 @@ public class DataHandler {
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
-                        Log.d(TAG, "DocumentSnapshot for streak successfully written!");
+                        //Log.d(TAG, "DocumentSnapshot for streak successfully written!");
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
@@ -616,12 +637,12 @@ public class DataHandler {
                                         dataObject.get("date").toString());
                                 quoteList.add(quote);
 
-                                Log.d(TAG, document.getId() + " => " + document.getData()+"\nI made a quote object like: "+quote.toString());
+                                //Log.d(TAG, document.getId() + " => " + document.getData()+"\nI made a quote object like: "+quote.toString());
                             }
-                            Log.d(TAG, "Sending callback with list: "+ quoteList);
+                            //Log.d(TAG, "Sending callback with list: "+ quoteList);
                             firebaseCallback.onCallback(quoteList);
                         } else {
-                            Log.d(TAG, "Error getting documents: ", task.getException());
+                            //Log.d(TAG, "Error getting documents: ", task.getException());
                         }
                     }
                 });
@@ -660,7 +681,7 @@ public class DataHandler {
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
-                        Log.d(TAG, "DocumentSnapshot for NoteEntry successfully written!");
+                        //Log.d(TAG, "DocumentSnapshot for NoteEntry successfully written!");
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
@@ -695,12 +716,12 @@ public class DataHandler {
                                 noteList.add(note);
 
 
-                                Log.d(TAG, document.getId() + " => " + document.getData()+"\nI made a note object like: "+note.toString());
+                                //Log.d(TAG, document.getId() + " => " + document.getData()+"\nI made a note object like: "+note.toString());
                             }
-                            Log.d(TAG, "Sending callback with list: "+ noteList);
+                            //Log.d(TAG, "Sending callback with list: "+ noteList);
                             firebaseCallback.onCallback(noteList);
                         } else {
-                            Log.d(TAG, "Error getting documents: ", task.getException());
+                            //Log.d(TAG, "Error getting documents: ", task.getException());
                         }
                     }
                 });
@@ -727,7 +748,7 @@ public class DataHandler {
                     firebaseCallBack.onCallback(false);
                 }
             }else{
-                Log.d(TAG, "Error getting documents: ", task.getException());
+                //Log.d(TAG, "Error getting documents: ", task.getException());
             }
         });
 
@@ -745,17 +766,18 @@ public class DataHandler {
                                 db.collection("users").document(userToken).collection("taskLog").document(document.getId()).delete().addOnSuccessListener(new OnSuccessListener<Void>() {
                                     @Override
                                     public void onSuccess(Void unused) {
-                                        Log.d(TAG, "Successfully deleted document from taskLog: "+ document.getId());
+                                        //Log.d(TAG, "Successfully deleted document from taskLog: "+ document.getId());
                                         hasUserJustDeleted = true;
                                         usersCurrentStreak = 0;
+                                        updateStreakInDatabase();
 
                                     }
                                 });
                             }
-                            Log.d(TAG, "Finished deleting all documents in taskLog collection"+ noteList);
+                            //Log.d(TAG, "Finished deleting all documents in taskLog collection"+ noteList);
 
                         } else {
-                            Log.d(TAG, "Error getting documents: ", task.getException());
+                            //Log.d(TAG, "Error getting documents: ", task.getException());
                         }
                     }
                 });
@@ -771,16 +793,16 @@ public class DataHandler {
                                 db.collection("users").document(userToken).collection("notesLog").document(document.getId()).delete().addOnSuccessListener(new OnSuccessListener<Void>() {
                                     @Override
                                     public void onSuccess(Void unused) {
-                                        Log.d(TAG, "Successfully deleted document from notesLog: "+ document.getId());
+                                        //Log.d(TAG, "Successfully deleted document from notesLog: "+ document.getId());
                                         firebaseCallback.onCallback(true);
                                     }
                                 });
                             }
-                            Log.d(TAG, "Finished deleting all documents in notesLog collection"+ noteList);
+                            //Log.d(TAG, "Finished deleting all documents in notesLog collection"+ noteList);
                             getTimestampsFromNotesLog();
 
                         } else {
-                            Log.d(TAG, "Error getting documents: ", task.getException());
+                            //Log.d(TAG, "Error getting documents: ", task.getException());
                         }
                     }
                 });

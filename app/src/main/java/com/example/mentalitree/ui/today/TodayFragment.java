@@ -71,9 +71,9 @@ public class TodayFragment extends Fragment implements TaskSelectListener, Workb
         reviewBtn = binding.reviewDayBtn;
         reviewBtn.setOnClickListener(this);
 
-        Log.e(TAG, "Running OnCreateView");
+        //Log.e(TAG, "Running OnCreateView");
         datahandler.hasUserReviewedToday(value ->{
-            Log.e(TAG, "dataHandler.hasUserReviewedToday: "+value);
+            //Log.e(TAG, "dataHandler.hasUserReviewedToday: "+value);
             if(value){
                 setReviewButtonInactive();
             }
@@ -86,9 +86,9 @@ public class TodayFragment extends Fragment implements TaskSelectListener, Workb
     }
 
     public void updateReviewToday(){
-        Log.e(TAG, "Running updateReviewToday method");
+        //Log.e(TAG, "Running updateReviewToday method");
         datahandler.hasUserReviewedToday(value ->{
-            Log.e(TAG, "Running updateReviewToday value is: "+value);
+            //Log.e(TAG, "Running updateReviewToday value is: "+value);
             if(value){
                 setReviewButtonInactive();
             }
@@ -97,13 +97,15 @@ public class TodayFragment extends Fragment implements TaskSelectListener, Workb
 
     public void updateWorkbookTasks(){
 
-        Log.d(TAG, "First logon today value is:" + datahandler.isHasUserLoggedInPreviouslyToday());
+        //Log.d(TAG, "Has user logged in previously today value: " + datahandler.isHasUserLoggedInPreviouslyToday());
         if(datahandler.isHasUserLoggedInPreviouslyToday()){
             datahandler.getWorkbookTaskFromDatabase(list -> {
-                Log.d(TAG, "(1)Hello from shitty method: list is: " + list + "\ntodays tasks are: " + datahandler.getTodaysTasks());
+                //Log.d(TAG, "(1)Hello from shitty method: list is: " + list + "\ntodays tasks are: " + datahandler.getTodaysTasks());
                 datahandler.setTodaysTasks(list);
-                Log.d(TAG, "(2)Hello from shitty method: list is: " + list + "\ntodays tasks are: " + datahandler.getTodaysTasks());
-                datahandler.writeTodaysChosenTasksToLog(flag -> Log.d(TAG, "I am done updating the db with chosen tasks"));
+                //Log.d(TAG, "(2)Hello from shitty method: list is: " + list + "\ntodays tasks are: " + datahandler.getTodaysTasks());
+                datahandler.writeTodaysChosenTasksToLog(flag -> {
+                            //Log.d(TAG, "I am done updating the db with chosen tasks"));
+                        });
                 WorkbookTaskAdapter adapter = new WorkbookTaskAdapter(list, this);
                 workbookTasksRv.setAdapter(adapter);
                 LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity()) {
@@ -118,6 +120,7 @@ public class TodayFragment extends Fragment implements TaskSelectListener, Workb
             });
         }else{
             datahandler.getChosenTasksFromDatabase(list -> {
+                //Log.e(TAG, "OOOOOOOOOOOOOOOOOO Populating recyclerview with chosen taskslist : "+list);
                 WorkbookTaskAdapter adapter = new WorkbookTaskAdapter(list, this);
                 workbookTasksRv.setAdapter(adapter);
                 LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity()) {
@@ -135,7 +138,7 @@ public class TodayFragment extends Fragment implements TaskSelectListener, Workb
 
         /*datahandler.getWorkbookTaskFromDatabase(list -> {
             this.workbookTasks = list;
-            Log.d(TAG, "The list is: " + list);
+            //Log.d(TAG, "The list is: " + list);
             WorkbookTaskAdapter adapter = new WorkbookTaskAdapter(workbookTasks, this);
             workbookTasksRv.setAdapter(adapter);
             LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity()) {
@@ -153,7 +156,7 @@ public class TodayFragment extends Fragment implements TaskSelectListener, Workb
     @Override
     public void onResume() {
         super.onResume();
-        Log.e(TAG, "onResume called");
+        //Log.e(TAG, "onResume called");
         updateWorkbookUI();
         updateReviewToday();
     }
@@ -161,7 +164,7 @@ public class TodayFragment extends Fragment implements TaskSelectListener, Workb
     public void updateWorkbookUI(){
 
         WorkbookTaskAdapter adapter = new WorkbookTaskAdapter(datahandler.getTodaysTasks(), this);
-        Log.d(TAG, "Updated adapter with list: " + datahandler.getTodaysTasks());
+        //Log.d(TAG, "Updated adapter with list: " + datahandler.getTodaysTasks());
         workbookTasksRv.setAdapter(adapter);
     }
 
@@ -180,7 +183,7 @@ public class TodayFragment extends Fragment implements TaskSelectListener, Workb
                 listOfDates.add(convert(date));
                 listOfDateStrings.add(convert(date).toString());
             }
-            Log.d(TAG, "The list is now of LocalDates: "+ listOfDates.toString());
+            //Log.d(TAG, "The list is now of LocalDates: "+ listOfDates.toString());
             activityLog = listOfDates;
             updateStreakUI();
             updateTotalDayCounter(listOfDateStrings);
@@ -254,7 +257,7 @@ public class TodayFragment extends Fragment implements TaskSelectListener, Workb
 
         }
 
-        Log.d(TAG, "Finished updating streak");
+        //Log.d(TAG, "Finished updating streak");
     }
 
     public void streakHit(LocalDate hitDate, ArrayList<LocalDate> activityDates, ImageView imageView){
@@ -290,7 +293,7 @@ public class TodayFragment extends Fragment implements TaskSelectListener, Workb
 
     public void updateCurrentStreak(){
         String value = String.valueOf(datahandler.getUsersCurrentStreak());
-        Log.d(TAG, "I am setting value for current streak: " + value);
+        //Log.d(TAG, "I am setting value for current streak: " + value);
         currentStreakCounter.setText(value);
 
     }
@@ -390,7 +393,7 @@ public class TodayFragment extends Fragment implements TaskSelectListener, Workb
     }
 
     public void setReviewButtonInactive(){
-        Log.e(TAG, "Setting button inactive");
+        //Log.e(TAG, "Setting button inactive");
         reviewBtn.setText("Reviewed");
         Drawable drawableBg = getResources().getDrawable(R.drawable.call_to_action_btn_deactivated_bg);
         reviewBtn.setBackground(drawableBg);
@@ -398,7 +401,7 @@ public class TodayFragment extends Fragment implements TaskSelectListener, Workb
 
     public void unBlockReviewButton(){
         reviewBtn.setText("Review your day");
-        Log.e(TAG, "unBlockReviewbutton");
+        //Log.e(TAG, "unBlockReviewbutton");
         Drawable drawableBg = getResources().getDrawable(R.drawable.call_to_action_btn_bg);
         reviewBtn.setBackground(drawableBg);
         reviewBtn.setClickable(true);
@@ -449,9 +452,9 @@ public class TodayFragment extends Fragment implements TaskSelectListener, Workb
 
             for(int i=0; i<testStrings.size(); i++){
                 String encrypted = privateDataHandler.encryptString(testStrings.get(i));
-                Log.e(TAG, "String: "+ testStrings.get(i)+ "encrypted as:" + encrypted+"!");
+                //Log.e(TAG, "String: "+ testStrings.get(i)+ "encrypted as:" + encrypted+"!");
                 //String decrypted = privateDataHandler.decryptString(encrypted);
-                //Log.e(TAG, "Now i have decrypted it again: " + decrypted);
+                ////Log.e(TAG, "Now i have decrypted it again: " + decrypted);
             }
     }
 }
