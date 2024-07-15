@@ -21,9 +21,12 @@ public class WorkbookDayAdapter extends RecyclerView.Adapter<WorkbookDayAdapter.
 
     ArrayList<WorkbookDayModel> workbookDays;
     RecyclerView.RecycledViewPool viewPool = new RecyclerView.RecycledViewPool();
+    SelectWorkbookNoteListener listener;
 
-    public WorkbookDayAdapter(ArrayList<WorkbookDayModel> workbookDays) {
+    public WorkbookDayAdapter(ArrayList<WorkbookDayModel> workbookDays, SelectWorkbookNoteListener listener) {
         this.workbookDays = workbookDays;
+        this.listener = listener;
+
     }
 
     @NonNull
@@ -38,7 +41,7 @@ public class WorkbookDayAdapter extends RecyclerView.Adapter<WorkbookDayAdapter.
     @Override
     public void onBindViewHolder(@NonNull WorkbookDayAdapter.MyViewHolder holder, int position) {
         holder.dateTv.setText(convertDate(workbookDays.get(position).getTimeStamp()));
-        WorkbookDayTaskAdapter taskAdapter = new WorkbookDayTaskAdapter(workbookDays.get(position).getChosenTasks());
+        WorkbookDayTaskAdapter taskAdapter = new WorkbookDayTaskAdapter(workbookDays.get(position).getChosenTasks(), this.listener);
         LinearLayoutManager layoutManager = new LinearLayoutManager(holder.completedTasksRecyclerView.getContext(), LinearLayoutManager.VERTICAL, false);
         layoutManager.setInitialPrefetchItemCount(workbookDays.get(position).getChosenTasks().size());
 

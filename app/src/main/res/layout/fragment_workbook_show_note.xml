@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/workbook_task_card_bg"
+    android:orientation="vertical"
+    tools:context=".ui.profile.submenus.workbook.WorkbookShowNoteFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="@drawable/header_for_dialog"
+        android:padding="15dp"
+        android:gravity="end">
+
+        <ImageView
+            android:id="@+id/closeDialogIv"
+            android:layout_width="35dp"
+            android:layout_height="match_parent"
+            android:src="@drawable/close_icon"/>
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="15dp"
+        android:weightSum="1"
+        android:background="@color/yellowish_white"
+        >
+
+        <TextView
+            android:id="@+id/shortDescriptionForTaskTv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="What is a positive affirmation, that reminds you of your worth and your strenght?"
+            android:layout_weight="0.2"
+            android:layout_gravity="center_vertical"
+            android:textSize="16sp"
+            android:textStyle="bold"/>
+
+        <ImageView
+            android:id="@+id/categoryIconIv"
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            android:src="@drawable/reflection_task_icon"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="0.8"/>
+
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/lightest_grey"
+        android:orientation="vertical" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="15dp">
+
+        <TextView
+            android:id="@+id/userInputWorkbookTaskTv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+            android:text="I did really many push ups"/>
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/lightest_grey"
+        android:orientation="vertical" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="20dp"
+        android:background="@drawable/footer_for_dialog"/>
+
+</LinearLayout>

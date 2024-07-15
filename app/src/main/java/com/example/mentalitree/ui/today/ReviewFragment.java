@@ -35,7 +35,7 @@ public class ReviewFragment extends DialogFragment implements View.OnClickListen
     OnReviewCompletedListener listener;
     ImageView closeBtnIv;
     TextView doneBtnTv;
-    String dynamicRating;
+    String dynamicRating = "0";
     String dynamicRatingDescriptiveString ="";
     PrivateDataHandler privateDataHandler = PrivateDataHandler.getInstance();
     DataHandler datahandler = DataHandler.getInstance();
@@ -108,6 +108,10 @@ public class ReviewFragment extends DialogFragment implements View.OnClickListen
             dismiss();
         }else if(view == doneBtnTv){
             String input = userNoteInput.getText().toString();
+            if(input.isEmpty()){
+                input = "";
+            }
+
             String encryptedNote = privateDataHandler.encryptString(input);
             String encryptedRating = privateDataHandler.encryptString(dynamicRating);
             datahandler.saveEncryptedNoteToDatabase(encryptedNote, encryptedRating);

@@ -20,6 +20,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.mentalitree.DataHandler;
+import com.example.mentalitree.PrivateDataHandler;
 import com.example.mentalitree.R;
 import com.example.mentalitree.databinding.FragmentWorkbookTaskBinding;
 
@@ -36,6 +37,7 @@ public class WorkbookTaskFragment extends DialogFragment implements View.OnClick
     EditText inputFieldEt;
     FragmentWorkbookTaskBinding binding;
     TaskModel taskObject;
+    PrivateDataHandler privateDataHandler = PrivateDataHandler.getInstance();
 
 
 
@@ -120,7 +122,15 @@ public class WorkbookTaskFragment extends DialogFragment implements View.OnClick
 
             for (TaskModel task : masterList){
                 if(task.getTaskId().equals(taskObject.getTaskId())){
-                    task.setCompleted(true);
+
+                    if(!inputFieldEt.getText().toString().isEmpty()){
+                        task.setUserInputNote(privateDataHandler.encryptString(inputFieldEt.getText().toString()));
+
+                    }else{
+                        task.setUserInputNote(privateDataHandler.encryptString(""));
+
+                    }
+                     task.setCompleted(true);
                     break;
                 }
             }

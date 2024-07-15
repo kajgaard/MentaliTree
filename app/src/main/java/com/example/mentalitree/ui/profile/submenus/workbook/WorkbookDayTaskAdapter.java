@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -21,9 +22,11 @@ import java.util.ArrayList;
 public class WorkbookDayTaskAdapter extends RecyclerView.Adapter<WorkbookDayTaskAdapter.MyViewHolder> {
 
     ArrayList<TaskModel> completedTasks;
+    SelectWorkbookNoteListener listener;
 
-    public WorkbookDayTaskAdapter(ArrayList<TaskModel> completedTasks){
+    public WorkbookDayTaskAdapter(ArrayList<TaskModel> completedTasks, SelectWorkbookNoteListener listener){
         this.completedTasks = completedTasks;
+        this.listener = listener;
     }
 
     @NonNull
@@ -40,6 +43,14 @@ public class WorkbookDayTaskAdapter extends RecyclerView.Adapter<WorkbookDayTask
         holder.titleTv.setText(completedTasks.get(position).getTaskName());
         //holder.iconIv.setImageResource(completedTasks.get(position).getImage());
         holder.iconIv.setImageResource(completedTasks.get(position).getMatchingCategoryIcon(completedTasks.get(position).getCategory()));
+        int finalPosition = position;
+        holder.layout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                listener.onItemClick(completedTasks.get(finalPosition));
+            }
+        });
+
     }
 
     @Override
@@ -52,12 +63,14 @@ public class WorkbookDayTaskAdapter extends RecyclerView.Adapter<WorkbookDayTask
 
         TextView titleTv;
         ImageView iconIv;
+        LinearLayout layout;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
 
             titleTv = itemView.findViewById(R.id.logTaskNameTv);
             iconIv = itemView.findViewById(R.id.logTaskIconIv);
+            layout = itemView.findViewById(R.id.workbookDayTaskLayout);
         }
     }
 }

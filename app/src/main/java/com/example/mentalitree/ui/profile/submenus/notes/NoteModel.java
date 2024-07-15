@@ -36,6 +36,9 @@ public class NoteModel {
 
     public String getRatingAsString(){
         switch (rating){
+
+            case 0:
+                return "No rating";
             case 1:
                 return "Good";
 

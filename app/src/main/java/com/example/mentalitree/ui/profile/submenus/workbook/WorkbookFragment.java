@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,9 +14,11 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.example.mentalitree.DataHandler;
+import com.example.mentalitree.PrivateDataHandler;
 import com.example.mentalitree.R;
 import com.example.mentalitree.databinding.FragmentProfileNotesBinding;
 import com.example.mentalitree.databinding.FragmentProfileWorkbookBinding;
+import com.example.mentalitree.ui.today.ReviewFragment;
 import com.example.mentalitree.ui.today.TaskModel;
 
 import java.lang.reflect.Array;
@@ -23,11 +26,12 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 
-public class WorkbookFragment extends Fragment {
+public class WorkbookFragment extends Fragment implements SelectWorkbookNoteListener {
 
     RecyclerView workbookDaysRecyclerView;
     FragmentProfileWorkbookBinding binding;
     DataHandler dataHandler = DataHandler.getInstance();
+    PrivateDataHandler privateDataHandler = PrivateDataHandler.getInstance();
 
 
     public WorkbookFragment() {
@@ -80,11 +84,31 @@ public class WorkbookFragment extends Fragment {
 
         dataHandler.getLogOfCompletedTasks(list -> {
             Collections.reverse(list);
-            WorkbookDayAdapter adapter = new WorkbookDayAdapter(list);
+            WorkbookDayAdapter adapter = new WorkbookDayAdapter(list, this);
             workbookDaysRecyclerView.setAdapter(adapter);
 
             LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
             workbookDaysRecyclerView.setLayoutManager(linearLayoutManager);
         });
+    }
+
+    @Override
+    public void onItemClick(TaskModel taskModel) {
+
+        try {
+            String note = taskModel.getUserInputNote();
+
+            if(!privateDataHandler.decryptString(taskModel.getUserInputNote()).isEmpty()){
+                WorkbookShowNoteFragment showNoteFragment = new WorkbookShowNoteFragment(taskModel);
+                showNoteFragment.show(getParentFragmentManager(), "ShowNoteFragment");
+            }else{
+                Toast.makeText(getContext(), "You did not write a note for this task", Toast.LENGTH_SHORT).show();
+            }
+        }catch(Exception e){
+            //do nothing
+            Log.e("WorkbookFRAG", "Exception: " + e);
+        }
+
+
     }
 }

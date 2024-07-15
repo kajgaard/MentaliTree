@@ -11,6 +11,7 @@ public class TaskModel {
     String helpText;
     String taskId;
     boolean completed = false;
+    String userInputNote = "";
 
 
 
@@ -110,5 +111,13 @@ public class TaskModel {
 
     public void setCompleted(boolean completed) {
         this.completed = completed;
+    }
+
+    public String getUserInputNote() {
+        return userInputNote;
+    }
+
+    public void setUserInputNote(String userInputNote) {
+        this.userInputNote = userInputNote;
     }
 }

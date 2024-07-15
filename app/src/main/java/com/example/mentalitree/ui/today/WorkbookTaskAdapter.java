@@ -57,7 +57,7 @@ public class WorkbookTaskAdapter  extends RecyclerView.Adapter<WorkbookTaskAdapt
          }else{
             holder.titleTv.setText(workbookTasks.get(position).getTaskName());
             holder.shortdescriptionTv.setText(workbookTasks.get(position).getTaskShortDescription());
-            holder.iconIv.setImageResource(workbookTasks.get(position).getImage());
+            holder.iconIv.setImageResource(workbookTasks.get(position).getMatchingCategoryIcon(workbookTasks.get(position).getCategory()));
             int finalPosition = position;
             holder.layoutView.setOnClickListener(new View.OnClickListener() {
                 @Override
