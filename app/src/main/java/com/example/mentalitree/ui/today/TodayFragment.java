@@ -349,7 +349,7 @@ public class TodayFragment extends Fragment implements TaskSelectListener, Workb
 
     @Override
     public void onTaskClicked(TaskModel taskModel) {
-        Toast.makeText(getContext(),"YAY YOU CLICKED: "+taskModel.getTaskName() , Toast.LENGTH_SHORT).show();
+        //Toast.makeText(getContext(),"YAY YOU CLICKED: "+taskModel.getTaskName() , Toast.LENGTH_SHORT).show();
         WorkbookTaskFragment dialogFragment = new WorkbookTaskFragment(taskModel);
         dialogFragment.setConfirmedListener(this);
         dialogFragment.show(getParentFragmentManager(), "WorkbookTaskFragment");

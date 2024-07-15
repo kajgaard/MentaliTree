@@ -60,7 +60,7 @@ public class DeleteDataFragment extends DialogFragment {
             @Override
             public void onClick(View view) {
                 if(acceptFlag){
-                    Toast.makeText(getContext(), "will delete", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(getContext(), "will delete", Toast.LENGTH_SHORT).show();
                     dataHandler.deleteDataFromDatabase(flag -> {
                         dismiss();
                         Intent intent = new Intent(getContext(), LogInActivity.class);
@@ -70,7 +70,7 @@ public class DeleteDataFragment extends DialogFragment {
                     });
 
                 }else{
-                    Toast.makeText(getContext(), "wont delete", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(getContext(), "wont delete", Toast.LENGTH_SHORT).show();
                     dismiss();
                 }
             }
